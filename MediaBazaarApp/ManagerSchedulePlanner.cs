@@ -23,7 +23,7 @@ namespace MediaBazaarApp
         Person loggedInUser;
         private bool close_application;
         SQLDatabase database;
-        AvailabilitySQL availabilitySQL;
+        AvailabilityDataAccessLayer availabilitySQL;
         private Random random = new Random();
         private int numOfWeeks;
         private Department selectedDepartment;
@@ -39,7 +39,7 @@ namespace MediaBazaarApp
                 InitializeComponent();
                 close_application = true;
                 this.database = database;
-                availabilitySQL = new AvailabilitySQL();
+                availabilitySQL = new AvailabilityDataAccessLayer();
                 rbGenerateDaySchedule.Checked = true;
                 cbWeeksRange.SelectedIndex = 2;
                 this.numOfWeeks = Convert.ToInt32(cbWeeksRange.SelectedItem);

@@ -13,11 +13,8 @@ namespace MediaBazaarWeb.Pages
     {
         private const int DaysPerPage = 28; // 4 weeks * 7 days
 
-        [BindProperty]
-        public List<AvailabilityBool> UserAvailability { get; set; }
-
         private readonly DataAccessLayer.SQLDatabase _sql;
-        private readonly AvailabilitySQL availabilitySQL;
+        private readonly AvailabilityDataAccessLayer availabilitySQL;
         public Person LoggedInPerson { get; set; }
         public bool IsAuthenticated { get; set; }
 
@@ -39,7 +36,7 @@ namespace MediaBazaarWeb.Pages
         {
             peopleManagement = new PeopleManagement();
             _sql = new DataAccessLayer.SQLDatabase();
-            availabilitySQL = new AvailabilitySQL();
+            availabilitySQL = new AvailabilityDataAccessLayer();
         }
 
         public IActionResult OnGet(int? pageIndex)

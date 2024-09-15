@@ -2,7 +2,10 @@
 
 namespace MediaBazaarWeb.Model
 {
-    public class ShiftChangeRequestDto
+    /// <summary>
+    /// A DTO model for the shift change that all users can request
+    /// </summary>
+    public class ShiftChangeRequestDTOModel
     {
         [Required]
         public string SelectedShift { get; set; }

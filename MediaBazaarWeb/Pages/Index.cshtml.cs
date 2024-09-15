@@ -15,7 +15,7 @@ namespace MediaBazaarWeb.Pages
         DataAccessLayer.SQLDatabase _sql = new DataAccessLayer.SQLDatabase();
         UserManager um = new UserManager();
         [BindProperty]
-        public LoginFormModel LoginForm { get; set; }
+        public LoginFormDTOModel LoginForm { get; set; }
 
         public bool IsAuthenticated { get; set; }
 

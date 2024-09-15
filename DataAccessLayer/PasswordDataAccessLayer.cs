@@ -29,7 +29,7 @@ namespace DataAccessLayer
     /// Provides methods for interacting with the password storage in the database, 
     /// including retrieving, updating, and adding password hashes and salts.
     /// </summary>
-    public class PasswordSQL
+    public class PasswordDataAccessLayer
     {
         private string connectionString = "Server=mssqlstud.fhict.local;Database=dbi527531_mediashop;User Id=dbi527531_mediashop;Password=mediashop123; TrustServerCertificate=True";
 

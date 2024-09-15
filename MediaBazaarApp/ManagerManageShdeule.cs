@@ -21,7 +21,7 @@ namespace MediaBazaarApp
         ManagerMenu managerMenu;
         Person loggedInUser;
         SQLDatabase database;
-        AvailabilitySQL availabilitySQL;
+        AvailabilityDataAccessLayer availabilitySQL;
         private bool close_application;
         public ManagerManageShdeule(ManagerMenu managerMenu, PeopleManagement dataManager, Person loggedInUser, SQLDatabase database)
         {
@@ -43,7 +43,7 @@ namespace MediaBazaarApp
                 this.database = database;
                 CheckLoggedInUser();
                 cbDepartment.SelectedIndex = 0;
-                availabilitySQL = new AvailabilitySQL();
+                availabilitySQL = new AvailabilityDataAccessLayer();
                 updateData();
                 UpdateShiftRequests();
                 if(loggedInUser.GetRole == Role.CEO)

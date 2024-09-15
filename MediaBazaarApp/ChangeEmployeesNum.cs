@@ -20,7 +20,7 @@ namespace MediaBazaarApp
     {
         private Department selectedDepartment;
         private int defaultNumOfEmployees;
-        private AvailabilitySQL availabilitySql;
+        private AvailabilityDataAccessLayer availabilitySql;
         public ChangeEmployeesNum(DateTime startDate, DateTime endDate, List<Role> roles, Department department)
         {
             try 
@@ -38,7 +38,7 @@ namespace MediaBazaarApp
                 cbShift.SelectedIndex = 0;
                 calendar.MinDate = startDate;
                 calendar.MaxDate = endDate;
-                availabilitySql = new AvailabilitySQL();
+                availabilitySql = new AvailabilityDataAccessLayer();
             }
             catch (Exception ex)
             {

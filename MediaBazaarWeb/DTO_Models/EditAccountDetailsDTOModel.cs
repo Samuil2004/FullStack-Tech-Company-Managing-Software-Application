@@ -3,7 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MediaBazaarWeb.Model
 {
-    public class EditAccountDetails
+    /// <summary>
+    /// A DTO model for updating user account information
+    /// </summary>
+    public class EditAccountDetailsDTOModel
     {
         [BindProperty]
         [EmailAddress(ErrorMessage = "The Email field is not a valid e-mail address.")]

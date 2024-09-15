@@ -15,7 +15,7 @@ namespace DataAccessLayer
     /// <summary>
     /// This class is responsible for establishing the communication between the code and the database for all availability related data
     /// </summary>
-    public class AvailabilitySQL
+    public class AvailabilityDataAccessLayer
     {
         private string connectionString = "Server=mssqlstud.fhict.local;Database=dbi527531_mediashop;User Id=dbi527531_mediashop;Password=mediashop123; TrustServerCertificate=True";
 

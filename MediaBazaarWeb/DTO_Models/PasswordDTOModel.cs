@@ -3,7 +3,10 @@ using System.ComponentModel;
 
 namespace MediaBazaarWeb.Model
 {
-    public class SetPasswordModel
+    /// <summary>
+    /// A DTO model used for updating user account password including the requirements for a strong password
+    /// </summary>
+    public class PasswordDTOModel
     {
         [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]

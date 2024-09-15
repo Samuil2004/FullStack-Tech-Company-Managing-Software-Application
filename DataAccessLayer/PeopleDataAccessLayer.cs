@@ -16,7 +16,7 @@ namespace DataAccessLayer
     /// including checking user login status, retrieving user IDs, updating login status,
     /// and finding specific person records.
     /// </summary>
-    public class PeopleSQL
+    public class PeopleDataAccessLayer
     {
         private string connectionString = "Server=mssqlstud.fhict.local;Database=dbi527531_mediashop;User Id=dbi527531_mediashop;Password=mediashop123; TrustServerCertificate=True";
         SQLDatabase sqlDatabase = new SQLDatabase();

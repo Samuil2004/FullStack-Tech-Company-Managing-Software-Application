@@ -13,7 +13,7 @@ namespace MediaBazaarWeb.Pages
         UserManager um = new UserManager();
         PeopleManagement peopleManagement = new PeopleManagement();
         [BindProperty]
-        public SetPasswordModel SetPasswordModel { get; set; }
+        public PasswordDTOModel SetPasswordModel { get; set; }
         public string UserEmail { get; private set; }
 
         public void OnGet()

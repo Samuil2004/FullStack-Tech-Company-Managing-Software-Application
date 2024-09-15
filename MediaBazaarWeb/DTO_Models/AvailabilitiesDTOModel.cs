@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MediaBazaarWeb.Model
 {
-    public class AvailabilitiesModel
+    /// <summary>
+    /// A DTO Model for marking and umarking availability from the web calendar
+    /// </summary>
+    public class AvailabilitiesDTOModel
     {
         [BindProperty]
         public int PersonId { get; set; }

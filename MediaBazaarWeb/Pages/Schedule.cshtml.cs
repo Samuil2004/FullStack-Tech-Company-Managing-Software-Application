@@ -15,11 +15,11 @@ namespace MediaBazaarWeb.Pages
     public class ScheduleModel : PageModel
     {
         [BindProperty]
-        public ShiftChangeRequestDto ShiftChangeRequest { get; set; }
+        public ShiftChangeRequestDTOModel ShiftChangeRequest { get; set; }
         [BindProperty]
-        public AvailabilitiesModel AvailabilityModel { get; set; }
+        public AvailabilitiesDTOModel AvailabilityModel { get; set; }
         private SQLDatabase _sql;
-        private AvailabilitySQL availabilitySQL;
+        private AvailabilityDataAccessLayer availabilitySQL;
         public bool IsAuthenticated { get; set; }
         public Person LoggedInPerson { get; set; }
         [BindProperty(SupportsGet = true)]
@@ -37,7 +37,7 @@ namespace MediaBazaarWeb.Pages
         {
             _sql = new SQLDatabase();
             peopleManagement = new PeopleManagement();
-            availabilitySQL = new AvailabilitySQL();
+            availabilitySQL = new AvailabilityDataAccessLayer();
         }
 
         public void OnGet()

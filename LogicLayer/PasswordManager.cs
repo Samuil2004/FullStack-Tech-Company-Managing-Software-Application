@@ -7,9 +7,19 @@ using System.Threading.Tasks;
 
 namespace LogicLayer
 {
+    /// <summary>
+    /// Manages password-related operations, including hashing and salt generation.
+    /// </summary>
     public class PasswordManager
     {
         public PasswordManager() { }
+
+        /// <summary>
+        /// Generates a SHA256 hash of the given password combined with the provided salt.
+        /// </summary>
+        /// <param name="password">The password to hash.</param>
+        /// <param name="salt">The salt to add to the password for hashing.</param>
+        /// <returns>A base64 string representing the hashed password.</returns>
         public string GenerateSHA256Hash(string password, string salt)
         {
             byte[] saltBytes = Encoding.UTF8.GetBytes(salt);
@@ -26,6 +36,12 @@ namespace LogicLayer
             }
         }
 
+
+        /// <summary>
+        /// Generates a random salt string of the specified length.
+        /// </summary>
+        /// <param name="length">The length of the salt string to generate.</param>
+        /// <returns>A randomly generated salt string.</returns>
         public string GenerateRandomSalt(int length)
         {
             const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+";

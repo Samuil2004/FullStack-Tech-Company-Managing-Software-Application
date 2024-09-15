@@ -19,7 +19,7 @@ namespace MediaBazaarWeb.Pages
         public string UserEmail { get; set; }
 
         [BindProperty]
-        public EditAccountDetails editAccountDetails { get; set; }
+        public EditAccountDetailsDTOModel editAccountDetails { get; set; }
 
         public IActionResult OnGet(string email)
         {

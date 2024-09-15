@@ -10,11 +10,20 @@ using System.Threading.Tasks;
 
 namespace LogicLayer
 {
+    /// <summary>
+    /// Manages user-related operations, including authentication, checking first-time login, and marking successful logins.
+    /// </summary>
     public class UserManager
     {
+        /// <summary>
+        /// Checks if a user exists and verifies their password.
+        /// </summary>
+        /// <param name="username">The username (email) of the user to check.</param>
+        /// <param name="password">The password entered by the user.</param>
+        /// <returns>True if the username and password match, otherwise false.</returns>
         public bool CheckUser(string username,string password)
         {
-            PasswordSQL passSQL = new PasswordSQL();
+            PasswordDataAccessLayer passSQL = new PasswordDataAccessLayer();
             SQLDatabase db = new SQLDatabase();
             PasswordManager manager = new PasswordManager();
             Dictionary<string, string> ContainerForSaltHash = passSQL.GetUserHashSalt(db.GetPersonId(username));
@@ -28,27 +37,48 @@ namespace LogicLayer
                 return false;
             }
         }
+
+        /// <summary>
+        /// Checks if a user is logging in for the first time.
+        /// </summary>
+        /// <param name="email">The email of the user to check.</param>
+        /// <returns>True if the user is logging in for the first time, otherwise false.</returns>
+        /// <exception cref="ArgumentException">Thrown when a null or empty email is passed.</exception>
         public bool IsUserLoggingINFortheFirstTime(string email)
         {
-            PeopleSQL peopleSQL = new PeopleSQL();
+            PeopleDataAccessLayer peopleSQL = new PeopleDataAccessLayer();
             if(string.IsNullOrEmpty(email))
             {
                 throw new ArgumentException("A null value has been passed!");
             }
             return peopleSQL.IsUserLoggingINFortheFirstTime(email);
         }
+
+
+        /// <summary>
+        /// Retrieves the user ID for a given email address.
+        /// </summary>
+        /// <param name="email">The email address of the user.</param>
+        /// <returns>The user ID as an integer.</returns>
+        /// <exception cref="ArgumentException">Thrown when a null or empty email is passed.</exception>
         public int GetUserId(string email)
         {
-            PeopleSQL peopleSQL = new PeopleSQL();
+            PeopleDataAccessLayer peopleSQL = new PeopleDataAccessLayer();
             if (string.IsNullOrEmpty(email))
             {
                 throw new ArgumentException("A null value has been passed!");
             }
             return peopleSQL.GetUserId(email);
         }
+
+        /// <summary>
+        /// Marks a user as having successfully logged in.
+        /// </summary>
+        /// <param name="email">The email address of the user.</param>
+        /// <exception cref="ArgumentException">Thrown when a null or empty email is passed.</exception>
         public void MarkSuccessfullLogIn(string email)
         {
-            PeopleSQL peopleSQL = new PeopleSQL();
+            PeopleDataAccessLayer peopleSQL = new PeopleDataAccessLayer();
             if (string.IsNullOrEmpty(email))
             {
                 throw new ArgumentException("A null value has been passed!");

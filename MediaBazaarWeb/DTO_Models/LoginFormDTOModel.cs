@@ -2,7 +2,10 @@
 
 namespace MediaBazaarWeb.Model
 {
-    public class LoginFormModel
+    /// <summary>
+    /// A DTO model for the log in page including the requirements for each of the credentials
+    /// </summary>
+    public class LoginFormDTOModel
     {
         [Required(ErrorMessage = "Email is required")]
         [DataType(DataType.EmailAddress)]

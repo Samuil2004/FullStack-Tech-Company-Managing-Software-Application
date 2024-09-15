@@ -11,11 +11,22 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace DataAccessLayer
 {
+    /// <summary>
+    /// Provides methods for interacting with the Person table in the database,
+    /// including checking user login status, retrieving user IDs, updating login status,
+    /// and finding specific person records.
+    /// </summary>
     public class PeopleSQL
     {
         private string connectionString = "Server=mssqlstud.fhict.local;Database=dbi527531_mediashop;User Id=dbi527531_mediashop;Password=mediashop123; TrustServerCertificate=True";
         SQLDatabase sqlDatabase = new SQLDatabase();
 
+        /// <summary>
+        /// Checks if a user is logging in for the first time based on their email address.
+        /// </summary>
+        /// <param name="email">The email address of the user.</param>
+        /// <returns><c>true</c> if the user is logging in for the first time; otherwise, <c>false</c>.</returns>
+        /// <exception cref="Exception">Thrown when there is an issue with retrieving the user's first login status from the database.</exception>
         public bool IsUserLoggingINFortheFirstTime(string email)
         {
             string query = $"Select isFirstLogIn from Person where email = @email";
@@ -40,6 +51,13 @@ namespace DataAccessLayer
                 { connection.Close(); }
             }
         }
+
+        /// <summary>
+        /// Retrieves the ID of a user based on their email address.
+        /// </summary>
+        /// <param name="email">The email address of the user.</param>
+        /// <returns>The ID of the user.</returns>
+        /// <exception cref="Exception">Thrown when there is an issue with finding the user ID in the database.</exception>
         public int GetUserId(string email)
         {
             string query = $"Select id from Person where email = @email";
@@ -51,7 +69,6 @@ namespace DataAccessLayer
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@email", email);
                 return Convert.ToInt32(command.ExecuteScalar());
-                //return result == 1;
             }
             catch (Exception e)
             {
@@ -64,6 +81,12 @@ namespace DataAccessLayer
                 { connection.Close(); }
             }
         }
+
+        /// <summary>
+        /// Marks a user's login as successful by updating their login status.
+        /// </summary>
+        /// <param name="email">The email address of the user.</param>
+        /// <exception cref="Exception">Thrown when there is an issue with marking the login activity in the database.</exception>
         public void MarkSuccessfullLogIn(string email)
         {
             string query = $"Update Person set isFirstLogIn = 0 where email = @email";
@@ -75,9 +98,6 @@ namespace DataAccessLayer
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@email", email);
                 command.ExecuteNonQuery();
-
-                //return Convert.ToInt32(command.ExecuteScalar());
-                //return result == 1;
             }
             catch (Exception e)
             {
@@ -90,6 +110,12 @@ namespace DataAccessLayer
             }
         }
 
+        /// <summary>
+        /// Finds a specific person based on a concatenated string of their information.
+        /// </summary>
+        /// <param name="givenInfo">A string containing concatenated person information (ID, name, and floor).</param>
+        /// <returns>A <see cref="Person"/> object representing the found person, or <c>null</c> if no matching person is found.</returns>
+        /// <exception cref="Exception">Thrown when there is an issue with retrieving the person data from the database.</exception>
         public Person FindConcretePerson(string givenInfo)
         {
             string query = "SELECT * FROM Person " +
@@ -106,7 +132,6 @@ namespace DataAccessLayer
                 {
                     int id = Convert.ToInt32(reader["id"]);
                     string email = reader["email"].ToString();
-                    //string password = reader["_password"].ToString();
                     string firstName = reader["firstName"].ToString();
                     string lastName = reader["lastName"].ToString();
                     string gender = reader["gender"].ToString();
@@ -129,63 +154,6 @@ namespace DataAccessLayer
                     readPerson.setManager(sqlDatabase.ReadPersonById(manager_id));
                 }
                 return readPerson;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Reading employee failed");
-            }
-            finally
-            {
-                connection.Close();
-            }
-        }
-        public List<Person> FindFilteredPeople(Department selectedDepartment, int pageNum)
-        {
-            string query = "select * from Person " +
-                "where department = @department " +
-                "and stillWorking = 1 " +
-                "ORDER BY id " +
-                "OFFSET(@pageNum - 1) * 15 ROWS " +
-                "FETCH NEXT 16 ROWS ONLY; ";
-            List<Person> readPeople = new List<Person>();
-            SqlConnection connection = new SqlConnection(connectionString);
-            try
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@department", selectedDepartment);
-                command.Parameters.AddWithValue("@pageNum", pageNum);
-
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    int id = Convert.ToInt32(reader["id"]);
-                    string email = reader["email"].ToString();
-                    //string password = reader["_password"].ToString();
-                    string firstName = reader["firstName"].ToString();
-                    string lastName = reader["lastName"].ToString();
-                    string gender = reader["gender"].ToString();
-                    string phoneNumber = reader["phoneNumber"].ToString();
-                    DateTime startingDate = Convert.ToDateTime(reader["startingDate"]);
-                    int manager_id = Convert.ToInt32(reader["manager_id"]);
-                    string department = reader["department"].ToString();
-                    string role = reader["_role"].ToString();
-                    Role selected_role = (Role)Enum.Parse(typeof(Role), role);
-                    bool stillWorking = Convert.ToBoolean(reader["stillWorking"]);
-                    Gender selected_gender = (Gender)Enum.Parse(typeof(Gender), gender);
-                    Department selected_department = (Department)Enum.Parse(typeof(Department), department);
-                    double wage = Convert.ToDouble(reader["Wage"]);
-                    string secretQuestion = reader["secretQuestion"].ToString();
-                    string secretAnswer = reader["secretAnswer"].ToString();
-                    int floor = Convert.ToInt32(reader["_floor"]);
-
-                    Person newPerson = new Person(id, email, firstName, lastName, selected_gender, startingDate, manager_id, selected_department, selected_role, wage, floor, secretQuestion, secretAnswer, stillWorking);
-                    newPerson.PhoneNumber = phoneNumber;
-                    newPerson.setManager(sqlDatabase.ReadPersonById(manager_id));
-
-                    readPeople.Add(newPerson);
-                }
-                return readPeople;
             }
             catch (Exception ex)
             {

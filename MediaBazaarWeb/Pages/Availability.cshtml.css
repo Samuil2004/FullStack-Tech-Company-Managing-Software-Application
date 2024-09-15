@@ -1,0 +1,13 @@
+﻿table, th, td {
+    border: 1px solid;
+    margin: auto;
+    text-align: center;
+}
+
+.Working {
+    background-color:darkgreen;
+}
+
+.NotWorking{
+    background-color:darkred;
+}

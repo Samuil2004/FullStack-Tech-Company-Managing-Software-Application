@@ -1,0 +1,49 @@
+﻿@page
+@model MediaBazaarWeb.Pages.AccountModel
+@{
+}
+
+@{
+	Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="error-message">
+        <span class="text-danger">@TempData["ErrorMessage"]</span>
+    </div>
+}
+
+<h1>Your account details</h1>
+<form method="post">
+    <label>Email: </label>
+    <span asp-validation-for="editAccountDetails.Email" class="text-danger"></span>
+    <input asp-for="editAccountDetails.Email" value="@Model.LoggedInPerson.Email" id="Email">
+        <br />
+        <br />
+    
+        <label>Phone number: </label>
+    <span asp-validation-for="editAccountDetails.PhoneNumber" class="text-danger"></span>
+
+        <input asp-for="editAccountDetails.PhoneNumber" value="@Model.LoggedInPerson.PhoneNumber" id="PhoneNumber">
+        <br />
+        <br />
+        <label>Security question:</label>
+        <select asp-for="editAccountDetails.SecurityQuestion" id="SecurityQuestion ">
+            <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+            <option value="What is the name of your first pet?">What is the name of your first pet?</option>
+        </select><br />
+        <label> Current security question : @Model.LoggedInPerson.SecretQuestion</label>
+        <br />
+        <br />
+        <label> Answer: </label>
+    <span asp-validation-for="editAccountDetails.SecurityAnswer" class="text-danger"></span>
+        <input asp-for="editAccountDetails.SecurityAnswer" value="@Model.LoggedInPerson.SecretAnswer" id="SecurityAnswer">
+        <br />
+        <br />
+            <button type="submit" >Save changes</button>
+    </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

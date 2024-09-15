@@ -1,0 +1,205 @@
+﻿@page
+@using MediaBazaarApp
+@model MediaBazaarWeb.Pages.ScheduleModel
+
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>@Model.LoggedInPerson.FirstName @Model.LoggedInPerson.LastName's Schedule</h1>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="error-message">
+        <span class="text-danger">@TempData["ErrorMessage"]</span>
+    </div>
+}
+    
+else
+{
+    <div class="success-message">
+        <span class="text-success">@TempData["SuccessMessage"]</span>
+    </div>
+    <br />
+    <form method="post" asp-page-handler="RequestChange">
+        <input type="hidden" id="selectedShift" name="ShiftChangeRequest.SelectedShift" />
+        <table>
+            <tr>
+                <td>Shift</td>
+                <td>Monday<br />@Model.datesList[0]</td>
+                <td>Tuesday<br />@Model.datesList[1]</td>
+                <td>Wednesday<br />@Model.datesList[2]</td>
+                <td>Thursday<br />@Model.datesList[3]</td>
+                <td>Friday<br />@Model.datesList[4]</td>
+                <td>Saturday<br />@Model.datesList[5]</td>
+                <td>Sunday<br />@Model.datesList[6]</td>
+            </tr>
+            <tr>
+                <td>First Shift<br />9:00-13:00</td>
+                <td class="@Model.shifts[0]" data-shift="@Model.datesList[0] FirstShift">@Model.shifts[0]</td>
+                <td class="@Model.shifts[1]" data-shift="@Model.datesList[1] FirstShift">@Model.shifts[1]</td>
+                <td class="@Model.shifts[2]" data-shift="@Model.datesList[2] FirstShift">@Model.shifts[2]</td>
+                <td class="@Model.shifts[3]" data-shift="@Model.datesList[3] FirstShift">@Model.shifts[3]</td>
+                <td class="@Model.shifts[4]" data-shift="@Model.datesList[4] FirstShift">@Model.shifts[4]</td>
+                <td class="@Model.shifts[5]" data-shift="@Model.datesList[5] FirstShift">@Model.shifts[5]</td>
+                <td class="@Model.shifts[6]" data-shift="@Model.datesList[6] FirstShift">@Model.shifts[6]</td>
+            </tr>
+            <tr>
+                <td>Second Shift<br />13:00-17:00</td>
+                <td class="@Model.shifts[7]" data-shift="@Model.datesList[0] SecondShift">@Model.shifts[7]</td>
+                <td class="@Model.shifts[8]" data-shift="@Model.datesList[1] SecondShift">@Model.shifts[8]</td>
+                <td class="@Model.shifts[9]" data-shift="@Model.datesList[2] SecondShift">@Model.shifts[9]</td>
+                <td class="@Model.shifts[10]" data-shift="@Model.datesList[3] SecondShift">@Model.shifts[10]</td>
+                <td class="@Model.shifts[11]" data-shift="@Model.datesList[4] SecondShift">@Model.shifts[11]</td>
+                <td class="@Model.shifts[12]" data-shift="@Model.datesList[5] SecondShift">@Model.shifts[12]</td>
+                <td class="@Model.shifts[13]" data-shift="@Model.datesList[6] SecondShift">@Model.shifts[13]</td>
+            </tr>
+            <tr>
+                <td>Third Shift<br />17:00-21:00</td>
+                <td class="@Model.shifts[14]" data-shift="@Model.datesList[0] ThirdShift">@Model.shifts[14]</td>
+                <td class="@Model.shifts[15]" data-shift="@Model.datesList[1] ThirdShift">@Model.shifts[15]</td>
+                <td class="@Model.shifts[16]" data-shift="@Model.datesList[2] ThirdShift">@Model.shifts[16]</td>
+                <td class="@Model.shifts[17]" data-shift="@Model.datesList[3] ThirdShift">@Model.shifts[17]</td>
+                <td class="@Model.shifts[18]" data-shift="@Model.datesList[4] ThirdShift">@Model.shifts[18]</td>
+                <td class="@Model.shifts[19]" data-shift="@Model.datesList[5] ThirdShift">@Model.shifts[19]</td>
+                <td class="@Model.shifts[20]" data-shift="@Model.datesList[6] ThirdShift">@Model.shifts[20]</td>
+            </tr>
+        </table>
+        <br />
+        <div>
+            <label for="changeReason">Reason for Shift Change (max 100 characters):</label>
+            <input type="text" id="changeReason" name="ShiftChangeRequest.Reason" maxlength="100" style="width: 300px;" />
+        </div>
+        <button type="submit" id="requestChangeButton" class="btn btn-primary">Request Shift Change</button>
+    </form>
+}
+
+<form method="post">
+    <button type="submit" asp-page-handler="ChangePage" asp-route-i="-1" id="backWeek">Last Week</button>
+    <button type="submit" asp-page-handler="ChangePage" asp-route-i="1" id="forwardWeek">Next Week</button>
+</form>
+
+@if (Model.GetPossibleShiftChanges().Count() > 0)
+{
+    <h5>Would you like to take over any of these shifts?</h5>
+    <div class="shift-container">
+        @foreach (var item in @Model.GetPossibleShiftChanges())
+        {
+            <div class="shift-card">
+                <p><span class="label">Name:</span> @item.Item1</p>
+                <p><span class="label">Date:</span> @item.Item2.ToString("dd/MM/yyyy")</p>
+                <p><span class="label">Shift:</span> @item.Item3.ToString()</p>
+                <form method="post" asp-page-handler="TakeShift">
+                    <input type="hidden" name="itemIndex" value="@Model.GetPossibleShiftChanges().IndexOf(item)" />
+                    <button class="take-shift-btn">Take Shift</button>
+                </form>
+            </div>
+        }
+    </div>
+}
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const selectShift = (shift, event) => {
+                const cell = event.target;
+                if (cell.classList.contains('Working')) {
+                    document.getElementById('selectedShift').value = shift;
+                    document.querySelectorAll('td').forEach(td => td.classList.remove('selected'));
+                    cell.classList.add('selected');
+                    document.getElementById('requestChangeButton').disabled = false;
+                }
+            };
+
+            const cells = document.querySelectorAll('td.Working');
+            cells.forEach(cell => cell.addEventListener('click', (event) => selectShift(cell.dataset.shift, event)));
+
+            document.getElementById('requestChangeButton').disabled = true;
+        });
+    </script>
+}
+
+<style>
+    .selected {
+        background-color: lime;
+        color: white !important;
+    }
+
+    td.Working {
+        cursor: pointer;
+    }
+
+    td.Requested {
+        background-color: dodgerblue;
+        color: white !important;
+    }
+
+    td.Locked {
+        background-color: grey;
+        color: white !important;
+        cursor: not-allowed;
+    }
+
+    table, th, td {
+        border: 1px solid;
+        margin: auto;
+        text-align: center;
+    }
+
+    .shift-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .shift-card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .shift-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .shift-card h6 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .shift-card p {
+            color: #666;
+            font-size: 16px;
+            margin: 8px 0;
+        }
+
+        .shift-card .label {
+            font-weight: bold;
+            color: #333;
+        }
+
+    .take-shift-btn {
+        background-color: #28a745;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 10px;
+        padding: 10px 20px;
+        transition: background-color 0.3s;
+    }
+
+        .take-shift-btn:hover {
+            background-color: #218838;
+        }
+
+        .take-shift-btn:focus {
+            outline: none;
+        }
+</style>

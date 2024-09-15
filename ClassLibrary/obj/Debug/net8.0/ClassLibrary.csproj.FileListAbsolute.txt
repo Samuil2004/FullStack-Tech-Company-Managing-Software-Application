@@ -1,0 +1,12 @@
+C:\Mac\Home\Desktop\MediaBazaarApp\ClassLibrary\bin\Debug\net8.0\ClassLibrary.deps.json
+C:\Mac\Home\Desktop\MediaBazaarApp\ClassLibrary\bin\Debug\net8.0\ClassLibrary.dll
+C:\Mac\Home\Desktop\MediaBazaarApp\ClassLibrary\bin\Debug\net8.0\ClassLibrary.pdb
+C:\Mac\Home\Desktop\MediaBazaarApp\ClassLibrary\obj\Debug\net8.0\ClassLibrary.csproj.AssemblyReference.cache
+C:\Mac\Home\Desktop\MediaBazaarApp\ClassLibrary\obj\Debug\net8.0\ClassLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Mac\Home\Desktop\MediaBazaarApp\ClassLibrary\obj\Debug\net8.0\ClassLibrary.AssemblyInfoInputs.cache
+C:\Mac\Home\Desktop\MediaBazaarApp\ClassLibrary\obj\Debug\net8.0\ClassLibrary.AssemblyInfo.cs
+C:\Mac\Home\Desktop\MediaBazaarApp\ClassLibrary\obj\Debug\net8.0\ClassLibrary.csproj.CoreCompileInputs.cache
+C:\Mac\Home\Desktop\MediaBazaarApp\ClassLibrary\obj\Debug\net8.0\ClassLibrary.dll
+C:\Mac\Home\Desktop\MediaBazaarApp\ClassLibrary\obj\Debug\net8.0\refint\ClassLibrary.dll
+C:\Mac\Home\Desktop\MediaBazaarApp\ClassLibrary\obj\Debug\net8.0\ClassLibrary.pdb
+C:\Mac\Home\Desktop\MediaBazaarApp\ClassLibrary\obj\Debug\net8.0\ref\ClassLibrary.dll

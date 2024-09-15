@@ -1,0 +1,15 @@
+﻿table, th, td {
+    border: 1px solid;
+    margin: auto;
+    text-align: center;
+}
+
+.Working {
+    background-color:darkred;
+    color:white;
+}
+
+.selected {
+    background-color: lightgreen;
+    color: white !important;
+}

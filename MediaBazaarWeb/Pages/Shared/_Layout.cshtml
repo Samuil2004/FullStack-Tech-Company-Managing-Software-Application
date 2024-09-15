@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] MediaBazaar - Web App</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MediaBazaarWeb.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar border-bottom border-body navbar-expand-lg" data-bs-theme="dark" style="background-color:#A10702">
+            <a class="navbar-brand" style="color:white" href="#">MediaBazaar</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Login">Login</a>
+                        </li>
+                    }
+                    else
+                    {
+                        @* <li class="nav-item">
+                            <a class="nav-link" asp-page="/Schedule" asp-route-email="@Model.Email" asp-route-password="@Model.Password">Schedule</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Profile" asp-route-email="@Model.Email" asp-route-password="@Model.Password">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Availability" asp-route-email="@Model.Email" asp-route-password="@Model.Password">Mark Availability</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Logout" id="logOut">Logout</a>
+                        </li> *@
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Schedule" >Schedule</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Profile" >Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Availability" asp-route-page="@(ViewData["CurrentPage"] ?? 1)">Mark Availability</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/EditAccountDetails">Account</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Logout" id="logOut">Logout</a>
+                        </li>
+                    }
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+@*     <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - MediaBazaarWeb - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer> *@
+
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+@*     <script>
+        document.getElementById('logOut').addEventListener('click', function (event) {
+            logout();
+        });
+        function logout() {
+            // Perform any logout-related actions here
+            // For example, remove user authentication
+            // Then reload the page
+            window.location.href = '/Index';
+        }
+    </script> *@
+</body>
+</html>

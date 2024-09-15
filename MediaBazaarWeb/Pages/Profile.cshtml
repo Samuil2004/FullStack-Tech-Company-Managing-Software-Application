@@ -1,0 +1,24 @@
+﻿@page
+@using MediaBazaarApp
+@model MediaBazaarWeb.Pages.ProfileModel
+@{
+	Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Employee Profile</h1>
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="error-message">
+        <span class="text-danger">@TempData["ErrorMessage"]</span>
+    </div>
+}
+else
+{
+    <p><strong>Email:</strong> @Model.LoggedInPerson.Email</p>
+    <p><strong>First Name:</strong> @Model.LoggedInPerson.FirstName</p>
+    <p><strong>Last Name:</strong> @Model.LoggedInPerson.LastName</p>
+    <p><strong>Starting Date:</strong> @Model.LoggedInPerson.GetStartignDate.ToShortDateString()</p>
+    <p><strong>Department:</strong> @Model.LoggedInPerson.GetDepartment</p>
+    <p><strong>Role:</strong> @Model.LoggedInPerson.GetRole</p>
+    <p><strong>Floor:</strong> @Model.LoggedInPerson.GetFloor</p>
+}

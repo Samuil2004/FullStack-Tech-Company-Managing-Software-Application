@@ -1,0 +1,27 @@
+﻿@page
+@model IndexModel
+@using MediaBazaarWeb.Model
+@{
+    ViewData["Title"] = "Login page";
+}
+
+<h1>Login</h1>
+
+<form method="post">
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="error-message">
+            <span class="text-danger">@TempData["ErrorMessage"]</span>
+        </div>
+    }
+    <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input asp-for="LoginForm.Email" id="email" type="email" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input asp-for="LoginForm.Password" id="password" type="password" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+    <a asp-page="ForgottenPassword">Forgot your password?</a>
+</form>

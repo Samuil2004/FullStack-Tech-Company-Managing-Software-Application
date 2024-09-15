@@ -1,0 +1,15 @@
+table[b-l7spt6tsh6], th[b-l7spt6tsh6], td[b-l7spt6tsh6] {
+    border: 1px solid;
+    margin: auto;
+    text-align: center;
+}
+
+.Working[b-l7spt6tsh6] {
+    background-color:darkred;
+    color:white;
+}
+
+.selected[b-l7spt6tsh6] {
+    background-color: lightgreen;
+    color: white !important;
+}

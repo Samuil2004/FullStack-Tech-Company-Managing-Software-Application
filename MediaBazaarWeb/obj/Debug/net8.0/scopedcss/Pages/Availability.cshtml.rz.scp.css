@@ -1,0 +1,13 @@
+table[b-y17bysidmz], th[b-y17bysidmz], td[b-y17bysidmz] {
+    border: 1px solid;
+    margin: auto;
+    text-align: center;
+}
+
+.Working[b-y17bysidmz] {
+    background-color:darkgreen;
+}
+
+.NotWorking[b-y17bysidmz]{
+    background-color:darkred;
+}

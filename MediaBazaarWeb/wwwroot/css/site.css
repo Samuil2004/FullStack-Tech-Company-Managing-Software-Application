@@ -1,0 +1,64 @@
+
+
+
+
+.nav-link {
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.navbar-brand {
+    color: white;
+}
+
+.nav-link:hover {
+    color: #ff0000;
+}
+
+.nav-link::selection {
+    color: #ff0000;
+}
+
+label {
+   color:black;
+}
+
+
+.main-container {
+    position: fixed;
+    z-index: 999; /* Ensure the container is above other elements */
+    top: 50%;
+    left: 50%; /* Adjust the left position as needed */
+    transform: translate(-50%, -50%); /* Center the container */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    width: 50%; /* Adjust the width as needed */
+    max-width: 1200px; /* Set maximum width if needed */
+}
+
+.datepicker-container {
+    width: 30%; /* Adjust the width of the datepicker container */
+    margin-right: 20px;
+}
+
+#radio-buttons-container {
+    width: 30%; /* Adjust the width of the radio buttons container */
+}
+
+#right-container {
+    width: 30%; /* Adjust the width of the right container */
+    text-align: right;
+    bottom:50px;
+}
+
+button {
+    background-color: #A10702;
+    color:white;
+    border:none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top:10px;
+}

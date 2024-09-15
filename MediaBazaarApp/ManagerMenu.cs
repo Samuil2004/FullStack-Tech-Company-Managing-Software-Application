@@ -41,21 +41,6 @@ namespace MediaBazaarApp
             {
                 MessageBox.Show(ex.Message);
             }
-            //if (loggedInUser.GetDepartment != Department.Floor_Workers)
-            //{
-            //    btnAllEmployeesManagerMenu.Visible = false;
-            //    btnManageScheduleManagerMenu.Visible = false;
-            //    btnArchive.Visible = false;
-            //    pbCalendar.Visible = false;
-            //    pbTeam.Visible = false;
-            //    pbArchive.Visible = false;
-            //}
-            //else
-            //{
-            //    pbProduct.Visible = false;
-            //    btnManageStock.Visible = false;
-            //}
-
         }
         private void CheckLoggedInUser()
         {

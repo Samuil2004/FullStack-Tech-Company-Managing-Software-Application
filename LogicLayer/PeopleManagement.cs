@@ -35,46 +35,11 @@ namespace MediaBazaarApp
             psS.AddPassword(Id, salt, hash);
         }
 
-
-        //private List<Person> AttachManager(List<Person> listOfPeople)
-        //{
-        //    List<Person> allPeople = new List<Person>();
-        //    foreach (Person person in listOfPeople)
-        //    {
-        //        if (person.GetManagerId() != null)
-        //        {
-        //            Person manager = listOfPeople.Find(p => p.GetId() == person.GetManagerId());
-        //            person.setManager(manager);
-        //        }
-        //        allPeople.Add(person);
-        //    }
-        //    return allPeople;
-        //}
-
-        //public List<Person> getAllPeople()
-        //{
-        //    //return AttachManager(database.TakeAllCurrentlyWorkingPeople());
-        //    return database.TakeAllCurrentlyWorkingPeople();
-        //}
-
-        //public List<Availability> getAvailabilityForSelectedDate(DateTime selectedTime)
-        //{
-        //    List<Availability> allAvailablePeople = GetAllAvailability(selectedTime, selectedTime).FindAll(av => av.getTimeSlot() == selectedTime);
-        //    return allAvailablePeople;
-        //}
-
-        //public List<Availability> GetAvailabilityForRoleAndDate(Role role, DateTime selectedTime)
-        //{
-        //    return availabilitySQL.GetAvailabilityForRoleAndDate(role, selectedTime);
-        //}
         public Person FindPerson(string username)
         {
             return database.FindPerson(username);
         }
-        public Person FindDepartmentManager(Department selectedDepartment)
-        {
-            return database.FindDepartmentManager(selectedDepartment);
-        }
+
         public List<Availability> GetAllAvailability(DateTime date1, DateTime date2, AvailabilityForTheDay shift, Department selectedDepartment, Role selectedRole)
         {
             return availabilitySQL.TakeAllCorrespondingAvailability(date1, date2,shift,selectedDepartment,selectedRole);
@@ -102,15 +67,6 @@ namespace MediaBazaarApp
         {
             return peopleSQL.FindConcretePerson(givenInfo);
         }
-        //public List<Person> FindFilteredPeople(Department selectedDepartment, int pageNum)
-        //{
-        //    return 
-        //}
-        //public Person FindPerson(string info)
-        //{
-        //    Person foundPerson = getAllPeople().FirstOrDefault(person => person.GetInfo().Equals(info));
-        //    return foundPerson;
-        //}
 
         public string FindPersonName(int id)
         {
@@ -122,31 +78,7 @@ namespace MediaBazaarApp
         {
             return database.GetTheHighestId();
         }
-        //public List<RequestChange> GetAllRequests(DateTime date1, DateTime date2)
-        //{
-        //    return database.TakeAllRequests(date1, date2);
-        //}
-        public List<Availability> GetAvailabilityForScheduleGenerator(DateTime date, Role role, Department department)
-        {
-            //try
-            //{
-                return availabilitySQL.GetAvailabilityForScheduleGenerator(date, role, department);
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw;
-            //}
-        }
-        //public void ChangePassword(Person person, string newPassword)
-        //{
-        //    PasswordManager passwordMasker = new PasswordManager();
-        //    string salt = passwordMasker.GenerateRandomSalt(80);
-        //    string hash = passwordMasker.GenerateSHA256Hash(newPassword, salt);
-        //    PasswordSQL psql = new PasswordSQL();
-        //    psql.UpdatePassword(person.GetId(), salt, hash);
-        //    //return _peopleDataManager.CreatePerson(p, salt, hash);
-        //    //database.ChangePhoneAndPassword(person, person.PhoneNumber, newPassword);
-        //}
+
         public void ChangePassword(int person_id, string newPassword)
         {
             PasswordManager passwordMasker = new PasswordManager();
@@ -154,17 +86,6 @@ namespace MediaBazaarApp
             string hash = passwordMasker.GenerateSHA256Hash(newPassword, salt);
             PasswordSQL psql = new PasswordSQL();
             psql.UpdatePassword(person_id, salt, hash);
-            //return _peopleDataManager.CreatePerson(p, salt, hash);
-            //database.ChangePhoneAndPassword(person, person.PhoneNumber, newPassword);
-        }
-        List<Person> ReadPeopleForSelectedPage(Department? selectedDepartment,Role? selectedRole, bool stillWorking, int pageNum,string filteringCriteria)
-        {
-            return database.ReadPeopleForSelectedPage(selectedDepartment,selectedRole,stillWorking, pageNum,filteringCriteria);
-        }
-        public List<Person> ReadPeopleForSelectedPageDifferentFromManagers(Department? selectedDepartment, bool stillWorking, int pageNum, string filteringCriteria)
-        {
-            return database.ReadPeopleForSelectedPageDifferentFromManagers(selectedDepartment, stillWorking, pageNum, filteringCriteria);
-
         }
     }
 }

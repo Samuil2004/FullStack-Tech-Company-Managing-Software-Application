@@ -16,9 +16,7 @@ namespace MediaBazaarApp
     {
         private Person person;
         private loginForm loginForm;
-        //private PeopleManagement peopleManagement;
         PeopleManagement peopleManagement;
-        //private Person loggedInUser;
         private bool close_application;
 
         public ForgottenPassword(loginForm loginForm, string emailInput)
@@ -27,11 +25,8 @@ namespace MediaBazaarApp
             {
                 InitializeComponent();
                 this.loginForm = loginForm;
-                //this.loggedInUser = loggedInUser;
                 peopleManagement = new PeopleManagement();
                 tbxEmail.Text = emailInput;
-                //cmbSecretQuestion.SelectedIndex = 0;
-                //tbxSecretAnswer.Text = "Jerry";
                 close_application = true;
             }
             catch (Exception ex)
@@ -61,7 +56,6 @@ namespace MediaBazaarApp
                     string secretAnswer = person.SecretAnswer;
                     if (cmbSecretQuestion.Text == person.SecretQuestion && tbxSecretAnswer.Text == person.SecretAnswer)
                     {
-                        //gbxSecretQuestion.Visible = true;
                         lblEmail.Visible = false;
                         tbxEmail.Visible = false;
                         label1.Visible = false;
@@ -123,31 +117,17 @@ namespace MediaBazaarApp
             {
                 MessageBox.Show(ex.Message);
             }
-            //peopleManagement.ChangePassword(person, newPassword);
         }
         private void AnyForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (close_application)
             {
-                //Application.Exit();
                 loginForm.Show();
-                //this.Close();
             }
             else
             {
                 return;
             }
         }
-        //private void AnyForm_FormClosing(object sender, FormClosingEventArgs e)
-        //{
-        //    if (close_application)
-        //    {
-        //        Application.Exit();
-        //    }
-        //    else
-        //    {
-        //        return;
-        //    }
-        //}
     }
 }

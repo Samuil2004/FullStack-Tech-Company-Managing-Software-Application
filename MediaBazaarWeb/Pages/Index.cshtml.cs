@@ -56,8 +56,6 @@ namespace MediaBazaarWeb.Pages
 
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
-                        // Redirect to profile page with email and password parameters
-                        //IsAuthenticated = true;
                         if (um.IsUserLoggingINFortheFirstTime(email))
                         {
                             return new RedirectToPageResult("/SetPasswordPage");
@@ -66,7 +64,6 @@ namespace MediaBazaarWeb.Pages
                     }
                     else
                     {
-                        //ModelState.AddModelError(string.Empty, "Invalid email or password.");
                         TempData["ErrorMessage"] = "Invalid email or password";
                         return Page();
                     }

@@ -20,16 +20,10 @@ namespace MediaBazaarApp
         bool close_application;
         Person loggedInUser;
         SQLDatabase db;
-
-        // Store restocking 
         List<RestockingRequest> StoreRestockingRequests;
         public RestockingRequest SelectedRequest;
-
-        // Depo restocking 
-
         Product selectedProduct;
 
-        // ManagerMenu managerMenu;
         public DepotWorkerForm(FloorWorkersMenu floorworkerMenu, Person loggedinUser, SQLDatabase sql)
         {
             try
@@ -37,7 +31,6 @@ namespace MediaBazaarApp
                 this.floorWorkerMenu = floorworkerMenu;
                 close_application = true;
                 depotManager = new ProductManager();
-                // this.managerMenu = managerMenu;
                 InitializeComponent();
                 this.loggedInUser = loggedinUser;
                 this.db = sql;

@@ -21,7 +21,6 @@ namespace MediaBazaarApp
         private Department selectedDepartment;
         private int defaultNumOfEmployees;
         private AvailabilitySQL availabilitySql;
-        //public List<EmployeeNumberChange> changes { get; private set; } = new List<EmployeeNumberChange>();
         public ChangeEmployeesNum(DateTime startDate, DateTime endDate, List<Role> roles, Department department)
         {
             try 
@@ -122,19 +121,8 @@ namespace MediaBazaarApp
                 {
                     Role selected_role = (Role)Enum.Parse(typeof(Role), cbRoles.SelectedItem.ToString());
                     AvailabilityForTheDay selectedShift = (AvailabilityForTheDay)Enum.Parse(typeof(AvailabilityForTheDay), cbShift.SelectedItem.ToString());
-                    //enc = new EmployeeNumberChange(selected_role, calendar.SelectionStart, selectedShift, Convert.ToInt32(nmNumOfEmployees.Value));
-                    //if(changes.Any(ch => ch.GetSelectedDate == calendar.SelectionStart && ch.GetSelectedRole == selected_role && ch.GetSelectedShift == selectedShift))
-                    //{
-
-                    //}
-                    //changes.RemoveAll(ch => ch.GetSelectedDate == calendar.SelectionStart && ch.GetSelectedRole == selected_role && ch.GetSelectedShift == selectedShift);
-                    //changes.Add(enc);
 
                     availabilitySql.AddShiftChange(calendar.SelectionStart, selectedDepartment, selected_role, selectedShift, Convert.ToInt32(nmNumOfEmployees.Value));
-                    //insert the specias number of employees in the Specail days table in sql and then make the planner page first check if
-                    //there is a special number for the selected date,
-                    //department and role and if yes to use it, but if no to use the default ones
-
                     btnAgree.Enabled = true;
                 }
                 else

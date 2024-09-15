@@ -75,7 +75,6 @@ namespace MediaBazaarApp
 
                     close_application = false;
                     this.Close();
-                    //logInPage.Show();
                     managerMenu.ShowLoginPage();
                 }
                 else

@@ -22,18 +22,6 @@
                     }
                     else
                     {
-                        @* <li class="nav-item">
-                            <a class="nav-link" asp-page="/Schedule" asp-route-email="@Model.Email" asp-route-password="@Model.Password">Schedule</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="/Profile" asp-route-email="@Model.Email" asp-route-password="@Model.Password">Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="/Availability" asp-route-email="@Model.Email" asp-route-password="@Model.Password">Mark Availability</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="/Logout" id="logOut">Logout</a>
-                        </li> *@
                         <li class="nav-item">
                             <a class="nav-link" asp-page="/Schedule" >Schedule</a>
                         </li>
@@ -60,11 +48,6 @@
             @RenderBody()
         </main>
     </div>
-@*     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - MediaBazaarWeb - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer> *@
 
     <partial name="_ValidationScriptsPartial" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -73,16 +56,5 @@
 
 
     @await RenderSectionAsync("Scripts", required: false)
-@*     <script>
-        document.getElementById('logOut').addEventListener('click', function (event) {
-            logout();
-        });
-        function logout() {
-            // Perform any logout-related actions here
-            // For example, remove user authentication
-            // Then reload the page
-            window.location.href = '/Index';
-        }
-    </script> *@
 </body>
 </html>

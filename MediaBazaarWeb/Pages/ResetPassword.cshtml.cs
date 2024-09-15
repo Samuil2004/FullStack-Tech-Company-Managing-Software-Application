@@ -32,14 +32,7 @@ namespace MediaBazaarWeb.Pages
         public IActionResult OnPost()
         {
             bool found = false;
-            //foreach (Person p in peopleManagement.getAllPeople())
-            //{
-            //    if (p.getEmail() == Email)
-            //    {
-            //        loggedInPerson = p;
-            //        found = true;
-            //    }
-            //}
+
             Person foundPerson = peopleManagement.FindPerson(Email);
             if (foundPerson != null)
             {
@@ -48,9 +41,7 @@ namespace MediaBazaarWeb.Pages
             }
             else
             {
-                //ModelState.AddModelError(string.Empty, "Invalid secret question and answer");
                 TempData["ErrorMessage"] = $"Invalid secret question and answer";
-
             }
             if (found)
             {

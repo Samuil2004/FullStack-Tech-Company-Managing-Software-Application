@@ -32,9 +32,6 @@ namespace MediaBazaarApp
         private List<Person> peopleForPage;
         private string filteringCriteria;
 
-        //private IEnumerable<Person> allPeople;
-        //private IEnumerable<Person> selectedRole;
-
         private int counter;
 
         public AllEmployeesPage(ManagerMenu managerMenu, PeopleManagement dataManager, Person loggedInUser, SQLDatabase database)
@@ -46,7 +43,6 @@ namespace MediaBazaarApp
                 this.loggedInUser = loggedInUser;
                 close_application = true;
                 InitializeComponent();
-                //ReloadList();
                 this.database = database;
                 tbSelectedUserInfo.ReadOnly = true;
                 this.counter = 1;
@@ -56,22 +52,6 @@ namespace MediaBazaarApp
                 btnPrevPage.Visible = false;
                 CheckLoggedInUser();
                 ListPeople();
-                //if (loggedInUser.GetRole == Role.Manager)
-                //{
-                //    this.allPeople =
-                //                from person in dataManager.getAllPeople()
-                //                where person != loggedInUser && person.GetStillWorking == true && person.GetDepartment == loggedInUser.GetDepartment
-                //                select person;
-                //}
-                //else
-                //{
-                //    this.allPeople =
-                //                from person in dataManager.getAllPeople()
-                //                where person != loggedInUser && person.GetStillWorking == true
-                //                select person;
-                //}
-                //this.selectedRole = allPeople;
-                //ListPeople(0, 10, selectedRole);
             }
             catch (Exception ex)
             {
@@ -103,60 +83,15 @@ namespace MediaBazaarApp
             }
         }
 
-        //public void listEverybodyFromTheCompany()
-        //{
-        //IEnumerable<Person> allPeople;
-
-
-        //foreach (Person person in allPeople)
-        //{
-        //    string personInfo = person.GetInfo();
-        //    if (!string.IsNullOrEmpty(personInfo))
-        //    {
-        //        lbEmployeesList.Items.Add(personInfo);
-        //    }
-        //}
-        //}
         private void ListPeople()
         {
-            //lbEmployeesList.Items.Clear();
-            //if (endIndex >= selectedRole.Count()-15)
-            //{
-            //    foreach (Person person in listToUse.Skip(startIndex).Take(selectedRole.Count() - startIndex).ToList())
-            //    {
-            //        lbEmployeesList.Items.Add(person.GetInfo());
-            //    }
-            //}
-            //else
-            //{
-            //    foreach (Person person in selectedRole.Skip(startIndex).Take(15).ToList())
-            //    {
-            //        lbEmployeesList.Items.Add(person.GetInfo());
-            //    }
-            //}
-            //if (lbEmployeesList.Items.Count > 0)
-            //{
-            //    lbEmployeesList.SelectedIndex = 0;
-            //}
-            //int wholeNum = selectedRole.Count() % 15;
-            //int maxPages = 0;
-            //if (wholeNum == 0)
-            //{
-            //    maxPages = selectedRole.Count() / 15;
-            //}
-            //else
-            //{
-            //    maxPages = (selectedRole.Count() / 15) + 1;
-            //}
-            //labelPageNum.Text = $"{counter + 1}/{maxPages}";
+           
             try
             {
                 lbEmployeesList.Items.Clear();
                 if (loggedInUser.GetRole == Role.Manager)
                 {
-                    //peopleForPage = database.ReadPeopleForSelectedPage(loggedInUser.GetDepartment,loggedInUser.GetRole,true, counter);
                     peopleForPage = database.ReadPeopleForSelectedPageDifferentFromManagers(loggedInUser.GetDepartment, true, counter, filteringCriteria);
-                    //listToUse = peopleForPage.Take(15).ToList();
                 }
                 else
                 {
@@ -208,100 +143,6 @@ namespace MediaBazaarApp
             {
                 MessageBox.Show(ex.Message);
             }
-            //tbSelectedUserInfo.ResetText();
-            //lbEmployeesList.Items.Clear();
-            //if (string.IsNullOrEmpty(tbSearchInput.Text))
-            //{
-            //    if (!rbManagers.Checked && !rbEmployees.Checked)
-            //    {
-            //        this.counter = 0;
-            //        this.selectedRole = allPeople;
-            //        ListPeople(0,15, selectedRole);
-            //    }
-            //    else if (rbManagers.Checked)
-            //    {
-            //        printAllManagers();
-            //    }
-            //    else if (rbEmployees.Checked)
-            //    {
-            //        printAllEmployees();
-            //    }
-            //}
-            //else if (!string.IsNullOrEmpty(tbSearchInput.Text))
-            //{
-            //    if (!rbEmployees.Checked && !rbManagers.Checked)
-            //    {
-            //        IEnumerable<Person> possibleSearches;
-            //        if (loggedInUser.GetRole == Role.Manager)
-            //        {
-            //            possibleSearches =
-            //            from person in dataManager.getAllPeople()
-            //            where person.GetInfo().ToUpper().Contains(tbSearchInput.Text.ToUpper()) && person != loggedInUser && person.GetStillWorking == true && person.GetDepartment == loggedInUser.GetDepartment
-            //            select person;
-            //        }
-            //        else
-            //        {
-            //            possibleSearches =
-            //            from person in dataManager.getAllPeople()
-            //            where person.GetInfo().ToUpper().Contains(tbSearchInput.Text.ToUpper()) && person != loggedInUser && person.GetStillWorking == true
-            //            select person;
-            //        }
-            //        this.counter = 0;
-            //        this.selectedRole = possibleSearches;
-            //        ListPeople(0,15, selectedRole);
-            //        CheckForNavigationhiding();
-            //    }
-
-            //    if (rbManagers.Checked)
-            //    {
-            //        //lbEmployeesList.Items.Clear();
-            //        var managerResults =
-            //                from person in dataManager.getAllPeople()
-            //                where person.GetRole == Role.Manager && person.GetInfo().ToUpper().Contains(tbSearchInput.Text.ToUpper()) && person.GetStillWorking == true
-            //                select person;
-            //        //foreach (Person person in managerResults)
-            //        //{
-            //        //    lbEmployeesList.Items.Add(person.GetInfo());
-            //        //}
-            //        this.counter = 0;
-            //        this.selectedRole = managerResults;
-            //        ListPeople(0, 15, selectedRole);
-            //        CheckForNavigationhiding();
-
-            //    }
-            //    else if (rbEmployees.Checked)
-            //    {
-            //        IEnumerable<Person> employeeResults;
-            //        if (loggedInUser.GetRole == Role.Manager)
-            //        {
-            //            employeeResults =
-            //                from person in dataManager.getAllPeople()
-            //                where person.GetRole != Role.Manager && person.GetRole != Role.CEO && person.GetInfo().ToUpper().Contains(tbSearchInput.Text.ToUpper()) && person.GetStillWorking == true && person.GetDepartment == loggedInUser.GetDepartment
-            //                select person;
-            //        }
-            //        else
-            //        {
-            //            employeeResults =
-            //                from person in dataManager.getAllPeople()
-            //                where person.GetRole != Role.Manager && person.GetRole != Role.CEO && person.GetInfo().ToUpper().Contains(tbSearchInput.Text.ToUpper()) && person.GetStillWorking == true
-            //                select person;
-            //        }
-            //        //lbEmployeesList.Items.Clear();
-            //        //var employeeResults =
-            //        //        from person in dataManager.getAllPeople()
-            //        //        where person.GetRole == Role.Floor_Consultant && person.GetInfo().ToUpper().Contains(tbSearchInput.Text.ToUpper()) && person.GetStillWorking == true
-            //        //        select person;
-            //        //foreach (Person person in employeeResults)
-            //        //{
-            //        //    lbEmployeesList.Items.Add(person.GetInfo());
-            //        //}
-            //        this.counter = 0;
-            //        this.selectedRole = employeeResults;
-            //        ListPeople(0, 15, selectedRole);
-            //        CheckForNavigationhiding();
-
-            //    }
-            //}
 
         }
         private void lbEmployeesList_SelectedIndexChanged(object sender, EventArgs e)
@@ -311,7 +152,6 @@ namespace MediaBazaarApp
                 if (lbEmployeesList.SelectedItem != null)
                 {
                     tbSelectedUserInfo.ResetText();
-                    //Person person = dataManager.FindPerson(lbEmployeesList.SelectedItem.ToString());
                     Person person = listToUse.FirstOrDefault(p => p.GetInfo().Equals(lbEmployeesList.SelectedItem.ToString()));
                     tbSelectedUserInfo.Text = person.PersonDetailedInfo;
                     btnRemoveEmployee.Visible = true;
@@ -344,7 +184,6 @@ namespace MediaBazaarApp
             {
                 MessageBox.Show(ex.Message);
             }
-            //CheckLoggedInUser();
         }
         private void btnAddNewEmployee_Click(object sender, EventArgs e)
         {
@@ -403,41 +242,7 @@ namespace MediaBazaarApp
                 MessageBox.Show(ex.Message);
             }
         }
-        //private void printAllEmployees()
-        //{
-        //    IEnumerable<Person> allEmployees;
-        //    if (loggedInUser.GetRole == Role.Manager)
-        //    {
-        //        allEmployees =
-        //            from person in dataManager.getAllPeople()
-        //            where person.GetRole != Role.Manager && person.GetRole != Role.CEO && person.GetStillWorking == true && person.GetDepartment == loggedInUser.GetDepartment
-        //            select person;
-        //    }
-        //    else
-        //    {
-        //        allEmployees =
-        //            from person in dataManager.getAllPeople()
-        //            where person.GetRole != Role.Manager && person.GetRole != Role.CEO && person.GetStillWorking == true
-        //            select person;
-        //    }
-        //    this.selectedRole = allEmployees;
-        //    this.counter = 0;
-        //    ListPeople(0, 15, selectedRole);
-        //    CheckForNavigationhiding();
-        //}
-
-        //private void printAllManagers()
-        //{
-        //    var allCEOAndManagers =
-        //            from person in dataManager.getAllPeople()
-        //            where person.GetRole == Role.Manager && person.GetStillWorking == true
-        //            select person;
-        //    this.selectedRole = allCEOAndManagers;
-        //    this.counter = 0;
-        //    ListPeople(0, 15, selectedRole);
-        //    CheckForNavigationhiding();
-        //}
-
+        
         private void btnRemoveEmployee_Click(object sender, EventArgs e)
         {
             try
@@ -449,7 +254,6 @@ namespace MediaBazaarApp
                 {
                     if (userResponse.Equals("Yes"))
                     {
-                        //Person person = dataManager.FindPerson(lbEmployeesList.SelectedItem.ToString());
                         Person person = listToUse.FirstOrDefault(p => p.GetInfo().Equals(lbEmployeesList.SelectedItem.ToString()));
                         database.ChangeWorkingStatus(person);
                         availabilityManager.DeleteAvailability(person.GetId());
@@ -468,21 +272,19 @@ namespace MediaBazaarApp
         }
         public static DialogResult ConfirmationBox(ref string userResponse, string message)
         {
-                Alert aletPage = new Alert(message);
-                DialogResult dialogResult = aletPage.ShowDialog();
-                if (dialogResult == DialogResult.Yes)
-                {
-                    userResponse = "Yes";
-                }
+            Alert aletPage = new Alert(message);
+            DialogResult dialogResult = aletPage.ShowDialog();
+            if (dialogResult == DialogResult.Yes)
+            {
+                userResponse = "Yes";
+            }
 
-                if (dialogResult == DialogResult.Cancel)
-                {
-                    userResponse = "Cancel";
-                }
+            if (dialogResult == DialogResult.Cancel)
+            {
+                userResponse = "Cancel";
+            }
 
-                return dialogResult;
-            
-
+            return dialogResult;
         }
 
 
@@ -490,7 +292,6 @@ namespace MediaBazaarApp
         {
             try
             {
-                //Person person = dataManager.FindPerson(lbEmployeesList.SelectedItem.ToString());
                 Person person = listToUse.FirstOrDefault(p => p.GetInfo().Equals(lbEmployeesList.SelectedItem.ToString()));
                 UpdateSalary updateSalaryPage = new UpdateSalary(person, database, this);
                 updateSalaryPage.ShowDialog();
@@ -518,18 +319,6 @@ namespace MediaBazaarApp
 
         private void btnNextPage_Click(object sender, EventArgs e)
         {
-            //if (selectedRole.Count() <= (counter + 2) * 15)
-            //{
-            //    btnNextPage.Visible = false;
-            //}
-            //else
-            //{
-            //    btnNextPage.Visible = true;
-            //}
-            //lbEmployeesList.Items.Clear();
-            //counter++;
-            //ListPeople(15 * counter, 15 * counter, selectedRole);
-            //btnPrevPage.Visible = true;
             try
             {
                 counter++;
@@ -543,25 +332,6 @@ namespace MediaBazaarApp
 
         private void btnPrevPage_Click(object sender, EventArgs e)
         {
-            //if (counter - 1 == 0)
-            //{
-            //    btnPrevPage.Visible = false;
-            //}
-            //else
-            //{
-            //    btnPrevPage.Visible = true;
-            //}
-            //lbEmployeesList.Items.Clear();
-            //counter--;
-            //if (counter == 0)
-            //{
-            //    ListPeople(15 * counter, 15, selectedRole);
-            //}
-            //else
-            //{
-            //    ListPeople(15 * counter, 15 * counter, selectedRole);
-            //}
-            //btnNextPage.Visible = true;
             try
             {
                 counter--;
@@ -575,19 +345,6 @@ namespace MediaBazaarApp
 
         private void CheckForNavigationhiding()
         {
-            //    btnPrevPage.Visible = false;
-            //    if (selectedRole.Count() <= (counter + 2) * 15)
-            //    {
-            //        btnNextPage.Visible = false;
-            //        btnPrevPage.Visible = false;
-
-            //    }
-            //    else
-            //    {
-            //        btnNextPage.Visible = true;
-
-            //    }
-            //}
             if (counter == 1)
             {
                 btnPrevPage.Visible = false;

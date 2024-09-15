@@ -13,7 +13,6 @@ namespace MediaBazaarWeb.Pages
 	{
 		SQLDatabase _sql = new SQLDatabase();
         public bool IsAuthenticated { get; set; }
-        // Property to hold the logged-in person
         public Person LoggedInPerson { get; set; }
 
 		[BindProperty(SupportsGet = true)]
@@ -23,8 +22,6 @@ namespace MediaBazaarWeb.Pages
         public string Password { get; set; }
         public string UserEmail { get; set; }
 
-
-        // Handler method for GET request
         public IActionResult OnGet(string email, string password)
 		{
 			try
@@ -36,7 +33,6 @@ namespace MediaBazaarWeb.Pages
 
 					Email = email;
 					Password = password;
-					// Find the logged-in person based on email and password
 					IsAuthenticated = true;
 					LoggedInPerson = _sql.FindPerson(UserEmail);
 				}

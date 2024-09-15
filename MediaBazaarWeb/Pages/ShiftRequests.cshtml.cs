@@ -21,7 +21,6 @@ namespace MediaBazaarWeb.Pages
         public string Password { get; set; }
         
         private PeopleManagement peopleManagement;
-        //public List<string> ShiftTimes { get; } = new List<string> { "First Shift", "Second Shift", "Third Shift" };
         private int page;
 
         public ShiftRequestsModel()

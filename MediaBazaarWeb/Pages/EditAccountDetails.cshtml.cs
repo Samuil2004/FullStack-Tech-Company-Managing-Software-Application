@@ -21,7 +21,6 @@ namespace MediaBazaarWeb.Pages
         [BindProperty]
         public EditAccountDetails editAccountDetails { get; set; }
 
-        // Handler method for GET request
         public IActionResult OnGet(string email)
         {
             try
@@ -31,7 +30,6 @@ namespace MediaBazaarWeb.Pages
                 {
                     UserEmail = userEmailClaim.Value;
                     
-                    // Find the logged-in person based on email and password
                     IsAuthenticated = true;
                     LoggedInPerson = _sql.FindPerson(UserEmail);
                 }

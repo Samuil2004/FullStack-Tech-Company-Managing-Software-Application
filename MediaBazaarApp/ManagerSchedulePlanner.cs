@@ -29,13 +29,6 @@ namespace MediaBazaarApp
         private Department selectedDepartment;
         private Availability selectedAvailability;
         private Person selected_personDrag;
-        //public List<EmployeeNumberChange> changesForNumOfEmployees;
-        //public BackgroundWorker backgroundWorker1;
-
-        //List<Tuple<DateTime, Department, Role, AvailabilityForTheDay>> shiftShortageStorage;
-
-        //private List<DateTime> datesWithMissingPeople;
-
         public ManagerSchedulePlanner(PeopleManagement peopleManager, ManagerManageShdeule managerManageShdeule, Person loggedInUser, SQLDatabase database)
         {
             try
@@ -44,14 +37,6 @@ namespace MediaBazaarApp
                 this.managerManageShdeule = managerManageShdeule;
                 this.loggedInUser = loggedInUser;
                 InitializeComponent();
-                //backgroundWorker1 = new BackgroundWorker();
-
-                //InitializeBackgroundWorker();
-
-                //this.shiftShortageStorage = new Tuple<DateTime, Department, Role, AvailabilityForTheDay>();
-                //lbAvailableMemebersFirstShift.DragDrop += new DragEventHandler(lbAvailableMemebersFirstShift_DragDrop_1);
-                //shiftShortageStorage = new List<Tuple<DateTime, Department, Role, AvailabilityForTheDay>>();
-                //CheckLoggedInUser();
                 close_application = true;
                 this.database = database;
                 availabilitySQL = new AvailabilitySQL();
@@ -59,16 +44,7 @@ namespace MediaBazaarApp
                 cbWeeksRange.SelectedIndex = 2;
                 this.numOfWeeks = Convert.ToInt32(cbWeeksRange.SelectedItem);
 
-                //changesForNumOfEmployees = new List<EmployeeNumberChange>();
                 cbDepartment.Items.Add(loggedInUser.GetDepartment.ToString());
-                //foreach (Department department in Enum.GetValues(typeof(Department)))
-                //{
-                //    if (department != Department.Owners)
-                //    {
-                //        cbDepartment.Items.Add(department);
-                //        if(department.Equals(loggedInUser.))
-                //    }
-                //}
                 calendar.MinDate = DateTime.Today;
                 CheckLoggedInUser();
                 btnGenerateSchedule.Visible = true;
@@ -77,16 +53,12 @@ namespace MediaBazaarApp
                 lbDayPlannerFirstShift.DragEnter += lbDayPlannerFirstShift_DragEnter;
 
                 lbAvailableMemebersFirstShift.AllowDrop = true;
-                //lbAvailableMemebersFirstShift.DragDrop += lbAvailableMemebersFirstShift_DragDrop_1;
-                //lbAvailableMemebersFirstShift.DragEnter += lbAvailableMemebersFirstShift_DragEnter;
 
                 lbDayPlannerSecondShift.AllowDrop = true;
                 lbDayPlannerSecondShift.DragDrop += lbDayPlannerSecondShift_DragDrop;
                 lbDayPlannerSecondShift.DragEnter += lbDayPlannerSecondShift_DragEnter;
 
                 lbAvailableMembersSecondShift.AllowDrop = true;
-                //lbAvailableMembersSecondShift.DragDrop += lbAvailableMembersSecondShift_DragDrop;
-                //lbAvailableMembersSecondShift.DragEnter += lbAvailableMembersSecondShift_DragEnter;
 
                 lbDayPlannerThirdShift.AllowDrop = true;
                 lbDayPlannerThirdShift.DragDrop += lbDayPlannerThirdShift_DragDrop;
@@ -101,20 +73,11 @@ namespace MediaBazaarApp
             {
                 MessageBox.Show(ex.Message);
             }
-            // Subscribe to the DrawItem event
-            //lbAvailableMembersFirstShift.DrawItem += new DrawItemEventHandler(lbAvailableMembersFirstShift_DrawItem);
-
-
-            //lbAvailableMemebersFirstShift.MouseDown += lbAvailableMemebersFirstShift_MouseDown;
-
-            //UpdateDataPlannerPage(GetUpcomingSunday(DateTime.Today.AddDays(14)));
-
         }
 
 
         private void CheckLoggedInUser()
         {
-            //cbDepartment.Items.Add(loggedInUser.GetDepartment);
             cbDepartment.SelectedIndex = 0;
             cbDepartment.Enabled = false;
             cbRole.Visible = true;
@@ -190,43 +153,8 @@ namespace MediaBazaarApp
             {
                 MessageBox.Show(ex.Message);
             }
-            //foreach(var item in lbAvailableMemebersFirstShift.Items)
-            //{
-            //    if(lbDayPlannerThirdShift.Items.Contains(item))
-            //    {
-            //    }
-            //}
         }
-        //private void lbAvailableMemebersFirstShift_DrawItem(object sender, DrawItemEventArgs e)
-        //{
-        //    // Check if the index is valid
-        //    if (e.Index < 0)
-        //        return;
-
-        //    // Get the ListBox and the item
-        //    ListBox listBox = (ListBox)sender;
-        //    string item = (string)listBox.Items[e.Index];
-
-        //    // Determine the background color
-        //    Color backgroundColor;
-        //    if (e.Index % 2 == 0) // Example condition to change the background color
-        //    {
-        //        backgroundColor = Color.LightBlue;
-        //    }
-        //    else
-        //    {
-        //        backgroundColor = Color.LightGreen;
-        //    }
-
-        //    // Draw the background
-        //    e.Graphics.FillRectangle(new SolidBrush(backgroundColor), e.Bounds);
-
-        //    // Draw the text
-        //    TextRenderer.DrawText(e.Graphics, item, e.Font, e.Bounds, e.ForeColor, TextFormatFlags.Left);
-
-        //    // Draw focus rectangle if the item has focus
-        //    e.DrawFocusRectangle();
-        //}
+        
         private void lbAvailableMembersFirstShift_DrawItem(object sender, DrawItemEventArgs e)
         {
             try
@@ -308,21 +236,18 @@ namespace MediaBazaarApp
                 Availability selectedAvailability;
                 if (lbAvailableMemebersFirstShift.SelectedItem != null)
                 {
-                    //Person selected_person = database.TakeAllCurrentlyWorkingPeople().FirstOrDefault(p => p.GetShortInfo().Equals(lbAvailableMemebersFirstShift.SelectedItem.ToString()));
                     Person selected_person = peopleManager.FindConcretePerson(lbAvailableMemebersFirstShift.SelectedItem.ToString());
                     Availability av = availabilitySQL.FindAvailability(selected_person, calendar.SelectionStart.Date, AvailabilityForTheDay.FirstShift);
                     availabilitySQL.ChangeIsTaken(av, selected_person.GetId(), calendar.SelectionStart, AvailabilityForTheDay.FirstShift);
                 }
                 else if (lbAvailableMembersSecondShift.SelectedItem != null)
                 {
-                    //Person selected_person = database.TakeAllCurrentlyWorkingPeople().FirstOrDefault(p => p.GetShortInfo().Equals(lbAvailableMembersSecondShift.SelectedItem.ToString()));
                     Person selected_person = peopleManager.FindConcretePerson(lbAvailableMembersSecondShift.SelectedItem.ToString());
                     Availability av = availabilitySQL.FindAvailability(selected_person, calendar.SelectionStart.Date, AvailabilityForTheDay.SecondShift);
                     availabilitySQL.ChangeIsTaken(av, selected_person.GetId(), calendar.SelectionStart, AvailabilityForTheDay.SecondShift);
                 }
                 else if (lbAvailableMembersThirdShift.SelectedItem != null)
                 {
-                    //Person selected_person = database.TakeAllCurrentlyWorkingPeople().FirstOrDefault(p => p.GetShortInfo().Equals(lbAvailableMembersThirdShift.SelectedItem.ToString()));
                     Person selected_person = peopleManager.FindConcretePerson(lbAvailableMembersThirdShift.SelectedItem.ToString());
                     Availability av = availabilitySQL.FindAvailability(selected_person, calendar.SelectionStart.Date, AvailabilityForTheDay.ThirdShift);
                     availabilitySQL.ChangeIsTaken(av, selected_person.GetId(), calendar.SelectionStart, AvailabilityForTheDay.ThirdShift);
@@ -342,14 +267,12 @@ namespace MediaBazaarApp
                 Availability selectedAvailability;
                 if (lbDayPlannerFirstShift.SelectedItem != null)
                 {
-                    //Person selected_person = database.TakeAllCurrentlyWorkingPeople().FirstOrDefault(p => p.GetShortInfo().Equals(lbDayPlannerFirstShift.SelectedItem.ToString()));
                     Person selected_person = peopleManager.FindConcretePerson(lbDayPlannerFirstShift.SelectedItem.ToString());
                     Availability av = availabilitySQL.FindAvailability(selected_person, calendar.SelectionStart.Date, AvailabilityForTheDay.FirstShift);
                     availabilitySQL.ChangeIsTaken(av, selected_person.GetId(), calendar.SelectionStart, AvailabilityForTheDay.FirstShift);
                 }
                 else if (lbDayPlannerSecondShift.SelectedItem != null)
                 {
-                    //Person selected_person = database.TakeAllCurrentlyWorkingPeople().FirstOrDefault(p => p.GetShortInfo().Equals(lbDayPlannerSecondShift.SelectedItem.ToString()));
                     Person selected_person = peopleManager.FindConcretePerson(lbDayPlannerSecondShift.SelectedItem.ToString());
                     Availability av = availabilitySQL.FindAvailability(selected_person, calendar.SelectionStart.Date, AvailabilityForTheDay.SecondShift);
                     availabilitySQL.ChangeIsTaken(av, selected_person.GetId(), calendar.SelectionStart, AvailabilityForTheDay.SecondShift);
@@ -357,14 +280,12 @@ namespace MediaBazaarApp
                 }
                 else if (lbDayPlannerThirdShift.SelectedItem != null)
                 {
-                    //Person selected_person = database.TakeAllCurrentlyWorkingPeople().FirstOrDefault(p => p.GetShortInfo().Equals(lbDayPlannerThirdShift.SelectedItem.ToString()));
                     Person selected_person = peopleManager.FindConcretePerson(lbDayPlannerThirdShift.SelectedItem.ToString());
                     Availability av = availabilitySQL.FindAvailability(selected_person, calendar.SelectionStart.Date, AvailabilityForTheDay.ThirdShift);
                     availabilitySQL.ChangeIsTaken(av, selected_person.GetId(), calendar.SelectionStart, AvailabilityForTheDay.ThirdShift);
                 }
                 UpdateAvailabilityData();
             }
-
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
@@ -383,176 +304,6 @@ namespace MediaBazaarApp
                 MessageBox.Show(ex.Message);
             }
         }
-        //private async void GenerateDayScheduleForCertainRole(Role selected_role)
-        //{
-        //    try
-        //    {
-        //        Department seleced_department = (Department)Enum.Parse(typeof(Department), cbDepartment.SelectedItem.ToString());
-        //        int neededEmployees = 3;
-        //        var shuffledEmployees = dataManager.GetAvailabilityForScheduleGenerator(Convert.ToDateTime(calendar.SelectionStart.Date), selected_role, seleced_department).OrderBy(x => random.Next());
-        //        if (seleced_department == Department.Sales && selected_role == Role.Floor_Consultant)
-        //        {
-        //            if (calendar.SelectionStart.DayOfWeek == DayOfWeek.Saturday || calendar.SelectionStart.DayOfWeek == DayOfWeek.Sunday)
-        //            {
-        //                neededEmployees = 20;
-        //            }
-        //            else
-        //            {
-        //                neededEmployees = 15;
-        //            }
-        //        }
-        //        if (selected_role == Role.Manager)
-        //        {
-        //            neededEmployees = 1;
-        //        }
-        //        //foreach (Availability availability in shuffledEmployees)
-        //        //{
-        //        //    try
-        //        //    {
-
-        //        //        if (availability.GetAvailability().Equals(AvailabilityForTheDay.FirstShift) && lbDayPlannerFirstShift.Items.Count < neededEmployees)
-        //        //        {
-        //        //            lbDayPlannerFirstShift.Items.Add(availability.getPerson().GetShortInfo());
-        //        //            availabilitySQL.ChangeIsTaken(availability, 0, calendar.SelectionStart, AvailabilityForTheDay.FirstShift);
-        //        //        }
-        //        //        else if (availability.GetAvailability().Equals(AvailabilityForTheDay.SecondShift) && lbDayPlannerSecondShift.Items.Count < neededEmployees)
-        //        //        {
-        //        //            lbDayPlannerSecondShift.Items.Add(availability.getPerson().GetShortInfo());
-        //        //            availabilitySQL.ChangeIsTaken(availability, 0, calendar.SelectionStart, AvailabilityForTheDay.SecondShift);
-        //        //        }
-        //        //        else if (availability.GetAvailability().Equals(AvailabilityForTheDay.ThirdShift) && lbDayPlannerThirdShift.Items.Count < neededEmployees)
-        //        //        {
-        //        //            lbDayPlannerThirdShift.Items.Add(availability.getPerson().GetShortInfo());
-        //        //            availabilitySQL.ChangeIsTaken(availability, 0, calendar.SelectionStart, AvailabilityForTheDay.ThirdShift);
-        //        //        }
-        //        //        else if (lbDayPlannerFirstShift.Items.Count == neededEmployees && lbDayPlannerSecondShift.Items.Count == neededEmployees && lbDayPlannerThirdShift.Items.Count == neededEmployees)
-        //        //        {
-        //        //            break;
-        //        //        }
-        //        //    }
-        //        //    catch (Exception ex)
-        //        //    {
-        //        //        MessageBox.Show(ex.Message);
-        //        //    }
-        //        //}
-
-        //        foreach (Availability availability in shuffledEmployees)
-        //        {
-        //            try
-        //            {
-        //                Dictionary<int, int> shiftsAssignedPerDay = availabilitySQL.GetShiftsAssignedPerDay(calendar.SelectionStart);
-
-        //                if (!shiftsAssignedPerDay.ContainsKey(availability.getPerson().GetId()))
-        //                {
-        //                    shiftsAssignedPerDay.Add(availability.getPerson().GetId(), 0);
-        //                }
-        //                if(shiftsAssignedPerDay[availability.getPerson().GetId()] == 0)
-        //                {
-        //                    if (availability.GetAvailability().Equals(AvailabilityForTheDay.FirstShift) && lbDayPlannerFirstShift.Items.Count < neededEmployees)
-        //                    {
-        //                        lbDayPlannerFirstShift.Items.Add(availability.getPerson().GetShortInfo());
-        //                        availabilitySQL.ChangeIsTaken(availability, 0, calendar.SelectionStart, AvailabilityForTheDay.FirstShift);
-        //                    }
-        //                    else if (availability.GetAvailability().Equals(AvailabilityForTheDay.SecondShift) && lbDayPlannerSecondShift.Items.Count < neededEmployees)
-        //                    {
-        //                        lbDayPlannerSecondShift.Items.Add(availability.getPerson().GetShortInfo());
-        //                        availabilitySQL.ChangeIsTaken(availability, 0, calendar.SelectionStart, AvailabilityForTheDay.SecondShift);
-        //                    }
-        //                    else if (availability.GetAvailability().Equals(AvailabilityForTheDay.ThirdShift) && lbDayPlannerThirdShift.Items.Count < neededEmployees)
-        //                    {
-        //                        lbDayPlannerThirdShift.Items.Add(availability.getPerson().GetShortInfo());
-        //                        availabilitySQL.ChangeIsTaken(availability, 0, calendar.SelectionStart, AvailabilityForTheDay.ThirdShift);
-        //                    }
-        //                    else if (lbDayPlannerFirstShift.Items.Count == neededEmployees && lbDayPlannerSecondShift.Items.Count == neededEmployees && lbDayPlannerThirdShift.Items.Count == neededEmployees)
-        //                    {
-        //                        break;
-        //                    }
-        //                }
-        //                else if (shiftsAssignedPerDay[availability.getPerson().GetId()] < 2)
-        //                {
-        //                    AvailabilityForTheDay existingShift = GetExistingShiftForPerson(availability.getPerson().GetId(), calendar.SelectionStart.Date);
-        //                    if (IsShiftCompatible(existingShift, availability.GetAvailability()))
-        //                    {
-        //                        if (availability.GetAvailability().Equals(AvailabilityForTheDay.FirstShift) && lbDayPlannerFirstShift.Items.Count < neededEmployees)
-        //                        {
-        //                            lbDayPlannerFirstShift.Items.Add(availability.getPerson().GetShortInfo());
-        //                            availabilitySQL.ChangeIsTaken(availability, 0, calendar.SelectionStart, AvailabilityForTheDay.FirstShift);
-        //                        }
-        //                        else if (availability.GetAvailability().Equals(AvailabilityForTheDay.SecondShift) && lbDayPlannerSecondShift.Items.Count < neededEmployees)
-        //                        {
-        //                            lbDayPlannerSecondShift.Items.Add(availability.getPerson().GetShortInfo());
-        //                            availabilitySQL.ChangeIsTaken(availability, 0, calendar.SelectionStart, AvailabilityForTheDay.SecondShift);
-        //                        }
-        //                        else if (availability.GetAvailability().Equals(AvailabilityForTheDay.ThirdShift) && lbDayPlannerThirdShift.Items.Count < neededEmployees)
-        //                        {
-        //                            lbDayPlannerThirdShift.Items.Add(availability.getPerson().GetShortInfo());
-        //                            availabilitySQL.ChangeIsTaken(availability, 0, calendar.SelectionStart, AvailabilityForTheDay.ThirdShift);
-        //                        }
-        //                        else if (lbDayPlannerFirstShift.Items.Count == neededEmployees && lbDayPlannerSecondShift.Items.Count == neededEmployees && lbDayPlannerThirdShift.Items.Count == neededEmployees)
-        //                        {
-        //                            break;
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                MessageBox.Show(ex.Message);
-        //            }
-        //        }
-        //        if (lbDayPlannerFirstShift.Items.Count < neededEmployees)
-        //        {
-        //            MessageBox.Show("There aren't enough people \nfor first shift!");
-        //        }
-        //        if(lbDayPlannerSecondShift.Items.Count < neededEmployees)
-        //        {
-        //            MessageBox.Show("There aren't enough people \nfor second shift!");
-        //        }
-        //        if(lbDayPlannerThirdShift.Items.Count < neededEmployees)
-        //        {
-        //            MessageBox.Show("There aren't enough people \nfor third shift!");
-        //        }
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //    }
-        //}
-        //private bool IsShiftCompatible(AvailabilityForTheDay existingShift, AvailabilityForTheDay newShift)
-        //{
-        //    //if(existingShift == null)
-        //    //{
-        //    //    return true;
-        //    //}
-        //    // Check if the new shift is compatible with the existing one
-        //    if ((existingShift == AvailabilityForTheDay.FirstShift && newShift == AvailabilityForTheDay.ThirdShift)||(existingShift == AvailabilityForTheDay.ThirdShift && newShift == AvailabilityForTheDay.FirstShift))
-        //    {
-        //        // First and third shifts are not compatible
-        //        return false;
-        //    }
-        //    // Add other compatibility checks if needed
-        //    return true;
-        //}
-        //private AvailabilityForTheDay GetExistingShiftForPerson(int personId, DateTime date)
-        //{
-        //    try
-        //    {
-        //        //string shift = availabilitySQL.GetAssignedShift(personId, date);
-        //        //if(string.IsNullOrEmpty(shift))
-        //        //{
-        //        //    return null;
-        //        //}
-        //        //AvailabilityForTheDay selected_availability = (AvailabilityForTheDay)Enum.Parse(typeof(AvailabilityForTheDay), shift);
-
-        //        //return selected_availability; // Placeholder, replace with actual logic
-        //        return availabilitySQL.GetAssignedShift(personId, date);
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        throw;
-        //    }
-        //}
-
 
         private void GenerateWeekScheduleForACertainRole2(Role selected_role, DateTime startDate, DateTime upcomingSunday)
         {
@@ -723,7 +474,6 @@ namespace MediaBazaarApp
         {
             try
             {
-                //changesForNumOfEmployees.Clear();
                 Role selected_role = (Role)Enum.Parse(typeof(Role), cbRole.SelectedItem.ToString());
                 selectedDepartment = (Department)Enum.Parse(typeof(Department), cbDepartment.SelectedItem.ToString());
                 List<Role> rolesForDepartment = new List<Role>();
@@ -769,13 +519,6 @@ namespace MediaBazaarApp
                         DateTime upcomingSunday = GetUpcomingSunday(calendar.SelectionStart);
 
                         DialogResult result = ConfirmationBox(ref userResponse, selectedDepartment, startDate, upcomingSunday, rolesForDepartment, out changeForm);
-                        //if (result == DialogResult.Yes)
-                        //{
-                        //    changesForNumOfEmployees = changeForm.changes;
-                        //}
-                        //else if (result == DialogResult.Cancel)
-                        //{
-                        //}
 
                         GenerateWeekScheduleForACertainRole2(selected_role, startDate, upcomingSunday);
                         UpdateAvailabilityData();
@@ -805,14 +548,6 @@ namespace MediaBazaarApp
 
                         DialogResult result = ConfirmationBox(ref userResponse, selectedDepartment, startDate, upcomingSunday, rolesForDepartment, out changeForm);
 
-                        //if (result == DialogResult.Yes)
-                        //{
-                        //    changesForNumOfEmployees = changeForm.changes;
-                        //}
-                        //else if (result == DialogResult.Cancel)
-                        //{
-                        //}
-
                         foreach (var item in cbRole.Items)
                         {
                             Role selectedRole = (Role)Enum.Parse(typeof(Role), item.ToString());
@@ -821,11 +556,6 @@ namespace MediaBazaarApp
                         UpdateAvailabilityData();
                     }
                 }
-                // backgroundWorker1.DoWork += backgroundWorker1_DoWork;
-                //backgroundWorker1.RunWorkerCompleted += backgroundWorker1_RunWorkerCompleted;
-
-                //CheckForShiftShortages();
-                //backgroundWorker1.DoWork += backgroundWorker1_DoWork;
                 if (!backgroundWorker1.IsBusy)
                 {
                     backgroundWorker1.RunWorkerAsync();
@@ -848,105 +578,7 @@ namespace MediaBazaarApp
                 MessageBox.Show(ex.Message);
             }
         }
-        //private async void btnGenerateSchedule_Click(object sender, EventArgs e)
-        //{
-        //    changesForNumOfEmployees.Clear();
-        //    Role selected_role = (Role)Enum.Parse(typeof(Role), cbRole.SelectedItem.ToString());
-        //    selectedDepartment = (Department)Enum.Parse(typeof(Department), cbDepartment.SelectedItem.ToString());
-        //    List<Role> rolesForDepartment = new List<Role>();
-
-        //    if (rbWeekForWholeDepartment.Checked)
-        //    {
-        //        foreach (var item in cbRole.Items)
-        //        {
-        //            rolesForDepartment.Add((Role)Enum.Parse(typeof(Role), item.ToString()));
-        //        }
-        //    }
-        //    else
-        //    {
-        //        rolesForDepartment.Add(selected_role);
-        //    }
-        //    string userResponse = "";
-        //    ChangeEmployeesNum changeForm;
-
-        //    if (rbGenerateDaySchedule.Checked)
-        //    {
-        //        IEnumerable<Availability> allAvailableEmployees;
-        //        GenerateWeekScheduleForACertainRole2(selected_role, calendar.SelectionStart.Date, calendar.SelectionEnd.Date);
-        //        // Run UpdateAvailabilityDataAsync and CheckForShiftShortagesAsync concurrently
-        //        var updateTask = UpdateAvailabilityDataAsync();
-        //        var shortageTask = CheckForShiftShortagesAsync();
-        //        await Task.WhenAll(updateTask, shortageTask);
-        //    }
-        //    else if (rbGenerateWeekSchedule.Checked)
-        //    {
-        //        DateTime startDate;
-
-        //        if (DateTime.Today <= GetLastMonday(calendar.SelectionStart))
-        //        {
-        //            startDate = GetLastMonday(calendar.SelectionStart);
-        //        }
-        //        else
-        //        {
-        //            startDate = DateTime.Today.AddDays(1);
-        //        }
-        //        DateTime upcomingSunday = GetUpcomingSunday(calendar.SelectionStart);
-
-        //        DialogResult result = ConfirmationBox(ref userResponse, selectedDepartment, startDate, upcomingSunday, rolesForDepartment, out changeForm);
-        //        if (result == DialogResult.Yes)
-        //        {
-        //            changesForNumOfEmployees = changeForm.changes;
-        //        }
-        //        else if (result == DialogResult.Cancel)
-        //        {
-        //            return;
-        //        }
-
-        //        GenerateWeekScheduleForACertainRole2(selected_role, startDate, upcomingSunday);
-        //        // Run UpdateAvailabilityDataAsync and CheckForShiftShortagesAsync concurrently
-        //        var updateTask = UpdateAvailabilityDataAsync();
-        //        var shortageTask = CheckForShiftShortagesAsync();
-        //        await Task.WhenAll(updateTask, shortageTask);
-        //    }
-        //    else if (rbWeekForWholeDepartment.Checked)
-        //    {
-        //        DateTime startDate;
-        //        btnGenerateSchedule.Click -= btnGenerateSchedule_Click;
-
-        //        if (DateTime.Today <= GetLastMonday(calendar.SelectionStart))
-        //        {
-        //            startDate = GetLastMonday(calendar.SelectionStart);
-        //        }
-        //        else
-        //        {
-        //            startDate = DateTime.Today.AddDays(1);
-        //        }
-        //        int numOfWeeks = Convert.ToInt16(cbWeeksRange.SelectedItem);
-        //        DateTime upcomingSunday = GetUpcomingSunday(calendar.SelectionStart).AddDays(numOfWeeks * 7);
-
-        //        DialogResult result = ConfirmationBox(ref userResponse, selectedDepartment, startDate, upcomingSunday, rolesForDepartment, out changeForm);
-
-        //        if (result == DialogResult.Yes)
-        //        {
-        //            changesForNumOfEmployees = changeForm.changes;
-        //        }
-        //        else if (result == DialogResult.Cancel)
-        //        {
-        //            return;
-        //        }
-
-        //        foreach (var item in cbRole.Items)
-        //        {
-        //            Role selectedRole = (Role)Enum.Parse(typeof(Role), item.ToString());
-        //            GenerateWeekScheduleForACertainRole2(selectedRole, startDate, upcomingSunday);
-        //        }
-        //        // Run UpdateAvailabilityDataAsync and CheckForShiftShortagesAsync concurrently
-        //        var updateTask = UpdateAvailabilityDataAsync();
-        //        var shortageTask = CheckForShiftShortagesAsync();
-        //        await Task.WhenAll(updateTask, shortageTask);
-        //    }
-        //}
-
+        
         private void AnyForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (close_application)
@@ -1038,11 +670,6 @@ namespace MediaBazaarApp
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
         }
 
         private void cbWeeksRange_SelectedIndexChanged(object sender, EventArgs e)
@@ -1174,7 +801,7 @@ namespace MediaBazaarApp
                 MessageBox.Show(ex.Message);
             }
         }
-        //--------------------------------------
+
         private void lbAvailableMembersThirdShift_MouseDown(object sender, MouseEventArgs e)
         {
             try
@@ -1235,40 +862,5 @@ namespace MediaBazaarApp
                 MessageBox.Show(ex.Message);
             }
         }
-
-        //--------------------------------------
-        //private void lbDayPlannerSecondShift_MouseDown(object sender, MouseEventArgs e)
-        //{
-        //    if (lbDayPlannerSecondShift.SelectedItem != null)
-        //    {
-        //        selected_personDrag = database.TakeAllCurrentlyWorkingPeople().FirstOrDefault(p => p.GetShortInfo().Equals(lbDayPlannerSecondShift.SelectedItem.ToString()));
-        //        selectedAvailability = database.FindAvailability(selected_personDrag, calendar.SelectionStart.Date, AvailabilityForTheDay.SecondShift);
-
-        //        if (e.Button == MouseButtons.Left)
-        //        {
-        //            ListBox lb = (ListBox)sender;
-        //            if (lb.SelectedItem != null)
-        //            {
-        //                lb.DoDragDrop(lb.SelectedItem, DragDropEffects.Copy);
-        //            }
-        //        }
-        //    }
-        //}
-
-        //private void lbAvailableMembersSecondShift_DragDrop(object sender, DragEventArgs e)
-        //{
-        //    if (e.Data.GetDataPresent(typeof(string)))
-        //    {
-        //        e.Effect = DragDropEffects.Copy;
-        //    }
-        //}
-
-        //private void lbAvailableMembersSecondShift_DragEnter(object sender, DragEventArgs e)
-        //{
-        //    if (e.Data.GetDataPresent(typeof(string)))
-        //    {
-        //        e.Effect = DragDropEffects.Copy;
-        //    }
-        //}
     }
 }

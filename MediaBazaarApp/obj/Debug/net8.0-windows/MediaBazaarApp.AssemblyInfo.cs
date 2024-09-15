@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MediaBazaarApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+524706f98c4cc2cea73bf46961e0541e90e3cba2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2fffcfb294af0ff4526b03219340d9ab7bff6a0a")]
 [assembly: System.Reflection.AssemblyProductAttribute("MediaBazaarApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MediaBazaarApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

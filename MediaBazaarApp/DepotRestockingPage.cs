@@ -77,7 +77,6 @@ namespace MediaBazaarApp
                 requests = db.GetRequestsFromDepoWorker();
                 filteredRequests = new List<RestockingRequest>(requests);
 
-                // Populate SupplierComboBox with all unique suppliers only once
                 LoadAllSuppliers();
 
                 if (requests.Count == 0)
@@ -141,7 +140,7 @@ namespace MediaBazaarApp
 
         public OrderItem GetOrderItemByCartItemString(string s)
         {
-                return order.OrderItems.FirstOrDefault(orderItem => orderItem.GetOrderItemString() == s);
+            return order.OrderItems.FirstOrDefault(orderItem => orderItem.GetOrderItemString() == s);
         }
 
         private void btnCheckOut_Click(object sender, EventArgs e)

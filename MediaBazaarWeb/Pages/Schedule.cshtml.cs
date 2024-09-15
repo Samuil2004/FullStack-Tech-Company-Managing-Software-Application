@@ -31,7 +31,6 @@ namespace MediaBazaarWeb.Pages
         public List<string> datesList = new List<string>();
         private PeopleManagement peopleManagement;
         public List<string> shifts = new List<string>();
-        //public List<string> ShiftTimes { get; } = new List<string> { "First Shift", "Second Shift", "Third Shift" };
         private int page;
 
         public ScheduleModel()
@@ -136,8 +135,6 @@ namespace MediaBazaarWeb.Pages
                 {
                     UserEmail = userEmailClaim.Value;
                     page = Convert.ToInt32(TempData.Peek("page"));
-                    //Email = TempData.Peek("email").ToString();
-                    //Password = TempData.Peek("password").ToString();
                     page += i;
                     TempData["page"] = page;
                     IsAuthenticated = true;
@@ -148,7 +145,6 @@ namespace MediaBazaarWeb.Pages
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = $"{ex.Message}";
-                //return Page();
             }
         }
 

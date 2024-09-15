@@ -45,14 +45,7 @@ namespace MediaBazaarWeb.Pages
             {
                 var selectedOption = Request.Form["SecretQuestionOptions"];
                 bool found = false;
-                //foreach (Person p in peopleManagement.getAllPeople())
-                //{
-                //    if (p.getEmail() == Email)
-                //    {
-                //        LoggedInPerson = p;
-                //        found = true;
-                //    }
-                //}
+
                 Person foundPerson = peopleManagement.FindPerson(Email);
                 if (foundPerson != null)
                 {
@@ -61,7 +54,6 @@ namespace MediaBazaarWeb.Pages
                 }
                 else
                 {
-                    //ModelState.AddModelError(string.Empty, "Invalid secret question and answer");
                     TempData["ErrorMessage"] = $"Invalid secret question and answer";
 
                 }
@@ -74,7 +66,6 @@ namespace MediaBazaarWeb.Pages
                     }
                     else
                     {
-                        //ModelState.AddModelError(string.Empty, "Invalid secret question and answer");
                         TempData["ErrorMessage"] = $"Invalid secret question and answer";
                         return Page();
                     }
@@ -84,7 +75,6 @@ namespace MediaBazaarWeb.Pages
             }
             catch(Exception ex)
             {
-                //ModelState.AddModelError(string.Empty,ex.Message);
                 TempData["ErrorMessage"] = $"An error occured: {ex.Message}";
                 return Page();
             }

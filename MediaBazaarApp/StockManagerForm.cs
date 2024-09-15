@@ -41,10 +41,6 @@ namespace MediaBazaarApp
                 MessageBox.Show(ex.Message);
             }
         }
-        public void AddProductToList(Product product)
-        {
-            lbxProducts.Items.Add(product);
-        }
 
         private void btnFilter_Click(object sender, EventArgs e)
         {
@@ -99,7 +95,6 @@ namespace MediaBazaarApp
         {
             try
             {
-                //pass necessary variables to form
                 AddOrEditProduct addProduct = new AddOrEditProduct(this, productManager, lbxProducts);
                 addProduct.Show();
                 this.Hide();
@@ -124,24 +119,6 @@ namespace MediaBazaarApp
             }
         }
 
-        public void UpdateStockInListBox()
-        {
-            try
-            {
-                for (int i = 0; i < productManager.getAllProducts().Count; i++)
-                {
-                    if (productManager.getAllProducts()[i] is Product product && product == selectedProduct)
-                    {
-                        lbxProducts.Items[i] = product.getInfo();
-                        break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
         private void UpdateStockProgressBar()
         {
             try

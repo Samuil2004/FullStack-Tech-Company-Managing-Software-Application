@@ -125,7 +125,6 @@ namespace MediaBazaarApp
                 string selected;
                 if (lbxProducts.SelectedIndex >= 0 && lbxProducts.SelectedIndex < productManager.getAllProducts().Count)
                 {
-                    // Get the values from Product
                     selected = lbxProducts.SelectedItem.ToString();
                     foreach (Product p in productManager.getAllProducts())
                     {
@@ -144,7 +143,6 @@ namespace MediaBazaarApp
 
                     panelProduct.Visible = true;
 
-                    // Assign values to the labels
                     lblSelectedProduct.Text = name;
                     lblYear.Text = year.ToString();
                     lblProductNumber.Text = id.ToString();

@@ -22,7 +22,6 @@ namespace MediaBazaarApp
         Person loggedInUser;
         SQLDatabase database;
         AvailabilitySQL availabilitySQL;
-        //UserManager userManager = new UserManager();
         private bool close_application;
         public ManagerManageShdeule(ManagerMenu managerMenu, PeopleManagement dataManager, Person loggedInUser, SQLDatabase database)
         {
@@ -35,9 +34,6 @@ namespace MediaBazaarApp
                 DateTime lastMonday = GetLastMonday(DateTime.Today);
                 DateTime upcommingSuday = GetUpcomingSunday(DateTime.Today);
                 int num = 0;
-                //lbShiftChange.Visible = false;
-                //btnApproveShift.Visible = false;
-                //btnDecline.Visible = false;
 
 
                 cbRole.Visible = false;
@@ -48,7 +44,6 @@ namespace MediaBazaarApp
                 CheckLoggedInUser();
                 cbDepartment.SelectedIndex = 0;
                 availabilitySQL = new AvailabilitySQL();
-                //cbSelectedWeek.SelectedIndex = 2;
                 updateData();
                 UpdateShiftRequests();
                 if(loggedInUser.GetRole == Role.CEO)
@@ -57,7 +52,6 @@ namespace MediaBazaarApp
                     btnApproveShift.Visible = false;
                     btnDecline.Visible = false;
                 }
-
             }
             catch (Exception ex)
             {
@@ -370,14 +364,6 @@ namespace MediaBazaarApp
 
         private void calendar_DateChanged(object sender, DateRangeEventArgs e)
         {
-            //if (calendar.SelectionStart != calendar.SelectionEnd)
-            //{
-            //    calendar.SelectionStart = calendar.SelectionEnd;
-            //}
-
-            //calendar.SetDate(GetLastMonday(calendar.SelectionEnd));
-            //calendar.SetSelectionRange(GetLastMonday(calendar.SelectionEnd), GetUpcomingSunday(calendar.SelectionEnd));
-            //updateData();
             try
             {
                 calendar.DateChanged -= calendar_DateChanged;
@@ -391,7 +377,6 @@ namespace MediaBazaarApp
                 calendar.SetSelectionRange(GetLastMonday(calendar.SelectionEnd), GetUpcomingSunday(calendar.SelectionEnd));
                 updateData();
 
-                // Reconnect the event handler
                 calendar.DateChanged += calendar_DateChanged;
                 if (calendar.SelectionEnd < DateTime.Today)
                 {
@@ -417,7 +402,6 @@ namespace MediaBazaarApp
         {
             try
             {
-                //calendar.SetDate(GetLastMonday(calendar.SelectionEnd.AddDays(-7)));
                 calendar.SetSelectionRange(GetLastMonday(calendar.SelectionEnd.AddDays(-7)), GetUpcomingSunday(calendar.SelectionEnd.AddDays(-7)));
                 updateData();
             }
@@ -447,11 +431,9 @@ namespace MediaBazaarApp
             {
                 if (lbShiftChange.SelectedItem != null)
                 {
-                    //Availability selectedAvailability = availabilitySQL.FindConcreteAvailability(lbShiftChange.SelectedItem.ToString());
                     ShiftExchange selectedShiftExchange = availabilitySQL.FindConcreteAvailability(lbShiftChange.SelectedItem.ToString());
 
                     availabilitySQL.ChangeIsTaken(selectedShiftExchange.GetAvailability, selectedShiftExchange.GetAvailability.getPerson().GetId(), selectedShiftExchange.GetAvailability.getTimeSlot(), selectedShiftExchange.GetAvailability.GetAvailability());
-                    //availabilitySQL.DeleteShiftTransferRequest(selectedAvailability.getPerson().GetId(), selectedAvailability.getTimeSlot(),selectedAvailability.GetAvailability());
                     availabilitySQL.UpdateShiftRequestStatus(selectedShiftExchange.GetAvailability.getPerson().GetId(), selectedShiftExchange.GetAvailability.GetAvailability(), selectedShiftExchange.GetAvailability.getTimeSlot());
                     UpdateShiftRequests();
                 }
@@ -485,7 +467,6 @@ namespace MediaBazaarApp
                 if (lbShiftChange.SelectedItem != null)
                 {
                     ShiftExchange selectedShiftExchange = availabilitySQL.FindConcreteAvailability(lbShiftChange.SelectedItem.ToString());
-                    //Availability selectedAvailability = availabilitySQL.FindConcreteAvailability(lbShiftChange.SelectedItem.ToString());
                     availabilitySQL.DeleteShiftTransferRequest(selectedShiftExchange.GetAvailability.getPerson().GetId(), selectedShiftExchange.GetAvailability.getTimeSlot(), selectedShiftExchange.GetAvailability.GetAvailability());
                     UpdateShiftRequests();
                 }

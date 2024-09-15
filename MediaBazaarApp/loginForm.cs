@@ -54,29 +54,6 @@ namespace WorkTasks_Individual_Kristof_Szabo
             {
                 MessageBox.Show("Database is not repsonding at the moment. \n Please, try again later!");
             }
-
-            //switch (sql.ValidateLogin(email, password))
-            //{
-            //    case 2:
-            //        loggedInUser = sql.FindPerson(email, password);
-            //        this.Hide();
-
-
-            //        ManagerMenu managerMenu = new ManagerMenu(this, loggedInUser, sql);
-            //        managerMenu.Show();
-
-            //        break;
-
-            //    case 1:
-            //        loggedInUser = sql.FindPerson(email, password);
-            //        this.Hide();
-            //        FloorWorkersMenu floorWorkers = new FloorWorkersMenu(this, loggedInUser, sql);
-            //        floorWorkers.Show();
-            //        break;
-            //    case 0:
-            //        MessageBox.Show("Invalid credentials!");
-            //        break;
-            //}
         }
 
         private void buttonForgetPassword_Click(object sender, EventArgs e)

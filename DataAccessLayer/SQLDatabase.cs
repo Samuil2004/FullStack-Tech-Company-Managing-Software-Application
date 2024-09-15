@@ -24,12 +24,28 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace DataAccessLayer
 {
+    /// <summary>
+    /// Represents a class to interact with a SQL Database.
+    /// </summary>
     public class SQLDatabase
     {
-
+        /// <summary>
+        /// Connection string used to establish a connection with the SQL server.
+        /// </summary>
         private string connectionString = "Server=mssqlstud.fhict.local;Database=dbi527531_mediashop;User Id=dbi527531_mediashop;Password=mediashop123; TrustServerCertificate=True";
 
-        public List<Person> ReadPeopleForSelectedPage(Department? selectedDepartment,Role? selectedRole,bool StillWorking, int pageNum,string filteringCriteria)
+
+
+        /// <summary>
+        /// Reads a list of people based on the provided filters, department, and role for the selected page.
+        /// </summary>
+        /// <param name="selectedDepartment">The department filter.</param>
+        /// <param name="selectedRole">The role filter.</param>
+        /// <param name="StillWorking">Indicates whether the person is still working or not.</param>
+        /// <param name="pageNum">The page number to retrieve.</param>
+        /// <param name="filteringCriteria">The search criteria to filter people by.</param>
+        /// <returns>A list of <see cref="Person"/> objects for the selected page.</returns>
+        public List<Person> ReadPeopleForSelectedPage(Department? selectedDepartment, Role? selectedRole, bool StillWorking, int pageNum, string filteringCriteria)
         {
             string query = "select * from Person where stillWorking = @stillWorking ";
 
@@ -84,7 +100,6 @@ namespace DataAccessLayer
                 {
                     int id = Convert.ToInt32(reader["id"]);
                     string email = reader["email"].ToString();
-                    //string password = reader["_password"].ToString();
                     string firstName = reader["firstName"].ToString();
                     string lastName = reader["lastName"].ToString();
                     string gender = reader["gender"].ToString();
@@ -119,7 +134,17 @@ namespace DataAccessLayer
             }
         }
 
-        public List<Person> ReadPeopleForSelectedPageDifferentFromManagers(Department? selectedDepartment, bool StillWorking, int pageNum,string filteringCriteria)
+
+
+        /// <summary>
+        /// Reads a list of people excluding managers based on the provided filters, department, and whether they are still working.
+        /// </summary>
+        /// <param name="selectedDepartment">The department filter.</param>
+        /// <param name="StillWorking">Indicates whether the person is still working or not.</param>
+        /// <param name="pageNum">The page number to retrieve.</param>
+        /// <param name="filteringCriteria">The search criteria to filter people by.</param>
+        /// <returns>A list of <see cref="Person"/> objects excluding managers.</returns>
+        public List<Person> ReadPeopleForSelectedPageDifferentFromManagers(Department? selectedDepartment, bool StillWorking, int pageNum, string filteringCriteria)
         {
             string query = "select * from Person where stillWorking = @stillWorking and _role != 'Manager' ";
 
@@ -200,8 +225,13 @@ namespace DataAccessLayer
             }
         }
 
-       
 
+
+        /// <summary>
+        /// Reads a person's details by their ID.
+        /// </summary>
+        /// <param name="personId">The ID of the person to retrieve.</param>
+        /// <returns>A <see cref="Person"/> object if found, otherwise null.</returns>
         public Person ReadPersonById(int personId)
         {
             string query = "SELECT * from Person where id = @id";
@@ -218,7 +248,6 @@ namespace DataAccessLayer
                 {
                     int id = Convert.ToInt32(reader["id"]);
                     string email = reader["email"].ToString();
-                    //string password = reader["_password"].ToString();
                     string firstName = reader["firstName"].ToString();
                     string lastName = reader["lastName"].ToString();
                     string gender = reader["gender"].ToString();
@@ -251,6 +280,12 @@ namespace DataAccessLayer
             }
         }
 
+
+        /// <summary>
+        /// Finds the manager of a specified department.
+        /// </summary>
+        /// <param name="selectedDepartment">The department to find the manager for.</param>
+        /// <returns>A <see cref="Person"/> representing the manager of the department.</returns>
         public Person FindDepartmentManager(Department selectedDepartment)
         {
             string query = "SELECT TOP 1 * from Person where department = @department and _role = 'Manager' and stillWorking = 1";
@@ -299,6 +334,11 @@ namespace DataAccessLayer
             }
         }
 
+
+        /// <summary>
+        /// Adds a new person to the database.
+        /// </summary>
+        /// <param name="p">The <see cref="Person"/> object to add.</param>
         public void AddPerson(Person p)
         {
             SqlConnection connection = new SqlConnection(connectionString);
@@ -335,6 +375,12 @@ namespace DataAccessLayer
                 connection.Close();
             }
         }
+
+
+        /// <summary>
+        /// Retrieves restocking requests from sales representatives.
+        /// </summary>
+        /// <returns>A list of <see cref="RestockingRequest"/> objects.</returns>
         public List<RestockingRequest> GetRequestsFromSalesRepresentative()
         {
             List<RestockingRequest> requests = new List<RestockingRequest>();
@@ -373,6 +419,11 @@ namespace DataAccessLayer
         }
 
 
+
+        /// <summary>
+        /// Gets the highest person ID from the database.
+        /// </summary>
+        /// <returns>An integer representing the highest person ID.</returns>
         public int GetTheHighestId()
         {
             int id = 0;
@@ -401,7 +452,12 @@ namespace DataAccessLayer
         }
 
 
-        
+
+        /// <summary>
+        /// Finds a person by their username (email).
+        /// </summary>
+        /// <param name="username">The email of the person to find.</param>
+        /// <returns>A <see cref="Person"/> object if found, otherwise null.</returns>
         public Person FindPerson(string username)
         {
             int floor;
@@ -469,6 +525,12 @@ namespace DataAccessLayer
             return person;
         }
 
+
+        /// <summary>
+        /// Retrieves the full name of a person by their ID.
+        /// </summary>
+        /// <param name="id">The ID of the person.</param>
+        /// <returns>The full name of the person.</returns>
         public string FindPersonName(int id)
         {
             string name = "";
@@ -501,6 +563,11 @@ namespace DataAccessLayer
             return name;
         }
 
+
+        /// <summary>
+        /// Retrieves all products from the database.
+        /// </summary>
+        /// <returns>A list of <see cref="Product"/> objects.</returns>
         public List<Product> TakeAllProducts()
         {
             string query = "SELECT * from Product";
@@ -540,6 +607,10 @@ namespace DataAccessLayer
             return fetchedProducts;
         }
 
+        /// <summary>
+        /// Adds a new product to the database.
+        /// </summary>
+        /// <param name="p">The <see cref="Product"/> object to add.</param>
         public void AddProduct(Product p)
         {
             SqlConnection connection = new SqlConnection(connectionString);
@@ -570,6 +641,11 @@ namespace DataAccessLayer
             }
         }
 
+
+        /// <summary>
+        /// Changes the working status of a person in the database.
+        /// </summary>
+        /// <param name="person">The person whose status will be updated.</param>
         public void ChangeWorkingStatus(Person person)
         {
             string query = "UPDATE Person SET stillWorking = @stillWorking WHERE id = @id;";
@@ -601,8 +677,15 @@ namespace DataAccessLayer
             }
         }
 
+        /// <summary>
+        /// Sets a secret question and answer for a person.
+        /// </summary>
+        /// <param name="person">The person whose secret question will be set.</param>
+        /// <param name="secretQuestion">The secret question.</param>
+        /// <param name="secretAnswer">The secret answer.</param>
         public void SetSecretQuestion(Person person, string secretQuestion, string secretAnswer)
         {
+            
             string query = "UPDATE person SET secretQuestion = @secretQuestion, secretAnswer = @secretAnswer WHERE id = @id;";
             SqlConnection connection = new SqlConnection(connectionString);
             try
@@ -627,6 +710,12 @@ namespace DataAccessLayer
             }
         }
 
+
+        /// <summary>
+        /// Updates the phone number for a person.
+        /// </summary>
+        /// <param name="person">The person whose phone number will be updated.</param>
+        /// <param name="phoneNumber">The new phone number.</param>
         public void UpdateUserPhoneNumber(Person person, string phoneNumber)
         {
             string query = "Update Person set phoneNumber = @phoneNumber where id = @id";
@@ -650,6 +739,11 @@ namespace DataAccessLayer
             }
         }
 
+        /// <summary>
+        /// Updates the wage for a person.
+        /// </summary>
+        /// <param name="person">The person whose wage will be updated.</param>
+        /// <param name="newWage">The new wage value.</param>
         public void UpdateWage(Person person, double newWage)
         {
             string query = "UPDATE Person SET Wage = @wage WHERE id = @id;";
@@ -678,6 +772,11 @@ namespace DataAccessLayer
             }
         }
 
+        /// <summary>
+        /// Checks if an email is available for registration.
+        /// </summary>
+        /// <param name="email">The email to check.</param>
+        /// <returns>True if the email is available, otherwise false.</returns>
         public bool IsEmailAvailable(string email)
         {
             string query = "SELECT COUNT(*) AS email FROM Person WHERE email = @email;";
@@ -701,6 +800,10 @@ namespace DataAccessLayer
             }
         }
 
+        /// <summary>
+        /// Updates the price of a product in the database.
+        /// </summary>
+        /// <param name="product">The product whose price will be updated.</param>
         public void UpdatePriceDatabase(Product product)
         {
             string query = "UPDATE Product SET price = @price WHERE productId = @productId";
@@ -725,6 +828,12 @@ namespace DataAccessLayer
             }
         }
 
+
+        /// <summary>
+        /// Removes availability dates for a person.
+        /// </summary>
+        /// <param name="person_id">The ID of the person whose availability will be removed.</param>
+        /// <param name="selectedDates">The list of dates to remove.</param>
         public void RemoveAvailability(int person_id, List<DateTime> selectedDates)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -752,6 +861,13 @@ namespace DataAccessLayer
             }
         }
 
+
+        /// <summary>
+        /// Checks if a specific date exists for a person.
+        /// </summary>
+        /// <param name="person_id">The ID of the person.</param>
+        /// <param name="selectedDate">The selected date.</param>
+        /// <returns>True if the date exists, otherwise false.</returns>
         public bool IsDateExist(int person_id, DateTime selectedDate)
         {
             bool isShiftSelected = false;
@@ -780,6 +896,11 @@ namespace DataAccessLayer
             return isShiftSelected;
         }
 
+
+        /// <summary>
+        /// Retrieves products from the depot.
+        /// </summary>
+        /// <returns>A list of <see cref="Product"/> objects.</returns>
         public List<Product> TakeDepotProducts()
         {
             string query = "SELECT * from DepotProduct";
@@ -817,6 +938,12 @@ namespace DataAccessLayer
             return fetchedProducts;
         }
 
+
+        /// <summary>
+        /// Gets the quantity of a depot product by its ID.
+        /// </summary>
+        /// <param name="productID">The ID of the product.</param>
+        /// <returns>The quantity of the product.</returns>
         public int GetDepoProductQuantityByID(int productID)
         {
             int quantity = 0;
@@ -848,6 +975,12 @@ namespace DataAccessLayer
             return quantity;
         }
 
+
+        /// <summary>
+        /// Gets the quantity of a store product by its ID.
+        /// </summary>
+        /// <param name="productID">The ID of the product.</param>
+        /// <returns>The quantity of the product.</returns>
         public int GetStoreProductQuantityByID(int productID)
         {
             int quantity = 0;
@@ -879,6 +1012,12 @@ namespace DataAccessLayer
             return quantity;
         }
 
+
+        /// <summary>
+        /// Updates the quantity of a store product.
+        /// </summary>
+        /// <param name="productId">The ID of the product.</param>
+        /// <param name="quantityInStock">The new quantity of the product.</param>
         public void UpdateStoreProductQuantity(int productId, int quantityInStock)
         {
             string query = "UPDATE Product SET quantityInStock = @quantityInStock WHERE productId = @productId";
@@ -903,6 +1042,12 @@ namespace DataAccessLayer
             }
         }
 
+
+        /// <summary>
+        /// Updates the quantity of a depot product.
+        /// </summary>
+        /// <param name="DepotProductId">The ID of the depot product.</param>
+        /// <param name="quantity">The new quantity of the product.</param>
         public void UpdateDepoProductQuantity(int DepotProductId, int quantity)
         {
             string query = "UPDATE DepotProduct SET quantity = @quantity WHERE DepotProductId = @DepotProductId";
@@ -928,6 +1073,11 @@ namespace DataAccessLayer
             }
         }
 
+        /// <summary>
+        /// Deletes a restocking request from the database.
+        /// </summary>
+        /// <param name="productID">The ID of the product.</param>
+        /// <param name="Quantity">The quantity of the product.</param>
         public void DeleteRequest(int productID, int Quantity)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -952,6 +1102,15 @@ namespace DataAccessLayer
             }
         }
 
+
+        /// <summary>
+        /// Creates a new restocking request.
+        /// </summary>
+        /// <param name="ProductID">The ID of the product.</param>
+        /// <param name="productName">The name of the product.</param>
+        /// <param name="Quantity">The quantity of the product.</param>
+        /// <param name="Date">The date of the request.</param>
+        /// <param name="RequestFrom">The requester.</param>
         public void CreateNewRestockRequest(int ProductID, string productName, int Quantity, DateOnly Date, string RequestFrom)
         {
             SqlConnection connection = new SqlConnection(connectionString);
@@ -980,6 +1139,14 @@ namespace DataAccessLayer
             }
         }
 
+
+
+        /// <summary>
+        /// Checks if a request already exists for a given product and requester.
+        /// </summary>
+        /// <param name="productID">The ID of the product.</param>
+        /// <param name="requestFrom">The requester.</param>
+        /// <returns>True if the request exists, otherwise false.</returns>
         public bool CheckRequestAlreadyExists(int productID, string requestFrom)
         {
             bool exists = false;
@@ -1011,6 +1178,11 @@ namespace DataAccessLayer
         }
 
 
+        /// <summary>
+        /// Gets the ID of a person by their email.
+        /// </summary>
+        /// <param name="email">The email of the person.</param>
+        /// <returns>The ID of the person.</returns>
         public int GetPersonId(string email)
         {
             string query = "select id from Person where email = @email;";
@@ -1038,7 +1210,13 @@ namespace DataAccessLayer
             }
             return id;
         }
+        
 
+        /// <summary>
+        /// Reads the details of a person by their email.
+        /// </summary>
+        /// <param name="givenEmail">The email of the person.</param>
+        /// <returns>A <see cref="Person"/> object.</returns>
         public Person ReadPerson(string givenEmail)
         {
             string query = "select * from Person where email = @email";
@@ -1089,6 +1267,10 @@ namespace DataAccessLayer
             return p;
         }
 
+        /// <summary>
+        /// Retrieves restocking requests from depot workers.
+        /// </summary>
+        /// <returns>A list of <see cref="RestockingRequest"/> objects.</returns>
         public List<RestockingRequest> GetRequestsFromDepoWorker()
         {
             List<RestockingRequest> requests = new List<RestockingRequest>();
@@ -1123,6 +1305,11 @@ namespace DataAccessLayer
             return requests;
         }
 
+        /// <summary>
+        /// Finds a product by its barcode.
+        /// </summary>
+        /// <param name="barcode">The barcode of the product.</param>
+        /// <returns>A <see cref="Product"/> object.</returns>
         public Product FindProductByBarcode(string barcode)
         {
             Product product = null;
@@ -1164,6 +1351,12 @@ namespace DataAccessLayer
             return product;
         }
 
+
+        /// <summary>
+        /// Gets the maximum quantity of a depot product by its ID.
+        /// </summary>
+        /// <param name="productID">The ID of the product.</param>
+        /// <returns>The maximum quantity of the product.</returns>
         public int GetDepoProductMaxQuantityByID(int productID)
         {
             int quantity = 0;
@@ -1194,6 +1387,11 @@ namespace DataAccessLayer
             return quantity;
         }
 
+
+        /// <summary>
+        /// Gets the total number of orders.
+        /// </summary>
+        /// <returns>The total order count.</returns>
         public int GetOrderCount()
         {
             int orderCount = 0;
@@ -1224,6 +1422,12 @@ namespace DataAccessLayer
             return orderCount;
         }
 
+
+        /// <summary>
+        /// Gets the names of suppliers for a given product ID.
+        /// </summary>
+        /// <param name="ProductID">The ID of the product.</param>
+        /// <returns>A list of supplier names.</returns>
         public List<string> GetSupplierNamesByProductID(int ProductID)
         {
             List<string> supplierNames = new List<string>();
@@ -1256,6 +1460,13 @@ namespace DataAccessLayer
             return supplierNames;
         }
 
+
+        /// <summary>
+        /// Creates a new order item.
+        /// </summary>
+        /// <param name="orderId">The ID of the order.</param>
+        /// <param name="ProductID">The ID of the product.</param>
+        /// <param name="quantity">The quantity of the product.</param>
         public void CreateNewOrderItem(int orderId, int ProductID, int quantity)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -1283,6 +1494,15 @@ namespace DataAccessLayer
             }
         }
 
+
+        /// <summary>
+        /// Creates a new order.
+        /// </summary>
+        /// <param name="orderId">The ID of the order.</param>
+        /// <param name="supplier">The supplier's name.</param>
+        /// <param name="orderDate">The date of the order.</param>
+        /// <param name="arrivalDate">The expected arrival date.</param>
+        /// <param name="status">The status of the order.</param>
         public void CreateNewOrder(int orderId, string supplier, DateTime orderDate, DateTime arrivalDate, string status)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -1309,6 +1529,11 @@ namespace DataAccessLayer
             }
         }
 
+
+        /// <summary>
+        /// Retrieves all orders from the database.
+        /// </summary>
+        /// <returns>A list of <see cref="Order"/> objects.</returns>
         public List<Order> GetAllOrders()
         {
             List<Order> orders = new List<Order>();
@@ -1347,6 +1572,11 @@ namespace DataAccessLayer
         }
 
 
+        /// <summary>
+        /// Retrieves the items of an order by the order ID.
+        /// </summary>
+        /// <param name="orderId">The ID of the order.</param>
+        /// <returns>A list of <see cref="OrderItem"/> objects.</returns>
         public List<OrderItem> getOrderItemsByOrderID(int orderId)
         {
             List<OrderItem> orderItems = new List<OrderItem>();
@@ -1383,6 +1613,12 @@ namespace DataAccessLayer
             return orderItems;
         }
 
+
+        /// <summary>
+        /// Retrieves a product by its ID.
+        /// </summary>
+        /// <param name="productId">The ID of the product.</param>
+        /// <returns>A <see cref="Product"/> object.</returns>
         public Product GetProductByID(int productId)
         {
             Product product = null;
@@ -1425,6 +1661,11 @@ namespace DataAccessLayer
         }
 
 
+        /// <summary>
+        /// Retrieves the name of the supplier for a specific order.
+        /// </summary>
+        /// <param name="orderId">The ID of the order.</param>
+        /// <returns>The supplier's name.</returns>
         public string GetSupplierNameByOrderID(int orderId)
         {
             string supplierName = "";
@@ -1457,6 +1698,11 @@ namespace DataAccessLayer
         }
 
 
+        /// <summary>
+        /// Changes the status of an order.
+        /// </summary>
+        /// <param name="orderId">The ID of the order.</param>
+        /// <param name="newStatus">The new status of the order.</param>
         public void ChangeOrderStatus(int orderId, string newStatus)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -1479,6 +1725,11 @@ namespace DataAccessLayer
             }
         }
 
+        /// <summary>
+        /// Changes the quantity of a depot product.
+        /// </summary>
+        /// <param name="productId">The ID of the product.</param>
+        /// <param name="newQuantity">The new quantity of the product.</param>
         public void ChangeProductQuantity(int productId, int newQuantity)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -1502,6 +1753,14 @@ namespace DataAccessLayer
             }
         }
 
+        /// <summary>
+        /// Updates user details such as email, phone number, and security questions.
+        /// </summary>
+        /// <param name="userId">The ID of the user.</param>
+        /// <param name="email">The user's new email.</param>
+        /// <param name="phoneNumber">The user's new phone number.</param>
+        /// <param name="securityQuestion">The user's new security question.</param>
+        /// <param name="securityAnswer">The user's new security answer.</param>
         public void UpdateUserDetails(int userId, string email, string phoneNumber, string securityQuestion, string securityAnswer)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -1541,6 +1800,12 @@ namespace DataAccessLayer
             }
         }
 
+
+        /// <summary>
+        /// Records the clocking-in time for an employee.
+        /// </summary>
+        /// <param name="id">The ID of the employee.</param>
+        /// <param name="time">The clock-in time.</param>
         public void ClockingIn(int id,  DateTime time)
         {
 			SqlConnection connection = new SqlConnection(connectionString);
@@ -1565,6 +1830,13 @@ namespace DataAccessLayer
 			}
 		}
 
+
+        /// <summary>
+        /// Retrieves the total work time for a month for an employee.
+        /// </summary>
+        /// <param name="id">The ID of the employee.</param>
+        /// <param name="month">The month to calculate the work time for.</param>
+        /// <returns>A list of <see cref="DateTime"/> objects representing work shifts.</returns>
 		public List<DateTime> GetWorkTimeMonth(int id, DateTime month)
 		{
 			List<DateTime> results = new List<DateTime>();
@@ -1595,8 +1867,14 @@ namespace DataAccessLayer
 			return results;
 		}
 
-		
-		public void AddAvailability(int personId, DateTime date, AvailabilityForTheDay shift)
+
+        /// <summary>
+        /// Adds availability for a person.
+        /// </summary>
+        /// <param name="personId">The ID of the person.</param>
+        /// <param name="date">The date of the availability.</param>
+        /// <param name="shift">The shift availability for the day.</param>
+        public void AddAvailability(int personId, DateTime date, AvailabilityForTheDay shift)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -1620,6 +1898,13 @@ namespace DataAccessLayer
                 }
             }
         }
+
+        /// <summary>
+        /// Records the clocking-out time and calculates time worked for an employee.
+        /// </summary>
+        /// <param name="id">The ID of the employee.</param>
+        /// <param name="time">The clock-out time.</param>
+        /// <returns>The total time worked.</returns>
         public TimeSpan ClockOut(int id, DateTime time)
         {
             TimeSpan timeWorked = time - time;
@@ -1654,6 +1939,13 @@ namespace DataAccessLayer
             return timeWorked;
         }
 
+
+        /// <summary>
+        /// Checks if an employee has already clocked in for a specific date.
+        /// </summary>
+        /// <param name="id">The ID of the employee.</param>
+        /// <param name="time">The date to check for clock-in.</param>
+        /// <returns>True if the employee has clocked in, otherwise false.</returns>
         public bool CheckIfClockedIn(int id, DateTime time)
         {
             int count = 0;
@@ -1693,6 +1985,13 @@ namespace DataAccessLayer
             }
         }
 
+
+        /// <summary>
+        /// Checks if an employee has clocked in within the last 5 minutes.
+        /// </summary>
+        /// <param name="id">The ID of the employee.</param>
+        /// <param name="time">The time to check.</param>
+        /// <returns>True if the employee has clocked in recently, otherwise false.</returns>
         public bool CheckIfJustClocked(int id, DateTime time)
         {
             bool result = false;

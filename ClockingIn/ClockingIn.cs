@@ -50,5 +50,10 @@ namespace ClockingIn
                 timer.Enabled = true;
             }
         }
+
+        private void tbxEmployeeID_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

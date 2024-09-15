@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MediaBazaarApp
 {
+    /// <summary>
+    /// Represents all product categories that the shop offers  
+    /// </summary>
     public enum ProductCategory
     {
         Audio,

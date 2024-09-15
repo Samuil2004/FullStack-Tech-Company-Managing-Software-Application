@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MediaBazaarApp
 {
+    /// <summary>
+    /// All genders people can choose for their accounts
+    /// </summary>
     public enum Gender
     {
         Male,

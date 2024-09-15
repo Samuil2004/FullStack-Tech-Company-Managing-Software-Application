@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MediaBazaarApp
 {
+    /// <summary>
+    /// All departments within the company
+    /// </summary>
     public enum Department
     {
         Products,

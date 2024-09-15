@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MediaBazaarApp
 {
+    /// <summary>
+    /// Possible availabilities for all shifts for a day
+    /// </summary>
     public enum AvailabilityForTheDay
     {
         FirstShift,

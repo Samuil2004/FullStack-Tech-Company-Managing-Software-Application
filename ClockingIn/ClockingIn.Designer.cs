@@ -48,11 +48,11 @@
             // tbxEmployeeID
             // 
             tbxEmployeeID.Location = new Point(692, 413);
-            tbxEmployeeID.Margin = new Padding(5, 5, 5, 5);
+            tbxEmployeeID.Margin = new Padding(5);
             tbxEmployeeID.Name = "tbxEmployeeID";
             tbxEmployeeID.Size = new Size(339, 39);
             tbxEmployeeID.TabIndex = 2;
-            //tbxEmployeeID.TextChanged += tbxEmployeeID_TextChanged;
+            tbxEmployeeID.TextChanged += tbxEmployeeID_TextChanged;
             tbxEmployeeID.KeyDown += tbxEmployeeID_KeyDown;
             // 
             // timer
@@ -66,7 +66,7 @@
             ClientSize = new Size(1726, 930);
             Controls.Add(lblWelcomeMessage);
             Controls.Add(tbxEmployeeID);
-            Margin = new Padding(5, 5, 5, 5);
+            Margin = new Padding(5);
             Name = "ClockingIn";
             Text = "Clock in";
             ResumeLayout(false);

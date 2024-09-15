@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MediaBazaarApp
 {
+    /// <summary>
+    /// Represents all roles within the company
+    /// </summary>
     public enum Role
     {
         Floor_Consultant,

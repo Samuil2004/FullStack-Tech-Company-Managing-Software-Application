@@ -462,7 +462,6 @@ namespace MediaBazaarApp
             }
         }
 
-
         private void UpdateShiftRequests()
         {
             try

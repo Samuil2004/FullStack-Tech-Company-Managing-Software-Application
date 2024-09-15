@@ -20,58 +20,62 @@
 			base.Dispose(disposing);
 		}
 
-		#region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
-			components = new System.ComponentModel.Container();
-			lblWelcomeMessage = new Label();
-			tbxEmployeeID = new TextBox();
-			timer = new System.Windows.Forms.Timer(components);
-			SuspendLayout();
-			// 
-			// lblWelcomeMessage
-			// 
-			lblWelcomeMessage.AutoSize = true;
-			lblWelcomeMessage.Font = new Font("Segoe UI", 12F);
-			lblWelcomeMessage.Location = new Point(360, 305);
-			lblWelcomeMessage.Name = "lblWelcomeMessage";
-			lblWelcomeMessage.Size = new Size(0, 28);
-			lblWelcomeMessage.TabIndex = 3;
-			lblWelcomeMessage.TextAlign = ContentAlignment.TopCenter;
-			// 
-			// tbxEmployeeID
-			// 
-			tbxEmployeeID.Location = new Point(426, 258);
-			tbxEmployeeID.Name = "tbxEmployeeID";
-			tbxEmployeeID.Size = new Size(210, 27);
-			tbxEmployeeID.TabIndex = 2;
-			tbxEmployeeID.KeyDown += tbxEmployeeID_KeyDown;
-			// 
-			// timer
-			// 
-			timer.Tick += timer_Tick;
-			// 
-			// ClockingIn
-			// 
-			AutoScaleDimensions = new SizeF(8F, 20F);
-			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(1062, 581);
-			Controls.Add(lblWelcomeMessage);
-			Controls.Add(tbxEmployeeID);
-			Name = "ClockingIn";
-			Text = "Clock in";
-			ResumeLayout(false);
-			PerformLayout();
-		}
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            components = new System.ComponentModel.Container();
+            lblWelcomeMessage = new Label();
+            tbxEmployeeID = new TextBox();
+            timer = new System.Windows.Forms.Timer(components);
+            SuspendLayout();
+            // 
+            // lblWelcomeMessage
+            // 
+            lblWelcomeMessage.AutoSize = true;
+            lblWelcomeMessage.Font = new Font("Segoe UI", 12F);
+            lblWelcomeMessage.Location = new Point(585, 488);
+            lblWelcomeMessage.Margin = new Padding(5, 0, 5, 0);
+            lblWelcomeMessage.Name = "lblWelcomeMessage";
+            lblWelcomeMessage.Size = new Size(0, 45);
+            lblWelcomeMessage.TabIndex = 3;
+            lblWelcomeMessage.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // tbxEmployeeID
+            // 
+            tbxEmployeeID.Location = new Point(692, 413);
+            tbxEmployeeID.Margin = new Padding(5, 5, 5, 5);
+            tbxEmployeeID.Name = "tbxEmployeeID";
+            tbxEmployeeID.Size = new Size(339, 39);
+            tbxEmployeeID.TabIndex = 2;
+            //tbxEmployeeID.TextChanged += tbxEmployeeID_TextChanged;
+            tbxEmployeeID.KeyDown += tbxEmployeeID_KeyDown;
+            // 
+            // timer
+            // 
+            timer.Tick += timer_Tick;
+            // 
+            // ClockingIn
+            // 
+            AutoScaleDimensions = new SizeF(13F, 32F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1726, 930);
+            Controls.Add(lblWelcomeMessage);
+            Controls.Add(tbxEmployeeID);
+            Margin = new Padding(5, 5, 5, 5);
+            Name = "ClockingIn";
+            Text = "Clock in";
+            ResumeLayout(false);
+            PerformLayout();
+        }
 
-		#endregion
+        #endregion
 
-		private Label lblWelcomeMessage;
+        private Label lblWelcomeMessage;
 		private TextBox tbxEmployeeID;
 		private System.Windows.Forms.Timer timer;
 	}

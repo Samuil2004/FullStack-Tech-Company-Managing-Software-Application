@@ -12,7 +12,7 @@ namespace MediaBazaarWeb.Pages
     public class AccountModel : PageModel
     {
 
-        SQLDatabase _sql = new SQLDatabase();
+        PeopleManagement peopleManager = new PeopleManagement();
         public bool IsAuthenticated { get; set; }
         public Person LoggedInPerson { get; set; }
 
@@ -31,7 +31,7 @@ namespace MediaBazaarWeb.Pages
                     UserEmail = userEmailClaim.Value;
                     
                     IsAuthenticated = true;
-                    LoggedInPerson = _sql.FindPerson(UserEmail);
+                    LoggedInPerson = peopleManager.FindPerson(UserEmail);
                 }
 
                 return Page();
@@ -48,13 +48,13 @@ namespace MediaBazaarWeb.Pages
             {
                 try
                 {
-                    LoggedInPerson = _sql.FindPerson(editAccountDetails.Email);
+                    LoggedInPerson = peopleManager.FindPerson(editAccountDetails.Email);
                     string email = editAccountDetails.Email;
                     string phoneNumber = editAccountDetails.PhoneNumber;
                     string securityQuestion = editAccountDetails.SecurityQuestion;
                     string securityAnswer = editAccountDetails.SecurityAnswer;
 
-                    _sql.UpdateUserDetails(LoggedInPerson.GetId(), email, phoneNumber, securityQuestion, securityAnswer);
+                    peopleManager.UpdateUserDetails(LoggedInPerson.GetId(), email, phoneNumber, securityQuestion, securityAnswer);
                 }
                 catch (Exception ex)
                 {

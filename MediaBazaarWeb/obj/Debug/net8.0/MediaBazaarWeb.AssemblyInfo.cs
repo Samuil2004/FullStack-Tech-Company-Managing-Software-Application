@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MediaBazaarWeb")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8c69e4ca180ce324e78b787f91d8071b9002be10")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+093465fc24b152c0963eba493f54f7f5a5693ea4")]
 [assembly: System.Reflection.AssemblyProductAttribute("MediaBazaarWeb")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MediaBazaarWeb")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

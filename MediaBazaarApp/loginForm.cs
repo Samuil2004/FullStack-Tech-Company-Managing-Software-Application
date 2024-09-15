@@ -11,7 +11,8 @@ namespace WorkTasks_Individual_Kristof_Szabo
 {
     public partial class loginForm : Form
     {
-        SQLDatabase sql = new SQLDatabase();
+        PeopleManagement peopleManager = new PeopleManagement();
+        ProductsDataAccessLayer productManager = new ProductsDataAccessLayer();
         Person loggedInUser;
         UserManager userManager = new UserManager();
         private bool close_application;
@@ -31,17 +32,17 @@ namespace WorkTasks_Individual_Kristof_Szabo
                 string password = textBoxPassword.Text;
                 if (userManager.CheckUser(email, password))
                 {
-                    loggedInUser = sql.ReadPerson(email);
+                    loggedInUser = peopleManager.ReadPerson(email);
                     if (loggedInUser.GetRole == Role.Manager || loggedInUser.GetRole == Role.CEO)
                     {
                         this.Hide();
-                        ManagerMenu managerMenu = new ManagerMenu(this, loggedInUser, sql);
+                        ManagerMenu managerMenu = new ManagerMenu(this, loggedInUser, productManager);
                         managerMenu.Show();
                     }
                     else
                     {
                         this.Hide();
-                        FloorWorkersMenu floorWorkers = new FloorWorkersMenu(this, loggedInUser, sql);
+                        FloorWorkersMenu floorWorkers = new FloorWorkersMenu(this, loggedInUser, productManager);
                         floorWorkers.Show();
                     }
                 }

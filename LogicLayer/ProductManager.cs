@@ -16,10 +16,10 @@ namespace LogicLayer
     {
 
         private List<Product> allProducts;
-        SQLDatabase database;
+        ProductsDataAccessLayer database;
         public ProductManager()
         {
-            database = new SQLDatabase();
+            database = new ProductsDataAccessLayer();
             allProducts = new List<Product>();
         }
 

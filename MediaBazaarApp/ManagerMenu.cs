@@ -20,11 +20,11 @@ namespace MediaBazaarApp
     {
         PeopleManagement dataManager;
         Person loggedInUser;
-        SQLDatabase sql;
+        ProductsDataAccessLayer sql;
         loginForm logInPage;
         private bool close_application;
 
-        public ManagerMenu(loginForm logInPage, Person loggedInUser, SQLDatabase sql)
+        public ManagerMenu(loginForm logInPage, Person loggedInUser, ProductsDataAccessLayer sql)
         {
             try
             {
@@ -267,7 +267,7 @@ namespace MediaBazaarApp
                 this.Hide();
                 depotRestockingPage.Show();
 
-                SQLDatabase db = new SQLDatabase();
+                ProductsDataAccessLayer db = new ProductsDataAccessLayer();
                 foreach (Order order in db.GetAllOrders())
                 {
                     if (DateTime.Now >= order.ArrivalDate && order.status == "On the way")

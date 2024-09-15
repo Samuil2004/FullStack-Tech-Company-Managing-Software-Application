@@ -1163,5 +1163,111 @@ namespace DataAccessLayer
                 { connection.Close(); }
             }
         }
+
+        /// <summary>
+        /// Marks person as unavailable for the selectedDates.
+        /// </summary>
+        /// <param name="person_id">The ID of the person whose availability will be removed.</param>
+        /// <param name="selectedDates">The list of dates to remove.</param>
+        public void RemoveAvailability(int person_id, List<DateTime> selectedDates)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "DELETE FROM Availabilty WHERE person_id = @person_id AND _date = @_date";
+
+                try
+                {
+                    connection.Open();
+                    foreach (var date in selectedDates)
+                    {
+                        using (SqlCommand command = new SqlCommand(query, connection))
+                        {
+                            command.Parameters.AddWithValue("@person_id", person_id);
+                            command.Parameters.AddWithValue("@_date", date);
+
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("An error occurred while removing availability.", ex);
+                }
+            }
+        }
+
+
+
+        /// <summary>
+        /// Marks person as available for the selected timeslot
+        /// </summary>
+        /// <param name="personId">The ID of the person.</param>
+        /// <param name="date">The date of the availability.</param>
+        /// <param name="shift">The shift availability for the day.</param>
+        public void AddAvailability(int personId, DateTime date, AvailabilityForTheDay shift)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string query = $"INSERT INTO Availabilty (person_id, _date, availabilityForTheDay, IsTaken) VALUES (@PersonId, @Date, @Shift, {0})";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@PersonId", personId);
+                        command.Parameters.AddWithValue("@Date", date);
+                        command.Parameters.AddWithValue("@Shift", shift.ToString());
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Adding availability failed.");
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Checks if a specific date exists for a person.
+        /// </summary>
+        /// <param name="person_id">The ID of the person.</param>
+        /// <param name="selectedDate">The selected date.</param>
+        /// <returns>True if the date exists, otherwise false.</returns>
+        public bool IsDateExist(int person_id, DateTime selectedDate)
+        {
+            bool isShiftSelected = false;
+            SqlConnection connection = new SqlConnection(connectionString);
+            string query = "SELECT COUNT(*) FROM Availabilty WHERE person_id = @person_id AND _date = @_date";
+
+            try
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@person_id", person_id);
+                command.Parameters.AddWithValue("@_date", selectedDate);
+
+                int count = (int)command.ExecuteScalar();
+                isShiftSelected = count > 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Checking date failed.");
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return isShiftSelected;
+        }
+
+
+
+
+
+
     }
 }

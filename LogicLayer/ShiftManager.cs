@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer;
+using MediaBazaarApp;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,13 @@ namespace LogicLayer
     /// </summary>
     public class ShiftManager
 	{
-		SQLDatabase database;
+		ProductsDataAccessLayer database;
+		PeopleManagement peopleManager;
 
 		public ShiftManager()
 		{
-			database = new SQLDatabase();
+			database = new ProductsDataAccessLayer();
+			peopleManager = new PeopleManagement();
 		}
 
         /// <summary>
@@ -30,19 +33,19 @@ namespace LogicLayer
 		{
 			string message = ", welcome!";
 			DateTime time = DateTime.Now;
-			if (database.CheckIfJustClocked(employeeID, time))
+			if (peopleManager.CheckIfJustClocked(employeeID, time))
 			{
 				message = ", you just clocked in/out, please wait before doing it again";
 			}
-			else if (database.CheckIfClockedIn(employeeID, time))
+			else if (peopleManager.CheckIfClockedIn(employeeID, time))
 			{
-				TimeSpan timeWorked = database.ClockOut(employeeID, time);
-				database.ClockingIn(employeeID, time);
+				TimeSpan timeWorked = peopleManager.ClockOut(employeeID, time);
+                peopleManager.ClockingIn(employeeID, time);
 				message = ", you worked for " + timeWorked.ToString(@"hh\:mm") + ". Goodbye!";
 			}
 			else
 			{
-				database.ClockingIn(employeeID, time);
+                peopleManager.ClockingIn(employeeID, time);
 			}
 			return message;
 		}
@@ -57,7 +60,7 @@ namespace LogicLayer
         public int GetEmployeeWorkTimeMonth(int employeeID, int month)
 		{
 			TimeSpan workTimeWeek = TimeSpan.Zero;
-			List<DateTime> shifts = database.GetWorkTimeMonth(employeeID, DateTime.Now.AddMonths(-month));
+			List<DateTime> shifts = peopleManager.GetWorkTimeMonth(employeeID, DateTime.Now.AddMonths(-month));
 			DateTime clockIn = DateTime.MinValue;
 			for (int i = 0; i < shifts.Count; i++)
 			{

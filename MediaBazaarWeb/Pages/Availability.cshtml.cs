@@ -13,8 +13,10 @@ namespace MediaBazaarWeb.Pages
     {
         private const int DaysPerPage = 28; // 4 weeks * 7 days
 
-        private readonly DataAccessLayer.SQLDatabase _sql;
-        private readonly AvailabilityDataAccessLayer availabilitySQL;
+        private readonly PeopleManagement peopleManager;
+        private readonly AvailabilityManager availabilityManagement;
+
+
         public Person LoggedInPerson { get; set; }
         public bool IsAuthenticated { get; set; }
 
@@ -24,7 +26,6 @@ namespace MediaBazaarWeb.Pages
         public string UserEmail { get; set; }
         public bool IsScheduleLocked { get; set; }
 
-        private readonly PeopleManagement peopleManagement;
         public List<string> DatesList { get; set; } = new List<string>();
         public List<string> AvailabilitiesWorker { get; set; } = new List<string>();
         public List<string> IsWorking { get; set; } = new List<string>();
@@ -34,9 +35,8 @@ namespace MediaBazaarWeb.Pages
 
         public AvailabilityModel()
         {
-            peopleManagement = new PeopleManagement();
-            _sql = new DataAccessLayer.SQLDatabase();
-            availabilitySQL = new AvailabilityDataAccessLayer();
+            peopleManager = new PeopleManagement();
+            availabilityManagement = new AvailabilityManager();
         }
 
         public IActionResult OnGet(int? pageIndex)
@@ -56,7 +56,7 @@ namespace MediaBazaarWeb.Pages
                 {
                     UserEmail = userEmailClaim.Value;
                     IsAuthenticated = true;
-                    LoggedInPerson = _sql.FindPerson(UserEmail);
+                    LoggedInPerson = peopleManager.FindPerson(UserEmail);
                     if (LoggedInPerson != null)
                     {
                         DateTime now = DateTime.Now;
@@ -89,7 +89,7 @@ namespace MediaBazaarWeb.Pages
                     if (userEmailClaim != null)
                     {
                         UserEmail = userEmailClaim.Value;
-                        LoggedInPerson = _sql.FindPerson(UserEmail);
+                        LoggedInPerson = peopleManager.FindPerson(UserEmail);
 
                         if (LoggedInPerson != null)
                         {
@@ -105,7 +105,7 @@ namespace MediaBazaarWeb.Pages
 
                             foreach (var date in SelectedDates)
                             {
-                                if (_sql.IsDateExist(LoggedInPerson.GetId(), date))
+                                if (availabilityManagement.IsDateExist(LoggedInPerson.GetId(), date))
                                 {
                                     datesToRemove.Add(date);
                                 }
@@ -115,7 +115,7 @@ namespace MediaBazaarWeb.Pages
                                 }
                             }
 
-                            _sql.RemoveAvailability(LoggedInPerson.GetId(), datesToRemove);
+                            availabilityManagement.RemoveAvailability(LoggedInPerson.GetId(), datesToRemove);
                             AddAvailabilityForAllShifts(LoggedInPerson.GetId(), datesToAdd);
                         }
                     }
@@ -133,9 +133,9 @@ namespace MediaBazaarWeb.Pages
         {
             foreach (var date in datesToAdd)
             {
-                _sql.AddAvailability(personId, date, AvailabilityForTheDay.FirstShift);
-                _sql.AddAvailability(personId, date, AvailabilityForTheDay.SecondShift);
-                _sql.AddAvailability(personId, date, AvailabilityForTheDay.ThirdShift);
+                availabilityManagement.AddAvailability(personId, date, AvailabilityForTheDay.FirstShift);
+                availabilityManagement.AddAvailability(personId, date, AvailabilityForTheDay.SecondShift);
+                availabilityManagement.AddAvailability(personId, date, AvailabilityForTheDay.ThirdShift);
             }
         }
         public void GenerateCalendar()
@@ -158,12 +158,12 @@ namespace MediaBazaarWeb.Pages
                 if (userEmailClaim != null)
                 {
                     UserEmail = userEmailClaim.Value;
-                    LoggedInPerson = _sql.FindPerson(UserEmail);
+                    LoggedInPerson = peopleManager.FindPerson(UserEmail);
                     List<Availability> availabilities = new List<Availability>();
 
                     for (int i = 0; i < DaysPerPage; i++)
                     {
-                        availabilities.Add(peopleManagement.CheckUserAvailability(startDate.AddDays(i), LoggedInPerson.GetId()));
+                        availabilities.Add(peopleManager.CheckUserAvailability(startDate.AddDays(i), LoggedInPerson.GetId()));
                     }
 
                     for (int i = 0; i < DaysPerPage; i++)

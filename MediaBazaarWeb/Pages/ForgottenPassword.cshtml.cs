@@ -11,7 +11,7 @@ namespace MediaBazaarWeb.Pages
     {
         public UserManager _userManager;
 
-        public DataAccessLayer.SQLDatabase _sql;
+        public DataAccessLayer.ProductsDataAccessLayer _sql;
         public Person LoggedInPerson { get; set; }
         PeopleManagement peopleManagement = new PeopleManagement();
         public bool IsAuthenticated { get; set; }
@@ -30,7 +30,7 @@ namespace MediaBazaarWeb.Pages
 
         public ForgottenPasswordModel()
         {
-            _sql = new DataAccessLayer.SQLDatabase();
+            _sql = new DataAccessLayer.ProductsDataAccessLayer();
         }
         public IActionResult OnGet(string email)
         {

@@ -14,10 +14,10 @@ namespace MediaBazaarApp
 {
     public partial class OrderHistoryPage : Form
     {
-        SQLDatabase db;
+        ProductsDataAccessLayer db;
 
         public Order SelectedOrder;
-        public OrderHistoryPage(SQLDatabase DB)
+        public OrderHistoryPage(ProductsDataAccessLayer DB)
         {
             try
             {

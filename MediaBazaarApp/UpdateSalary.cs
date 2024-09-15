@@ -13,15 +13,15 @@ namespace MediaBazaarApp
     public partial class UpdateSalary : Form
     {
         Person selectedPerson;
-        SQLDatabase database;
+        PeopleManagement peopleManager;
         AllEmployeesPage allEmployeesPage;
-        public UpdateSalary(Person selectedPerson, SQLDatabase database, AllEmployeesPage allEmployeesPage)
+        public UpdateSalary(Person selectedPerson, PeopleManagement peopleManager, AllEmployeesPage allEmployeesPage)
         {
             try
             {
                 InitializeComponent();
                 this.selectedPerson = selectedPerson;
-                this.database = database;
+                this.peopleManager = peopleManager;
                 this.allEmployeesPage = allEmployeesPage;
                 labelCurrentSalary.Text = selectedPerson.GetWage.ToString();
             }
@@ -37,7 +37,7 @@ namespace MediaBazaarApp
             {
                 if (nmNewWage.Value != 0)
                 {
-                    database.UpdateWage(selectedPerson, Convert.ToDouble(nmNewWage.Value));
+                    peopleManager.UpdateWage(selectedPerson, Convert.ToDouble(nmNewWage.Value));
                     allEmployeesPage.Updatelist();
                     this.Close();
                 }

@@ -13,22 +13,22 @@ namespace MediaBazaarApp
     public partial class ArchivePage : Form
     {
         ManagerMenu managerMenu;
-        PeopleManagement dataManager;
+        PeopleManagement peopleManager;
         Person loggedInUser;
-        SQLDatabase database;
+        ProductsDataAccessLayer database;
 
         private bool close_application;
         private List<Person> listToUse;
         private List<Person> peopleForPage;
         private string filteringCriteria;
         private int counter;
-        public ArchivePage(ManagerMenu managerMenu, PeopleManagement dataManager, Person loggedInUser, SQLDatabase database)
+        public ArchivePage(ManagerMenu managerMenu, PeopleManagement dataManager, Person loggedInUser, ProductsDataAccessLayer database)
         {
             try
             {
                 InitializeComponent();
                 this.managerMenu = managerMenu;
-                this.dataManager = dataManager;
+                this.peopleManager = dataManager;
                 this.loggedInUser = loggedInUser;
                 this.database = database;
                 this.counter = 1;
@@ -47,7 +47,7 @@ namespace MediaBazaarApp
             try
             {
                 lbEmployeesList.Items.Clear();
-                peopleForPage = database.ReadPeopleForSelectedPage(null, null, false, counter, filteringCriteria);
+                peopleForPage = peopleManager.ReadPeopleForSelectedPage(null, null, false, counter, filteringCriteria);
 
                 listToUse = peopleForPage.Take(15).ToList();
 
@@ -92,7 +92,7 @@ namespace MediaBazaarApp
                     if (userResponse.Equals("Yes"))
                     {
                         Person person = listToUse.FirstOrDefault(p => p.GetInfo().Equals(lbEmployeesList.SelectedItem.ToString()));
-                        database.ChangeWorkingStatus(person);
+                        peopleManager.ChangeWorkingStatus(person);
                         MessageBox.Show("Employee has been restored!");
                         tbSelectedUserInfo.ResetText();
                         ListPeople();

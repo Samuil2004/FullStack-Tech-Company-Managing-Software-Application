@@ -21,10 +21,10 @@ namespace MediaBazaarApp
     public partial class AllEmployeesPage : Form
     {
         ManagerMenu managerMenu;
-        PeopleManagement dataManager;
+        PeopleManagement peopleManager;
         ShiftManager shiftManager = new ShiftManager();
         Person loggedInUser;
-        SQLDatabase database;
+        ProductsDataAccessLayer database;
         AvailabilityManager availabilityManager = new AvailabilityManager();
 
         private bool close_application;
@@ -34,12 +34,12 @@ namespace MediaBazaarApp
 
         private int counter;
 
-        public AllEmployeesPage(ManagerMenu managerMenu, PeopleManagement dataManager, Person loggedInUser, SQLDatabase database)
+        public AllEmployeesPage(ManagerMenu managerMenu, PeopleManagement dataManager, Person loggedInUser, ProductsDataAccessLayer database)
         {
             try
             {
                 this.managerMenu = managerMenu;
-                this.dataManager = dataManager;
+                this.peopleManager = dataManager;
                 this.loggedInUser = loggedInUser;
                 close_application = true;
                 InitializeComponent();
@@ -91,21 +91,21 @@ namespace MediaBazaarApp
                 lbEmployeesList.Items.Clear();
                 if (loggedInUser.GetRole == Role.Manager)
                 {
-                    peopleForPage = database.ReadPeopleForSelectedPageDifferentFromManagers(loggedInUser.GetDepartment, true, counter, filteringCriteria);
+                    peopleForPage = peopleManager.ReadPeopleForSelectedPageDifferentFromManagers(loggedInUser.GetDepartment, true, counter, filteringCriteria);
                 }
                 else
                 {
                     if (rbManagers.Checked)
                     {
-                        peopleForPage = database.ReadPeopleForSelectedPage(null, Role.Manager, true, counter, filteringCriteria);
+                        peopleForPage = peopleManager.ReadPeopleForSelectedPage(null, Role.Manager, true, counter, filteringCriteria);
                     }
                     else if (rbEmployees.Checked)
                     {
-                        peopleForPage = database.ReadPeopleForSelectedPageDifferentFromManagers(null, true, counter, filteringCriteria);
+                        peopleForPage = peopleManager.ReadPeopleForSelectedPageDifferentFromManagers(null, true, counter, filteringCriteria);
                     }
                     else
                     {
-                        peopleForPage = database.ReadPeopleForSelectedPage(null, null, true, counter, filteringCriteria);
+                        peopleForPage = peopleManager.ReadPeopleForSelectedPage(null, null, true, counter, filteringCriteria);
                     }
                 }
                 listToUse = peopleForPage.Take(15).ToList();
@@ -189,7 +189,7 @@ namespace MediaBazaarApp
         {
             try
             {
-                AddNewEmployeePage addNewEmployeePage = new AddNewEmployeePage(this, loggedInUser, dataManager, database);
+                AddNewEmployeePage addNewEmployeePage = new AddNewEmployeePage(this, loggedInUser, peopleManager, database);
                 this.Hide();
                 addNewEmployeePage.Show();
             }
@@ -255,7 +255,7 @@ namespace MediaBazaarApp
                     if (userResponse.Equals("Yes"))
                     {
                         Person person = listToUse.FirstOrDefault(p => p.GetInfo().Equals(lbEmployeesList.SelectedItem.ToString()));
-                        database.ChangeWorkingStatus(person);
+                        peopleManager.ChangeWorkingStatus(person);
                         availabilityManager.DeleteAvailability(person.GetId());
                         MessageBox.Show("Employee has been removed from the planning system. Removed person data will be kept in the Media Bazaar Archive for 7 years!");
                         tbSelectedUserInfo.ResetText();
@@ -293,7 +293,7 @@ namespace MediaBazaarApp
             try
             {
                 Person person = listToUse.FirstOrDefault(p => p.GetInfo().Equals(lbEmployeesList.SelectedItem.ToString()));
-                UpdateSalary updateSalaryPage = new UpdateSalary(person, database, this);
+                UpdateSalary updateSalaryPage = new UpdateSalary(person, peopleManager, this);
                 updateSalaryPage.ShowDialog();
             }
             catch (Exception ex)

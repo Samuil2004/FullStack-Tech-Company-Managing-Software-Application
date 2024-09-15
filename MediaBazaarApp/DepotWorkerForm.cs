@@ -19,12 +19,12 @@ namespace MediaBazaarApp
         FloorWorkersMenu floorWorkerMenu;
         bool close_application;
         Person loggedInUser;
-        SQLDatabase db;
+        ProductsDataAccessLayer db;
         List<RestockingRequest> StoreRestockingRequests;
         public RestockingRequest SelectedRequest;
         Product selectedProduct;
 
-        public DepotWorkerForm(FloorWorkersMenu floorworkerMenu, Person loggedinUser, SQLDatabase sql)
+        public DepotWorkerForm(FloorWorkersMenu floorworkerMenu, Person loggedinUser, ProductsDataAccessLayer sql)
         {
             try
             {

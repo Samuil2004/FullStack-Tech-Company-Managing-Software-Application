@@ -24,9 +24,9 @@ namespace LogicLayer
         public bool CheckUser(string username,string password)
         {
             PasswordDataAccessLayer passSQL = new PasswordDataAccessLayer();
-            SQLDatabase db = new SQLDatabase();
+            PeopleManagement peopleManager = new PeopleManagement();
             PasswordManager manager = new PasswordManager();
-            Dictionary<string, string> ContainerForSaltHash = passSQL.GetUserHashSalt(db.GetPersonId(username));
+            Dictionary<string, string> ContainerForSaltHash = passSQL.GetUserHashSalt(peopleManager.GetPersonId(username));
             string testHash = manager.GenerateSHA256Hash(password, ContainerForSaltHash["salt"]);
             if (ContainerForSaltHash["hash"].Equals(testHash))
             {

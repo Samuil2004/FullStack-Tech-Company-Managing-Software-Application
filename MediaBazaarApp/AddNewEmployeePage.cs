@@ -17,16 +17,16 @@ namespace MediaBazaarApp
     {
         AllEmployeesPage allEmployeesPage;
         Person loggedInUser;
-        PeopleManagement dataManager;
+        PeopleManagement peopleManager;
         private bool close_application;
-        SQLDatabase database;
+        ProductsDataAccessLayer database;
 
 
-        public AddNewEmployeePage(AllEmployeesPage allEmployeesPage, Person loggedInUser, PeopleManagement dataManager, SQLDatabase database)
+        public AddNewEmployeePage(AllEmployeesPage allEmployeesPage, Person loggedInUser, PeopleManagement dataManager, ProductsDataAccessLayer database)
         {
             this.allEmployeesPage = allEmployeesPage;
             this.loggedInUser = loggedInUser;
-            this.dataManager = dataManager;
+            this.peopleManager = dataManager;
             InitializeComponent();
             close_application = true;
             cbRole.Enabled = false;
@@ -69,7 +69,7 @@ namespace MediaBazaarApp
             {
                 if (IsValidEmail(tbEmail.Text))
                 {
-                    if (database.IsEmailAvailable(tbEmail.Text))
+                    if (peopleManager.IsEmailAvailable(tbEmail.Text))
                     {
                         if (ContainsOnlyLetters(tbFirstName.Text))
                         {
@@ -82,11 +82,11 @@ namespace MediaBazaarApp
                                         Gender selectedGender = (Gender)Enum.Parse(typeof(Gender), cbGender.SelectedItem.ToString());
                                         Department selectedDepartment = (Department)Enum.Parse(typeof(Department), cbDepartment.SelectedItem.ToString());
                                         Role selectedRole = (Role)Enum.Parse(typeof(Role), cbRole.SelectedItem.ToString());
-                                        Person manager = database.FindDepartmentManager(selectedDepartment);
+                                        Person manager = peopleManager.FindDepartmentManager(selectedDepartment);
                                         int manager_id = manager.GetId();
                                         int floor = Convert.ToInt32(nmFloor.Value);
-                                        int id = dataManager.GetHighestId();
-                                        dataManager.addNewPerson(id, tbEmail.Text, tbFirstName.Text, tbLastName.Text, tbPhoneNumber.Text, selectedGender, DateTime.Today, manager_id, selectedDepartment, selectedRole, Convert.ToDouble(nmWage.Value), floor);
+                                        int id = peopleManager.GetHighestId();
+                                        peopleManager.addNewPerson(id, tbEmail.Text, tbFirstName.Text, tbLastName.Text, tbPhoneNumber.Text, selectedGender, DateTime.Today, manager_id, selectedDepartment, selectedRole, Convert.ToDouble(nmWage.Value), floor);
                                         PrintMessage($"Employee was sucessfully added. \nId: {id}");
                                         close_application = false;
                                         this.Close();
@@ -142,7 +142,7 @@ namespace MediaBazaarApp
                 if (!string.IsNullOrEmpty(tbEmail.Text))
                 {
 
-                    if (IsValidEmail(tbEmail.Text) && database.IsEmailAvailable(tbEmail.Text))
+                    if (IsValidEmail(tbEmail.Text) && peopleManager.IsEmailAvailable(tbEmail.Text))
                     {
                         tbEmail.BackColor = Color.FromArgb(147, 255, 144);
                     }

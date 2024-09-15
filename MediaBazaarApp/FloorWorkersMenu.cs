@@ -16,10 +16,10 @@ namespace MediaBazaarApp
     {
         PeopleManagement dataManager;
         Person loggedInUser;
-        SQLDatabase sql;
+        ProductsDataAccessLayer sql;
         loginForm logInPage;
         private bool close_application;
-        public FloorWorkersMenu(loginForm logInPage, Person loggedInUser, SQLDatabase sql)
+        public FloorWorkersMenu(loginForm logInPage, Person loggedInUser, ProductsDataAccessLayer sql)
         {
             try
             {

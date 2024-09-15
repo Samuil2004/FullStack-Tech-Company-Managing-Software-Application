@@ -11,7 +11,7 @@ namespace MediaBazaarWeb.Pages
 {
 	public class ProfileModel : PageModel
 	{
-		SQLDatabase _sql = new SQLDatabase();
+		PeopleManagement peopleManager = new PeopleManagement();
         public bool IsAuthenticated { get; set; }
         public Person LoggedInPerson { get; set; }
 
@@ -34,7 +34,7 @@ namespace MediaBazaarWeb.Pages
 					Email = email;
 					Password = password;
 					IsAuthenticated = true;
-					LoggedInPerson = _sql.FindPerson(UserEmail);
+					LoggedInPerson = peopleManager.FindPerson(UserEmail);
 				}
 				return Page();
 			}

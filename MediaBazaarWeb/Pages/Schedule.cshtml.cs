@@ -8,6 +8,7 @@ using System.Globalization;
 using DataAccessLayer;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
+using LogicLayer;
 
 namespace MediaBazaarWeb.Pages
 {
@@ -18,8 +19,8 @@ namespace MediaBazaarWeb.Pages
         public ShiftChangeRequestDTOModel ShiftChangeRequest { get; set; }
         [BindProperty]
         public AvailabilitiesDTOModel AvailabilityModel { get; set; }
-        private SQLDatabase _sql;
-        private AvailabilityDataAccessLayer availabilitySQL;
+        private readonly AvailabilityManager availabilityManager;
+        private readonly PeopleManagement peopleManagaer;
         public bool IsAuthenticated { get; set; }
         public Person LoggedInPerson { get; set; }
         [BindProperty(SupportsGet = true)]
@@ -35,9 +36,8 @@ namespace MediaBazaarWeb.Pages
 
         public ScheduleModel()
         {
-            _sql = new SQLDatabase();
             peopleManagement = new PeopleManagement();
-            availabilitySQL = new AvailabilityDataAccessLayer();
+            availabilityManager = new AvailabilityManager();
         }
 
         public void OnGet()
@@ -49,7 +49,7 @@ namespace MediaBazaarWeb.Pages
                 if (userEmailClaim != null)
                 {
                     UserEmail = userEmailClaim.Value;
-                    LoggedInPerson = _sql.FindPerson(UserEmail);
+                    LoggedInPerson = peopleManagaer.FindPerson(UserEmail);
                     TempData["email"] = UserEmail;
                     TempData["password"] = Password;
                     TempData["page"] = page;
@@ -72,7 +72,7 @@ namespace MediaBazaarWeb.Pages
                 {
                     UserEmail = userEmailClaim.Value;
                     IsAuthenticated = true;
-                    LoggedInPerson = _sql.FindPerson(UserEmail);
+                    LoggedInPerson = peopleManagaer.FindPerson(UserEmail);
                 }
                 return Page();
             }
@@ -90,11 +90,11 @@ namespace MediaBazaarWeb.Pages
                 if (userEmailClaim != null)
                 {
                     UserEmail = userEmailClaim.Value;
-                    LoggedInPerson = _sql.FindPerson(UserEmail);
+                    LoggedInPerson = peopleManagaer.FindPerson(UserEmail);
 
                     if (LoggedInPerson != null)
                     {
-                        return availabilitySQL.GetPossibleShiftChanges(LoggedInPerson.GetId());
+                        return availabilityManager.GetPossibleShiftChanges(LoggedInPerson.GetId());
                     }
                 }
                 return null;
@@ -113,10 +113,10 @@ namespace MediaBazaarWeb.Pages
                 if (userEmailClaim != null)
                 {
                     UserEmail = userEmailClaim.Value;
-                    LoggedInPerson = _sql.FindPerson(UserEmail);
+                    LoggedInPerson = peopleManagaer.FindPerson(UserEmail);
                     Tuple<string, DateTime, AvailabilityForTheDay> item = GetPossibleShiftChanges()[itemIndex];
-                    availabilitySQL.AddAvailability(LoggedInPerson.GetId(),item.Item3,item.Item2,true);
-                    availabilitySQL.DeleteShiftTransferRequest(_sql.FindPerson(item.Item1).GetId(), item.Item2, item.Item3);
+                    availabilityManager.AddAvailability(LoggedInPerson.GetId(),item.Item3,item.Item2,true);
+                    availabilityManager.DeleteShiftTransferRequest(peopleManagaer.FindPerson(item.Item1).GetId(), item.Item2, item.Item3);
                 }
                 return RedirectToPage("/Schedule");
             }
@@ -138,7 +138,7 @@ namespace MediaBazaarWeb.Pages
                     page += i;
                     TempData["page"] = page;
                     IsAuthenticated = true;
-                    LoggedInPerson = _sql.FindPerson(UserEmail);
+                    LoggedInPerson = peopleManagaer.FindPerson(UserEmail);
                     GenerateCalendar(page);
                 }
             }
@@ -156,7 +156,7 @@ namespace MediaBazaarWeb.Pages
                 if (userEmailClaim != null)
                 {
                     UserEmail = userEmailClaim.Value;
-                    LoggedInPerson = _sql.FindPerson(UserEmail);
+                    LoggedInPerson = peopleManagaer.FindPerson(UserEmail);
 
                     if (LoggedInPerson == null)
                     {
@@ -183,7 +183,7 @@ namespace MediaBazaarWeb.Pages
                             shift = AvailabilityForTheDay.ThirdShift;
                         }
 
-                        bool requestExists = availabilitySQL.CheckExistingRequest(LoggedInPerson.GetId(), shift, date);
+                        bool requestExists = availabilityManager.CheckExistingRequest(LoggedInPerson.GetId(), shift, date);
                         ViewData["RequestExists"] = requestExists;
 
                         if (requestExists)
@@ -192,7 +192,7 @@ namespace MediaBazaarWeb.Pages
                             return Page();
                         }
 
-                        availabilitySQL.RequestTransfer(LoggedInPerson.GetId(), shift, date, ShiftChangeRequest.Reason);
+                        availabilityManager.RequestTransfer(LoggedInPerson.GetId(), shift, date, ShiftChangeRequest.Reason);
 
                         TempData["SuccessMessage"] = "Shift change request submitted successfully.";
                         return RedirectToPage("/Schedule");
@@ -246,7 +246,7 @@ namespace MediaBazaarWeb.Pages
                         {
                             if (DateOnly.FromDateTime(shiftDate) == DateOnly.FromDateTime(monday.AddDays(i)))
                             {
-                                bool isRequested = availabilitySQL.CheckExistingRequest(LoggedInPerson.GetId(), availability.GetAvailability(), shiftDate);
+                                bool isRequested = availabilityManager.CheckExistingRequest(LoggedInPerson.GetId(), availability.GetAvailability(), shiftDate);
                                 string shiftClass = isRequested ? "Requested" : "Working";
 
                                 if (shiftDate <= today)

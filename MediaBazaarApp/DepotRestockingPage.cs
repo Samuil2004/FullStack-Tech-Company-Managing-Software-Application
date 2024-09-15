@@ -21,7 +21,7 @@ namespace MediaBazaarApp
 {
     public partial class DepotRestockingPage : Form
     {
-        DataAccessLayer.SQLDatabase db;
+        DataAccessLayer.ProductsDataAccessLayer db;
         ManagerMenu managerMenu;
         Person loggedUser;
 
@@ -36,7 +36,7 @@ namespace MediaBazaarApp
         int currentRequestIndex;
         bool filterBySupplier;
 
-        public DepotRestockingPage(ManagerMenu managerMenu, Person loggedInUser, DataAccessLayer.SQLDatabase sql)
+        public DepotRestockingPage(ManagerMenu managerMenu, Person loggedInUser, DataAccessLayer.ProductsDataAccessLayer sql)
         {
             try
             {

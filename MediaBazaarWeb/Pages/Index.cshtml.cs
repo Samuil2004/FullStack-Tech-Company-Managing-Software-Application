@@ -12,7 +12,7 @@ namespace MediaBazaarWeb.Pages
 {
     public class IndexModel : PageModel
     {
-        DataAccessLayer.SQLDatabase _sql = new DataAccessLayer.SQLDatabase();
+        DataAccessLayer.ProductsDataAccessLayer _sql = new DataAccessLayer.ProductsDataAccessLayer();
         UserManager um = new UserManager();
         [BindProperty]
         public LoginFormDTOModel LoginForm { get; set; }

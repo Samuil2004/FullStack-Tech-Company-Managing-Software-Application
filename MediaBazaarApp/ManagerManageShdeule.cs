@@ -20,10 +20,10 @@ namespace MediaBazaarApp
         PeopleManagement dataManager;
         ManagerMenu managerMenu;
         Person loggedInUser;
-        SQLDatabase database;
-        AvailabilityDataAccessLayer availabilitySQL;
+        ProductsDataAccessLayer database;
+        AvailabilityManager availabilityManager;
         private bool close_application;
-        public ManagerManageShdeule(ManagerMenu managerMenu, PeopleManagement dataManager, Person loggedInUser, SQLDatabase database)
+        public ManagerManageShdeule(ManagerMenu managerMenu, PeopleManagement dataManager, Person loggedInUser, ProductsDataAccessLayer database)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace MediaBazaarApp
                 this.database = database;
                 CheckLoggedInUser();
                 cbDepartment.SelectedIndex = 0;
-                availabilitySQL = new AvailabilityDataAccessLayer();
+                availabilityManager = new AvailabilityManager();
                 updateData();
                 UpdateShiftRequests();
                 if(loggedInUser.GetRole == Role.CEO)
@@ -431,10 +431,10 @@ namespace MediaBazaarApp
             {
                 if (lbShiftChange.SelectedItem != null)
                 {
-                    ShiftExchange selectedShiftExchange = availabilitySQL.FindConcreteAvailability(lbShiftChange.SelectedItem.ToString());
+                    ShiftExchange selectedShiftExchange = availabilityManager.FindConcreteAvailability(lbShiftChange.SelectedItem.ToString());
 
-                    availabilitySQL.ChangeIsTaken(selectedShiftExchange.GetAvailability, selectedShiftExchange.GetAvailability.getPerson().GetId(), selectedShiftExchange.GetAvailability.getTimeSlot(), selectedShiftExchange.GetAvailability.GetAvailability());
-                    availabilitySQL.UpdateShiftRequestStatus(selectedShiftExchange.GetAvailability.getPerson().GetId(), selectedShiftExchange.GetAvailability.GetAvailability(), selectedShiftExchange.GetAvailability.getTimeSlot());
+                    availabilityManager.ChangeIsTaken(selectedShiftExchange.GetAvailability, selectedShiftExchange.GetAvailability.getPerson().GetId(), selectedShiftExchange.GetAvailability.getTimeSlot(), selectedShiftExchange.GetAvailability.GetAvailability());
+                    availabilityManager.UpdateShiftRequestStatus(selectedShiftExchange.GetAvailability.getPerson().GetId(), selectedShiftExchange.GetAvailability.GetAvailability(), selectedShiftExchange.GetAvailability.getTimeSlot());
                     UpdateShiftRequests();
                 }
             }
@@ -449,7 +449,7 @@ namespace MediaBazaarApp
             try
             {
                 lbShiftChange.Items.Clear();
-                foreach (ShiftExchange se in availabilitySQL.ReadShifTransferRequests(loggedInUser.GetDepartment))
+                foreach (ShiftExchange se in availabilityManager.ReadShifTransferRequests(loggedInUser.GetDepartment))
                 {
                     lbShiftChange.Items.Add($"{se.GetAvailability.getPerson().GetShortInfo()} - {se.GetAvailability.getTimeSlot().ToString("yyyy-MM-dd")} - {se.GetAvailability.GetAvailability().ToString()} - {se.GetReason}");
                 }
@@ -466,8 +466,8 @@ namespace MediaBazaarApp
             {
                 if (lbShiftChange.SelectedItem != null)
                 {
-                    ShiftExchange selectedShiftExchange = availabilitySQL.FindConcreteAvailability(lbShiftChange.SelectedItem.ToString());
-                    availabilitySQL.DeleteShiftTransferRequest(selectedShiftExchange.GetAvailability.getPerson().GetId(), selectedShiftExchange.GetAvailability.getTimeSlot(), selectedShiftExchange.GetAvailability.GetAvailability());
+                    ShiftExchange selectedShiftExchange = availabilityManager.FindConcreteAvailability(lbShiftChange.SelectedItem.ToString());
+                    availabilityManager.DeleteShiftTransferRequest(selectedShiftExchange.GetAvailability.getPerson().GetId(), selectedShiftExchange.GetAvailability.getTimeSlot(), selectedShiftExchange.GetAvailability.GetAvailability());
                     UpdateShiftRequests();
                 }
             }

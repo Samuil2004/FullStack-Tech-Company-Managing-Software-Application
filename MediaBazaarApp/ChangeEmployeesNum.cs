@@ -116,7 +116,6 @@ namespace MediaBazaarApp
         {
             try
             {
-                EmployeeNumberChange enc;
                 if (nmNumOfEmployees.Value != defaultNumOfEmployees)
                 {
                     Role selected_role = (Role)Enum.Parse(typeof(Role), cbRoles.SelectedItem.ToString());

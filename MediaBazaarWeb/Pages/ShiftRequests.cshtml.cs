@@ -12,8 +12,6 @@ namespace MediaBazaarWeb.Pages
     {
         [BindProperty]
         public AvailabilitiesDTOModel AvailabilityModel { get; set; }
-        private SQLDatabase _sql;
-        private AvailabilityDataAccessLayer availabilitySQL;
         public bool IsAuthenticated { get; set; }
         public Person LoggedInPerson { get; set; }
         [BindProperty(SupportsGet = true)]
@@ -25,9 +23,7 @@ namespace MediaBazaarWeb.Pages
 
         public ShiftRequestsModel()
         {
-            _sql = new SQLDatabase();
             peopleManagement = new PeopleManagement();
-            availabilitySQL = new AvailabilityDataAccessLayer();
         }
         public void OnGet()
         {
@@ -38,7 +34,7 @@ namespace MediaBazaarWeb.Pages
                 if (userEmailClaim != null)
                 {
                     UserEmail = userEmailClaim.Value;
-                    LoggedInPerson = _sql.FindPerson(UserEmail);
+                    LoggedInPerson = peopleManagement.FindPerson(UserEmail);
                     TempData["email"] = UserEmail;
                     TempData["password"] = Password;
                     TempData["page"] = page;

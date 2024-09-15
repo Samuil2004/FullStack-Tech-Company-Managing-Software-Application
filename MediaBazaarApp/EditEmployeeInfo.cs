@@ -17,17 +17,17 @@ namespace MediaBazaarApp
     public partial class EditEmployeeInfo : Form
     {
         ManagerMenu managerMenu;
-        PeopleManagement dataManager;
+        PeopleManagement peopleManager;
         Person loggedInUser;
-        SQLDatabase database;
+        ProductsDataAccessLayer database;
         private bool close_application;
 
-        public EditEmployeeInfo(ManagerMenu managerMenu, PeopleManagement dataManager, Person loggedInUser, SQLDatabase database)
+        public EditEmployeeInfo(ManagerMenu managerMenu, PeopleManagement dataManager, Person loggedInUser, ProductsDataAccessLayer database)
         {
             try
             {
                 this.managerMenu = managerMenu;
-                this.dataManager = dataManager;
+                this.peopleManager = dataManager;
                 this.loggedInUser = loggedInUser;
                 this.database = database;
                 close_application = true;
@@ -52,13 +52,13 @@ namespace MediaBazaarApp
                 {
                     if (cbxChangePassword.Checked)
                     {
-                        dataManager.ChangePassword(loggedInUser.GetId(), newPassword);
+                        peopleManager.ChangePassword(loggedInUser.GetId(), newPassword);
                     }
                     else
                     {
                         if (IsValidPhoneNumber(tbxPhoneNumber.Text))
                         {
-                            database.UpdateUserPhoneNumber(loggedInUser, phoneNumber);
+                            peopleManager.UpdateUserPhoneNumber(loggedInUser, phoneNumber);
                         }
                         else
                         {
@@ -68,7 +68,7 @@ namespace MediaBazaarApp
 
                     if (cbxSecretQuestion.Checked)
                     {
-                        database.SetSecretQuestion(loggedInUser, cmbSecretQuestion.Text, tbxSecretAnswer.Text);
+                        peopleManager.SetSecretQuestion(loggedInUser, cmbSecretQuestion.Text, tbxSecretAnswer.Text);
                     }
 
                     MessageBox.Show("Changes have been saved");

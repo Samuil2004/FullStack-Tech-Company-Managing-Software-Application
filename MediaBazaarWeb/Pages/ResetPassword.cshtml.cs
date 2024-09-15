@@ -19,7 +19,7 @@ namespace MediaBazaarWeb.Pages
 
         public PeopleManagement peopleManagement = new PeopleManagement();
 
-        public SQLDatabase _sql;
+        public ProductsDataAccessLayer _sql;
         public IActionResult OnGet(string email)
         {
             Email = email;

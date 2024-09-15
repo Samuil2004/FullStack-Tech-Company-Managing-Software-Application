@@ -15,7 +15,7 @@ namespace MediaBazaarApp
 	public partial class SalesRepresentative : Form
 	{
 		Person loggedinUser;
-		SQLDatabase db;
+		ProductsDataAccessLayer db;
 		Product SelectedProduct;
 		ProductManager productManager;
 		bool close_application;
@@ -24,7 +24,7 @@ namespace MediaBazaarApp
 			try
 			{
 				InitializeComponent();
-				db = new SQLDatabase();
+				db = new ProductsDataAccessLayer();
 				productManager = new ProductManager();
 				this.loggedinUser = person;
 				close_application = true;

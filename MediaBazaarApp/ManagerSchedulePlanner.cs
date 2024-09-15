@@ -1,18 +1,19 @@
-﻿using Microsoft.Azure.Management.Network.Fluent.Models;
-using System;
-using System.Collections.Generic;
+﻿//using Microsoft.Azure.Management.Network.Fluent.Models;
+//using System;
+//using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+//using System.Data;
+//using System.Drawing;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+//using System.Windows.Forms;
+//using static System.Runtime.InteropServices.JavaScript.JSType;
 using DataAccessLayer;
-using ClassLibrary;
-using Microsoft.Azure.Management.Network.Fluent;
-using System.Windows.Documents;
+//using ClassLibrary;
+//using Microsoft.Azure.Management.Network.Fluent;
+//using System.Windows.Documents;
+using LogicLayer;
 
 namespace MediaBazaarApp
 {
@@ -20,16 +21,15 @@ namespace MediaBazaarApp
     {
         PeopleManagement peopleManager;
         ManagerManageShdeule managerManageShdeule;
+        AvailabilityManager availabilityManager;
         Person loggedInUser;
         private bool close_application;
-        SQLDatabase database;
-        AvailabilityDataAccessLayer availabilitySQL;
         private Random random = new Random();
         private int numOfWeeks;
         private Department selectedDepartment;
         private Availability selectedAvailability;
         private Person selected_personDrag;
-        public ManagerSchedulePlanner(PeopleManagement peopleManager, ManagerManageShdeule managerManageShdeule, Person loggedInUser, SQLDatabase database)
+        public ManagerSchedulePlanner(PeopleManagement peopleManager, ManagerManageShdeule managerManageShdeule, Person loggedInUser, ProductsDataAccessLayer database)
         {
             try
             {
@@ -38,8 +38,7 @@ namespace MediaBazaarApp
                 this.loggedInUser = loggedInUser;
                 InitializeComponent();
                 close_application = true;
-                this.database = database;
-                availabilitySQL = new AvailabilityDataAccessLayer();
+                availabilityManager = new AvailabilityManager();
                 rbGenerateDaySchedule.Checked = true;
                 cbWeeksRange.SelectedIndex = 2;
                 this.numOfWeeks = Convert.ToInt32(cbWeeksRange.SelectedItem);
@@ -115,7 +114,7 @@ namespace MediaBazaarApp
 
                 Role selected_role = (Role)Enum.Parse(typeof(Role), cbRole.SelectedItem.ToString());
 
-                foreach (Availability availability in availabilitySQL.GetAvailabilityForPlannerPage(calendar.SelectionStart.Date, selected_role, seleced_department))
+                foreach (Availability availability in availabilityManager.GetAvailabilityForPlannerPage(calendar.SelectionStart.Date, selected_role, seleced_department))
                 {
                     if (!availability.isPersonTaken())
                     {
@@ -237,20 +236,20 @@ namespace MediaBazaarApp
                 if (lbAvailableMemebersFirstShift.SelectedItem != null)
                 {
                     Person selected_person = peopleManager.FindConcretePerson(lbAvailableMemebersFirstShift.SelectedItem.ToString());
-                    Availability av = availabilitySQL.FindAvailability(selected_person, calendar.SelectionStart.Date, AvailabilityForTheDay.FirstShift);
-                    availabilitySQL.ChangeIsTaken(av, selected_person.GetId(), calendar.SelectionStart, AvailabilityForTheDay.FirstShift);
+                    Availability av = availabilityManager.FindAvailability(selected_person, calendar.SelectionStart.Date, AvailabilityForTheDay.FirstShift);
+                    availabilityManager.ChangeIsTaken(av, selected_person.GetId(), calendar.SelectionStart, AvailabilityForTheDay.FirstShift);
                 }
                 else if (lbAvailableMembersSecondShift.SelectedItem != null)
                 {
                     Person selected_person = peopleManager.FindConcretePerson(lbAvailableMembersSecondShift.SelectedItem.ToString());
-                    Availability av = availabilitySQL.FindAvailability(selected_person, calendar.SelectionStart.Date, AvailabilityForTheDay.SecondShift);
-                    availabilitySQL.ChangeIsTaken(av, selected_person.GetId(), calendar.SelectionStart, AvailabilityForTheDay.SecondShift);
+                    Availability av = availabilityManager.FindAvailability(selected_person, calendar.SelectionStart.Date, AvailabilityForTheDay.SecondShift);
+                    availabilityManager.ChangeIsTaken(av, selected_person.GetId(), calendar.SelectionStart, AvailabilityForTheDay.SecondShift);
                 }
                 else if (lbAvailableMembersThirdShift.SelectedItem != null)
                 {
                     Person selected_person = peopleManager.FindConcretePerson(lbAvailableMembersThirdShift.SelectedItem.ToString());
-                    Availability av = availabilitySQL.FindAvailability(selected_person, calendar.SelectionStart.Date, AvailabilityForTheDay.ThirdShift);
-                    availabilitySQL.ChangeIsTaken(av, selected_person.GetId(), calendar.SelectionStart, AvailabilityForTheDay.ThirdShift);
+                    Availability av = availabilityManager.FindAvailability(selected_person, calendar.SelectionStart.Date, AvailabilityForTheDay.ThirdShift);
+                    availabilityManager.ChangeIsTaken(av, selected_person.GetId(), calendar.SelectionStart, AvailabilityForTheDay.ThirdShift);
                 }
                 UpdateAvailabilityData();
             }
@@ -268,21 +267,21 @@ namespace MediaBazaarApp
                 if (lbDayPlannerFirstShift.SelectedItem != null)
                 {
                     Person selected_person = peopleManager.FindConcretePerson(lbDayPlannerFirstShift.SelectedItem.ToString());
-                    Availability av = availabilitySQL.FindAvailability(selected_person, calendar.SelectionStart.Date, AvailabilityForTheDay.FirstShift);
-                    availabilitySQL.ChangeIsTaken(av, selected_person.GetId(), calendar.SelectionStart, AvailabilityForTheDay.FirstShift);
+                    Availability av = availabilityManager.FindAvailability(selected_person, calendar.SelectionStart.Date, AvailabilityForTheDay.FirstShift);
+                    availabilityManager.ChangeIsTaken(av, selected_person.GetId(), calendar.SelectionStart, AvailabilityForTheDay.FirstShift);
                 }
                 else if (lbDayPlannerSecondShift.SelectedItem != null)
                 {
                     Person selected_person = peopleManager.FindConcretePerson(lbDayPlannerSecondShift.SelectedItem.ToString());
-                    Availability av = availabilitySQL.FindAvailability(selected_person, calendar.SelectionStart.Date, AvailabilityForTheDay.SecondShift);
-                    availabilitySQL.ChangeIsTaken(av, selected_person.GetId(), calendar.SelectionStart, AvailabilityForTheDay.SecondShift);
+                    Availability av = availabilityManager.FindAvailability(selected_person, calendar.SelectionStart.Date, AvailabilityForTheDay.SecondShift);
+                    availabilityManager.ChangeIsTaken(av, selected_person.GetId(), calendar.SelectionStart, AvailabilityForTheDay.SecondShift);
 
                 }
                 else if (lbDayPlannerThirdShift.SelectedItem != null)
                 {
                     Person selected_person = peopleManager.FindConcretePerson(lbDayPlannerThirdShift.SelectedItem.ToString());
-                    Availability av = availabilitySQL.FindAvailability(selected_person, calendar.SelectionStart.Date, AvailabilityForTheDay.ThirdShift);
-                    availabilitySQL.ChangeIsTaken(av, selected_person.GetId(), calendar.SelectionStart, AvailabilityForTheDay.ThirdShift);
+                    Availability av = availabilityManager.FindAvailability(selected_person, calendar.SelectionStart.Date, AvailabilityForTheDay.ThirdShift);
+                    availabilityManager.ChangeIsTaken(av, selected_person.GetId(), calendar.SelectionStart, AvailabilityForTheDay.ThirdShift);
                 }
                 UpdateAvailabilityData();
             }
@@ -296,7 +295,7 @@ namespace MediaBazaarApp
         {
             try
             {
-                availabilitySQL.ClearSchedule(calendar.SelectionStart);
+                availabilityManager.ClearSchedule(calendar.SelectionStart);
                 UpdateAvailabilityData();
             }
             catch (Exception ex)
@@ -314,9 +313,9 @@ namespace MediaBazaarApp
                     foreach (AvailabilityForTheDay shift in Enum.GetValues(typeof(AvailabilityForTheDay)))
                     {
                         int neededEmployees = 3;
-                        if (availabilitySQL.ReadSpecialShiftsDays(date, selectedDepartment, selected_role, shift) != -1)
+                        if (availabilityManager.ReadSpecialShiftsDays(date, selectedDepartment, selected_role, shift) != -1)
                         {
-                            neededEmployees = availabilitySQL.ReadSpecialShiftsDays(date, selectedDepartment, selected_role, shift);
+                            neededEmployees = availabilityManager.ReadSpecialShiftsDays(date, selectedDepartment, selected_role, shift);
                         }
                         else if (selectedDepartment == Department.Sales && selected_role == Role.Floor_Consultant)
                         {
@@ -337,14 +336,14 @@ namespace MediaBazaarApp
                         {
                             continue;
                         }
-                        int counter = availabilitySQL.GetNumOfAssignedShifts(selected_role, selectedDepartment, date, shift);
+                        int counter = availabilityManager.GetNumOfAssignedShifts(selected_role, selectedDepartment, date, shift);
                         if (counter <= neededEmployees)
                         {
-                            List<Availability> peopleToBeAssigned = availabilitySQL.GetPossiblePeopleToBeAssigned(neededEmployees - counter, selected_role, selectedDepartment, date, shift);
+                            List<Availability> peopleToBeAssigned = availabilityManager.GetPossiblePeopleToBeAssigned(neededEmployees - counter, selected_role, selectedDepartment, date, shift);
 
                             foreach (var person in peopleToBeAssigned)
                             {
-                                availabilitySQL.ChangeIsTaken(person, 0, date, shift);
+                                availabilityManager.ChangeIsTaken(person, 0, date, shift);
                             }
                         }
                     }
@@ -370,11 +369,11 @@ namespace MediaBazaarApp
                             {
                                 Role selectedRole = (Role)Enum.Parse(typeof(Role), role.ToString());
                                 Department selectedDepartment = loggedInUser.GetDepartment;
-                                int alreadyAssinged = availabilitySQL.GetNumOfAssignedShifts(selectedRole, selectedDepartment, date, availability);
+                                int alreadyAssinged = availabilityManager.GetNumOfAssignedShifts(selectedRole, selectedDepartment, date, availability);
                                 int toBeAssigned = 3;
-                                if (availabilitySQL.ReadSpecialShiftsDays(date, selectedDepartment, selectedRole, availability) != -1)
+                                if (availabilityManager.ReadSpecialShiftsDays(date, selectedDepartment, selectedRole, availability) != -1)
                                 {
-                                    toBeAssigned = availabilitySQL.ReadSpecialShiftsDays(date, selectedDepartment, selectedRole, availability);
+                                    toBeAssigned = availabilityManager.ReadSpecialShiftsDays(date, selectedDepartment, selectedRole, availability);
                                 }
                                 else if (selectedDepartment == Department.Sales && selectedRole == Role.Floor_Consultant)
                                 {
@@ -689,7 +688,7 @@ namespace MediaBazaarApp
                     string item = (string)e.Data.GetData(typeof(string));
                     ListBox lb = (ListBox)sender;
                     lb.Items.Add(item);
-                    availabilitySQL.ChangeIsTaken(selectedAvailability, selected_personDrag.GetId(), calendar.SelectionStart, AvailabilityForTheDay.FirstShift);
+                    availabilityManager.ChangeIsTaken(selectedAvailability, selected_personDrag.GetId(), calendar.SelectionStart, AvailabilityForTheDay.FirstShift);
 
                     UpdateAvailabilityData();
                 }
@@ -722,7 +721,7 @@ namespace MediaBazaarApp
                 {
                     selected_personDrag = peopleManager.FindConcretePerson(lbAvailableMemebersFirstShift.SelectedItem.ToString());
 
-                    selectedAvailability = availabilitySQL.FindAvailability(selected_personDrag, calendar.SelectionStart.Date, AvailabilityForTheDay.FirstShift);
+                    selectedAvailability = availabilityManager.FindAvailability(selected_personDrag, calendar.SelectionStart.Date, AvailabilityForTheDay.FirstShift);
 
                     if (e.Button == MouseButtons.Left)
                     {
@@ -750,7 +749,7 @@ namespace MediaBazaarApp
                     string item = (string)e.Data.GetData(typeof(string));
                     ListBox lb = (ListBox)sender;
                     lb.Items.Add(item);
-                    availabilitySQL.ChangeIsTaken(selectedAvailability, selected_personDrag.GetId(), calendar.SelectionStart, AvailabilityForTheDay.SecondShift);
+                    availabilityManager.ChangeIsTaken(selectedAvailability, selected_personDrag.GetId(), calendar.SelectionStart, AvailabilityForTheDay.SecondShift);
 
                     UpdateAvailabilityData();
                 }
@@ -784,7 +783,7 @@ namespace MediaBazaarApp
                 {
                     selected_personDrag = peopleManager.FindConcretePerson(lbAvailableMembersSecondShift.SelectedItem.ToString());
 
-                    selectedAvailability = availabilitySQL.FindAvailability(selected_personDrag, calendar.SelectionStart.Date, AvailabilityForTheDay.SecondShift);
+                    selectedAvailability = availabilityManager.FindAvailability(selected_personDrag, calendar.SelectionStart.Date, AvailabilityForTheDay.SecondShift);
 
                     if (e.Button == MouseButtons.Left)
                     {
@@ -810,7 +809,7 @@ namespace MediaBazaarApp
                 {
                     selected_personDrag = peopleManager.FindConcretePerson(lbAvailableMembersThirdShift.SelectedItem.ToString());
 
-                    selectedAvailability = availabilitySQL.FindAvailability(selected_personDrag, calendar.SelectionStart.Date, AvailabilityForTheDay.ThirdShift);
+                    selectedAvailability = availabilityManager.FindAvailability(selected_personDrag, calendar.SelectionStart.Date, AvailabilityForTheDay.ThirdShift);
 
                     if (e.Button == MouseButtons.Left)
                     {
@@ -852,7 +851,7 @@ namespace MediaBazaarApp
                     string item = (string)e.Data.GetData(typeof(string));
                     ListBox lb = (ListBox)sender;
                     lb.Items.Add(item);
-                    availabilitySQL.ChangeIsTaken(selectedAvailability, selected_personDrag.GetId(), calendar.SelectionStart, AvailabilityForTheDay.ThirdShift);
+                    availabilityManager.ChangeIsTaken(selectedAvailability, selected_personDrag.GetId(), calendar.SelectionStart, AvailabilityForTheDay.ThirdShift);
 
                     UpdateAvailabilityData();
                 }

@@ -1,10 +1,13 @@
 ﻿using DataAccessLayer;
 using LogicLayer;
+using Microsoft.Data.SqlClient;
+using Microsoft.Rest.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace MediaBazaarApp
 {
@@ -13,14 +16,12 @@ namespace MediaBazaarApp
     /// </summary>
     public class PeopleManagement
     {
-        DataAccessLayer.SQLDatabase database;
         private Person newPerson;
         private Availability newAvailability;
         AvailabilityDataAccessLayer availabilitySQL;
         PeopleDataAccessLayer peopleSQL;
         public PeopleManagement()
         {
-            database = new DataAccessLayer.SQLDatabase();
             availabilitySQL = new AvailabilityDataAccessLayer();
             peopleSQL = new PeopleDataAccessLayer();
         }
@@ -37,7 +38,7 @@ namespace MediaBazaarApp
             string defaultPassword = $"password{Id}";
             string hash = passwordMasker.GenerateSHA256Hash(defaultPassword, salt);
             PasswordDataAccessLayer psS = new PasswordDataAccessLayer();
-            database.AddPerson(newPerson);
+            peopleSQL.AddPerson(newPerson);
             psS.AddPassword(Id, salt, hash);
         }
 
@@ -47,7 +48,7 @@ namespace MediaBazaarApp
         /// <returns>A <see cref="Person"/> object if found, otherwise null.</returns>
         public Person FindPerson(string username)
         {
-            return database.FindPerson(username);
+            return peopleSQL.FindPerson(username);
         }
 
         /// <summary>
@@ -110,7 +111,7 @@ namespace MediaBazaarApp
         /// <returns>The full name of the person as a string.</returns>
         public string FindPersonName(int id)
         {
-            string name = database.FindPersonName(id);
+            string name = peopleSQL.FindPersonName(id);
             return name;
         }
 
@@ -121,7 +122,7 @@ namespace MediaBazaarApp
         /// <returns>The highest available ID as an integer.</returns>
         public int GetHighestId()
         {
-            return database.GetTheHighestId();
+            return peopleSQL.GetTheHighestId();
         }
 
 
@@ -137,6 +138,245 @@ namespace MediaBazaarApp
             string hash = passwordMasker.GenerateSHA256Hash(newPassword, salt);
             PasswordDataAccessLayer psql = new PasswordDataAccessLayer();
             psql.UpdatePassword(person_id, salt, hash);
+        }
+
+
+        /// <summary>
+        /// Reads a list of people excluding managers based on the provided filters, department, and whether they are still working.
+        /// </summary>
+        /// <param name="selectedDepartment">The department filter.</param>
+        /// <param name="StillWorking">Indicates whether the person is still working or not.</param>
+        /// <param name="pageNum">The page number to retrieve.</param>
+        /// <param name="filteringCriteria">The search criteria to filter people by.</param>
+        /// <returns>A list of <see cref="Person"/> objects excluding managers.</returns>
+        public List<Person> ReadPeopleForSelectedPageDifferentFromManagers(Department? selectedDepartment, bool StillWorking, int pageNum, string filteringCriteria)
+        {
+            if (pageNum < 0)
+            {
+                throw new ArgumentNullException("An invalid page number value has been passed to the system. \nPlease, try again later!");
+            }
+            return peopleSQL.ReadPeopleForSelectedPageDifferentFromManagers(selectedDepartment, StillWorking, pageNum, filteringCriteria);
+        }
+
+        /// <summary>
+        /// Reads a list of people based on the provided filters, department, and role for the selected page.
+        /// </summary>
+        /// <param name="selectedDepartment">The department filter.</param>
+        /// <param name="selectedRole">The role filter.</param>
+        /// <param name="StillWorking">Indicates whether the person is still working or not.</param>
+        /// <param name="pageNum">The page number to retrieve.</param>
+        /// <param name="filteringCriteria">The search criteria to filter people by.</param>
+        /// <returns>A list of <see cref="Person"/> objects for the selected page.</returns>
+        public List<Person> ReadPeopleForSelectedPage(Department? selectedDepartment, Role? selectedRole, bool StillWorking, int pageNum, string filteringCriteria)
+        {
+            if (pageNum < 0)
+            {
+                throw new ArgumentNullException("An invalid page number value has been passed to the system. \nPlease, try again later!");
+            }
+            return peopleSQL.ReadPeopleForSelectedPage(selectedDepartment,selectedRole, StillWorking, pageNum, filteringCriteria);
+        }
+
+        /// <summary>
+        /// Changes the working status of a person.
+        /// </summary>
+        /// <param name="person">The person whose status will be updated.</param>
+        public void ChangeWorkingStatus(Person person)
+        {
+            if (person == null)
+            {
+                throw new ArgumentNullException("A null value has been passed to the system. \nPlease, try again later!");
+            }
+            peopleSQL.ChangeWorkingStatus(person);
+        }
+
+
+        /// <summary>
+        /// Checks if an employee has clocked in within the last 5 minutes.
+        /// </summary>
+        /// <param name="id">The ID of the employee.</param>
+        /// <param name="time">The time to check.</param>
+        /// <returns>True if the employee has clocked in recently, otherwise false.</returns>
+        public bool CheckIfJustClocked(int id, DateTime time)
+        {
+            if (id < 1)
+            {
+                throw new ArgumentNullException("An invalid id value has been passed to the system. \nPlease, try again later!");
+            }
+            return peopleSQL.CheckIfJustClocked(id, time);
+        }
+
+        /// <summary>
+        /// Checks if an employee has already clocked in for a specific date.
+        /// </summary>
+        /// <param name="id">The ID of the employee.</param>
+        /// <param name="time">The date to check for clock-in.</param>
+        /// <returns>True if the employee has clocked in, otherwise false.</returns>
+        public bool CheckIfClockedIn(int id, DateTime time)
+        {
+            if (id < 1)
+            {
+                throw new ArgumentNullException("An invalid id value has been passed to the system. \nPlease, try again later!");
+            }
+            return peopleSQL.CheckIfClockedIn(id, time);
+        }
+
+
+        /// <summary>
+        /// Records the clocking-out time and calculates time worked for an employee.
+        /// </summary>
+        /// <param name="id">The ID of the employee.</param>
+        /// <param name="time">The clock-out time.</param>
+        /// <returns>The total time worked.</returns>
+        public TimeSpan ClockOut(int id, DateTime time)
+        {
+            if (id < 1)
+            {
+                throw new ArgumentNullException("An invalid id value has been passed to the system. \nPlease, try again later!");
+            }
+            return peopleSQL.ClockOut(id, time);
+        }
+
+        /// <summary>
+        /// Records the clocking-in time for an employee.
+        /// </summary>
+        /// <param name="id">The ID of the employee.</param>
+        /// <param name="time">The clock-in time.</param>
+        public void ClockingIn(int id, DateTime time)
+        {
+            if (id < 1)
+            {
+                throw new ArgumentNullException("An invalid id value has been passed to the system. \nPlease, try again later!");
+            }
+            peopleSQL.ClockingIn(id, time);
+        }
+
+        /// <summary>
+        /// Retrieves the total work time for a month for an employee.
+        /// </summary>
+        /// <param name="id">The ID of the employee.</param>
+        /// <param name="month">The month to calculate the work time for.</param>
+        /// <returns>A list of <see cref="DateTime"/> objects representing work shifts.</returns>
+		public List<DateTime> GetWorkTimeMonth(int id, DateTime month)
+        {
+            if (id < 1)
+            {
+                throw new ArgumentNullException("An invalid id value has been passed to the system. \nPlease, try again later!");
+            }
+            return peopleSQL.GetWorkTimeMonth(id, month);
+        }
+
+        /// <summary>
+        /// Checks if an email is available for registration.
+        /// </summary>
+        /// <param name="email">The email to check.</param>
+        /// <returns>True if the email is available, otherwise false.</returns>
+        public bool IsEmailAvailable(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                throw new ArgumentNullException("An null value has been passed to the system. \nPlease, try again later!");
+            }
+            return peopleSQL.IsEmailAvailable(email);
+        }
+
+
+
+        /// <summary>
+        /// Finds the manager of a specified department.
+        /// </summary>
+        /// <param name="selectedDepartment">The department to find the manager for.</param>
+        /// <returns>A <see cref="Person"/> representing the manager of the department.</returns>
+        public Person FindDepartmentManager(Department selectedDepartment)
+        {
+            return peopleSQL.FindDepartmentManager(selectedDepartment);
+        }
+
+        /// <summary>
+        /// Updates user details such as email, phone number, and security questions.
+        /// </summary>
+        /// <param name="userId">The ID of the user.</param>
+        /// <param name="email">The user's new email.</param>
+        /// <param name="phoneNumber">The user's new phone number.</param>
+        /// <param name="securityQuestion">The user's new security question.</param>
+        /// <param name="securityAnswer">The user's new security answer.</param>
+        public void UpdateUserDetails(int userId, string email, string phoneNumber, string securityQuestion, string securityAnswer)
+        {
+            if (string.IsNullOrEmpty(email)|| userId < 0 || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(phoneNumber) || string.IsNullOrEmpty(securityQuestion) || string.IsNullOrEmpty(securityAnswer))
+            {
+                throw new ArgumentNullException("An null value has been passed to the system. \nPlease, try again later!");
+            }
+            peopleSQL.UpdateUserDetails(userId, email, phoneNumber, securityQuestion, securityAnswer);
+        }
+
+        /// <summary>
+        /// Gets the ID of a person by their email.
+        /// </summary>
+        /// <param name="email">The email of the person.</param>
+        /// <returns>The ID of the person.</returns>
+        public int GetPersonId(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                throw new ArgumentNullException("An null value has been passed to the system. \nPlease, try again later!");
+            }
+            return peopleSQL.GetPersonId(email);
+        }
+
+        /// <summary>
+        /// Reads the details of a person by their email.
+        /// </summary>
+        /// <param name="givenEmail">The email of the person.</param>
+        /// <returns>A <see cref="Person"/> object.</returns>
+        public Person ReadPerson(string givenEmail)
+        {
+            if (string.IsNullOrEmpty(givenEmail))
+            {
+                throw new ArgumentNullException("An null value has been passed to the system. \nPlease, try again later!");
+            }
+            return peopleSQL.ReadPerson(givenEmail);
+        }
+
+        /// <summary>
+        /// Updates the phone number for a person.
+        /// </summary>
+        /// <param name="person">The person whose phone number will be updated.</param>
+        /// <param name="phoneNumber">The new phone number.</param>
+        public void UpdateUserPhoneNumber(Person person, string phoneNumber)
+        {
+            if (string.IsNullOrEmpty(phoneNumber) || person == null)
+            {
+                throw new ArgumentNullException("An null value has been passed to the system. \nPlease, try again later!");
+            }
+            peopleSQL.UpdateUserPhoneNumber(person,phoneNumber);
+        }
+
+        /// <summary>
+        /// Sets a secret question and answer for a person.
+        /// </summary>
+        /// <param name="person">The person whose secret question will be set.</param>
+        /// <param name="secretQuestion">The secret question.</param>
+        /// <param name="secretAnswer">The secret answer.</param>
+        public void SetSecretQuestion(Person person, string secretQuestion, string secretAnswer)
+        {
+            if (string.IsNullOrEmpty(secretQuestion) || string.IsNullOrEmpty(secretAnswer) || person == null)
+            {
+                throw new ArgumentNullException("An null value has been passed to the system. \nPlease, try again later!");
+            }
+            peopleSQL.SetSecretQuestion(person, secretQuestion,secretAnswer);
+        }
+
+        /// <summary>
+        /// Updates the wage for a person.
+        /// </summary>
+        /// <param name="person">The person whose wage will be updated.</param>
+        /// <param name="newWage">The new wage value.</param>
+        public void UpdateWage(Person person, double newWage)
+        {
+            if (person == null)
+            {
+                throw new ArgumentNullException("An null value has been passed to the system. \nPlease, try again later!");
+            }
+            peopleSQL.UpdateWage(person, newWage);
         }
     }
 }

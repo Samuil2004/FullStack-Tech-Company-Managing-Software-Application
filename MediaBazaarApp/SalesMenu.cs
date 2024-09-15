@@ -19,7 +19,7 @@ namespace MediaBazaarApp
         Product selectedProduct;
         ManagerMenu managerMenu;
         Person loggedInUser;
-        public SalesMenu(ManagerMenu managermenu, Person loggedinUser, SQLDatabase sql)
+        public SalesMenu(ManagerMenu managermenu, Person loggedinUser, ProductsDataAccessLayer sql)
         {
             try
             {

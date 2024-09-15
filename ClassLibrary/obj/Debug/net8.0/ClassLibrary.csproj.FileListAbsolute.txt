@@ -10,3 +10,16 @@ C:\Mac\Home\Desktop\MediaBazaarApp\ClassLibrary\obj\Debug\net8.0\ClassLibrary.dl
 C:\Mac\Home\Desktop\MediaBazaarApp\ClassLibrary\obj\Debug\net8.0\refint\ClassLibrary.dll
 C:\Mac\Home\Desktop\MediaBazaarApp\ClassLibrary\obj\Debug\net8.0\ClassLibrary.pdb
 C:\Mac\Home\Desktop\MediaBazaarApp\ClassLibrary\obj\Debug\net8.0\ref\ClassLibrary.dll
+C:\Users\samuilkozarov\Source\Repos\MediaBazaar\ClassLibrary\bin\Debug\net8.0\ClassLibrary.deps.json
+C:\Users\samuilkozarov\Source\Repos\MediaBazaar\ClassLibrary\bin\Debug\net8.0\ClassLibrary.dll
+C:\Users\samuilkozarov\Source\Repos\MediaBazaar\ClassLibrary\bin\Debug\net8.0\ClassLibrary.pdb
+C:\Users\samuilkozarov\Source\Repos\MediaBazaar\ClassLibrary\obj\Debug\net8.0\ClassLibrary.csproj.AssemblyReference.cache
+C:\Users\samuilkozarov\Source\Repos\MediaBazaar\ClassLibrary\obj\Debug\net8.0\ClassLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\samuilkozarov\Source\Repos\MediaBazaar\ClassLibrary\obj\Debug\net8.0\ClassLibrary.AssemblyInfoInputs.cache
+C:\Users\samuilkozarov\Source\Repos\MediaBazaar\ClassLibrary\obj\Debug\net8.0\ClassLibrary.AssemblyInfo.cs
+C:\Users\samuilkozarov\Source\Repos\MediaBazaar\ClassLibrary\obj\Debug\net8.0\ClassLibrary.csproj.CoreCompileInputs.cache
+C:\Users\samuilkozarov\Source\Repos\MediaBazaar\ClassLibrary\obj\Debug\net8.0\ClassLibrary.sourcelink.json
+C:\Users\samuilkozarov\Source\Repos\MediaBazaar\ClassLibrary\obj\Debug\net8.0\ClassLibrary.dll
+C:\Users\samuilkozarov\Source\Repos\MediaBazaar\ClassLibrary\obj\Debug\net8.0\refint\ClassLibrary.dll
+C:\Users\samuilkozarov\Source\Repos\MediaBazaar\ClassLibrary\obj\Debug\net8.0\ClassLibrary.pdb
+C:\Users\samuilkozarov\Source\Repos\MediaBazaar\ClassLibrary\obj\Debug\net8.0\ref\ClassLibrary.dll

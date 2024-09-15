@@ -14,6 +14,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ClockingIn
-build_property.ProjectDir = C:\Users\samuilkozarov\Source\Repos\MeBa\ClockingIn\
+build_property.ProjectDir = C:\Users\samuilkozarov\Source\Repos\MediaBazaar\ClockingIn\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

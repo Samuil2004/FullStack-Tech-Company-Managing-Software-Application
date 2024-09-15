@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rNO+V2BaamE=",
+  "dgSpecHash": "jBHUBhWIxHc=",
   "success": true,
-  "projectFilePath": "C:\\Mac\\Home\\Desktop\\MediaBazaarApp\\MediaBazaarApp\\MediaBazaarApp.csproj",
+  "projectFilePath": "C:\\Users\\samuilkozarov\\Source\\Repos\\MediaBazaar\\MediaBazaarApp\\MediaBazaarApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\samuilkozarov\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\samuilkozarov\\.nuget\\packages\\azure.identity\\1.11.3\\azure.identity.1.11.3.nupkg.sha512",

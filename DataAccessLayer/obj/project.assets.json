@@ -7492,11 +7492,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Mac\\Home\\Desktop\\MediaBazaarApp\\DataAccessLayer\\DataAccessLayer.csproj",
+      "projectUniqueName": "C:\\Users\\samuilkozarov\\Source\\Repos\\MediaBazaar\\DataAccessLayer\\DataAccessLayer.csproj",
       "projectName": "DataAccessLayer",
-      "projectPath": "C:\\Mac\\Home\\Desktop\\MediaBazaarApp\\DataAccessLayer\\DataAccessLayer.csproj",
+      "projectPath": "C:\\Users\\samuilkozarov\\Source\\Repos\\MediaBazaar\\DataAccessLayer\\DataAccessLayer.csproj",
       "packagesPath": "C:\\Users\\samuilkozarov\\.nuget\\packages\\",
-      "outputPath": "C:\\Mac\\Home\\Desktop\\MediaBazaarApp\\DataAccessLayer\\obj\\",
+      "outputPath": "C:\\Users\\samuilkozarov\\Source\\Repos\\MediaBazaar\\DataAccessLayer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\samuilkozarov\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -7513,8 +7513,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Mac\\Home\\Desktop\\MediaBazaarApp\\ClassLibrary\\ClassLibrary.csproj": {
-              "projectPath": "C:\\Mac\\Home\\Desktop\\MediaBazaarApp\\ClassLibrary\\ClassLibrary.csproj"
+            "C:\\Users\\samuilkozarov\\Source\\Repos\\MediaBazaar\\ClassLibrary\\ClassLibrary.csproj": {
+              "projectPath": "C:\\Users\\samuilkozarov\\Source\\Repos\\MediaBazaar\\ClassLibrary\\ClassLibrary.csproj"
             }
           }
         }

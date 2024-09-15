@@ -7771,11 +7771,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Mac\\Home\\Desktop\\MediaBazaarApp\\MediaBazaarApp\\MediaBazaarApp.csproj",
+      "projectUniqueName": "C:\\Users\\samuilkozarov\\Source\\Repos\\MediaBazaar\\MediaBazaarApp\\MediaBazaarApp.csproj",
       "projectName": "MediaBazaarApp",
-      "projectPath": "C:\\Mac\\Home\\Desktop\\MediaBazaarApp\\MediaBazaarApp\\MediaBazaarApp.csproj",
+      "projectPath": "C:\\Users\\samuilkozarov\\Source\\Repos\\MediaBazaar\\MediaBazaarApp\\MediaBazaarApp.csproj",
       "packagesPath": "C:\\Users\\samuilkozarov\\.nuget\\packages\\",
-      "outputPath": "C:\\Mac\\Home\\Desktop\\MediaBazaarApp\\MediaBazaarApp\\obj\\",
+      "outputPath": "C:\\Users\\samuilkozarov\\Source\\Repos\\MediaBazaar\\MediaBazaarApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\samuilkozarov\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -7792,14 +7792,14 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "projectReferences": {
-            "C:\\Mac\\Home\\Desktop\\MediaBazaarApp\\ClassLibrary\\ClassLibrary.csproj": {
-              "projectPath": "C:\\Mac\\Home\\Desktop\\MediaBazaarApp\\ClassLibrary\\ClassLibrary.csproj"
+            "C:\\Users\\samuilkozarov\\Source\\Repos\\MediaBazaar\\ClassLibrary\\ClassLibrary.csproj": {
+              "projectPath": "C:\\Users\\samuilkozarov\\Source\\Repos\\MediaBazaar\\ClassLibrary\\ClassLibrary.csproj"
             },
-            "C:\\Mac\\Home\\Desktop\\MediaBazaarApp\\DataAccessLayer\\DataAccessLayer.csproj": {
-              "projectPath": "C:\\Mac\\Home\\Desktop\\MediaBazaarApp\\DataAccessLayer\\DataAccessLayer.csproj"
+            "C:\\Users\\samuilkozarov\\Source\\Repos\\MediaBazaar\\DataAccessLayer\\DataAccessLayer.csproj": {
+              "projectPath": "C:\\Users\\samuilkozarov\\Source\\Repos\\MediaBazaar\\DataAccessLayer\\DataAccessLayer.csproj"
             },
-            "C:\\Mac\\Home\\Desktop\\MediaBazaarApp\\LogicLayer\\LogicLayer.csproj": {
-              "projectPath": "C:\\Mac\\Home\\Desktop\\MediaBazaarApp\\LogicLayer\\LogicLayer.csproj"
+            "C:\\Users\\samuilkozarov\\Source\\Repos\\MediaBazaar\\LogicLayer\\LogicLayer.csproj": {
+              "projectPath": "C:\\Users\\samuilkozarov\\Source\\Repos\\MediaBazaar\\LogicLayer\\LogicLayer.csproj"
             }
           }
         }

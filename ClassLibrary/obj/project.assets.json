@@ -1937,11 +1937,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Mac\\Home\\Desktop\\MediaBazaarApp\\ClassLibrary\\ClassLibrary.csproj",
+      "projectUniqueName": "C:\\Users\\samuilkozarov\\Source\\Repos\\MediaBazaar\\ClassLibrary\\ClassLibrary.csproj",
       "projectName": "ClassLibrary",
-      "projectPath": "C:\\Mac\\Home\\Desktop\\MediaBazaarApp\\ClassLibrary\\ClassLibrary.csproj",
+      "projectPath": "C:\\Users\\samuilkozarov\\Source\\Repos\\MediaBazaar\\ClassLibrary\\ClassLibrary.csproj",
       "packagesPath": "C:\\Users\\samuilkozarov\\.nuget\\packages\\",
-      "outputPath": "C:\\Mac\\Home\\Desktop\\MediaBazaarApp\\ClassLibrary\\obj\\",
+      "outputPath": "C:\\Users\\samuilkozarov\\Source\\Repos\\MediaBazaar\\ClassLibrary\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\samuilkozarov\\AppData\\Roaming\\NuGet\\NuGet.Config",

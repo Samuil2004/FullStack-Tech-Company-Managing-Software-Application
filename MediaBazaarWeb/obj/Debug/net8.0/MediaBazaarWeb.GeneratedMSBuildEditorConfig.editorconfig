@@ -17,87 +17,87 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MediaBazaarWeb
 build_property.RootNamespace = MediaBazaarWeb
-build_property.ProjectDir = C:\Users\samuilkozarov\Source\Repos\MeBa\MediaBazaarWeb\
+build_property.ProjectDir = C:\Users\samuilkozarov\Source\Repos\MediaBazaar\MediaBazaarWeb\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\samuilkozarov\Source\Repos\MeBa\MediaBazaarWeb
+build_property.MSBuildProjectDirectory = C:\Users\samuilkozarov\Source\Repos\MediaBazaar\MediaBazaarWeb
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/samuilkozarov/Source/Repos/MeBa/MediaBazaarWeb/Pages/EditAccountDetails.cshtml]
+[C:/Users/samuilkozarov/Source/Repos/MediaBazaar/MediaBazaarWeb/Pages/EditAccountDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWRpdEFjY291bnREZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/samuilkozarov/Source/Repos/MeBa/MediaBazaarWeb/Pages/Error.cshtml]
+[C:/Users/samuilkozarov/Source/Repos/MediaBazaar/MediaBazaarWeb/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/samuilkozarov/Source/Repos/MeBa/MediaBazaarWeb/Pages/ForgottenPassword.cshtml]
+[C:/Users/samuilkozarov/Source/Repos/MediaBazaar/MediaBazaarWeb/Pages/ForgottenPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRm9yZ290dGVuUGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/samuilkozarov/Source/Repos/MeBa/MediaBazaarWeb/Pages/Index.cshtml]
+[C:/Users/samuilkozarov/Source/Repos/MediaBazaar/MediaBazaarWeb/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/samuilkozarov/Source/Repos/MeBa/MediaBazaarWeb/Pages/Logout.cshtml]
+[C:/Users/samuilkozarov/Source/Repos/MediaBazaar/MediaBazaarWeb/Pages/Logout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9nb3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/samuilkozarov/Source/Repos/MeBa/MediaBazaarWeb/Pages/Privacy.cshtml]
+[C:/Users/samuilkozarov/Source/Repos/MediaBazaar/MediaBazaarWeb/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/samuilkozarov/Source/Repos/MeBa/MediaBazaarWeb/Pages/Profile.cshtml]
+[C:/Users/samuilkozarov/Source/Repos/MediaBazaar/MediaBazaarWeb/Pages/Profile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/samuilkozarov/Source/Repos/MeBa/MediaBazaarWeb/Pages/ResetPassword.cshtml]
+[C:/Users/samuilkozarov/Source/Repos/MediaBazaar/MediaBazaarWeb/Pages/ResetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzZXRQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/samuilkozarov/Source/Repos/MeBa/MediaBazaarWeb/Pages/SetPasswordPage.cshtml]
+[C:/Users/samuilkozarov/Source/Repos/MediaBazaar/MediaBazaarWeb/Pages/SetPasswordPage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2V0UGFzc3dvcmRQYWdlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/samuilkozarov/Source/Repos/MeBa/MediaBazaarWeb/Pages/Shared/View.cshtml]
+[C:/Users/samuilkozarov/Source/Repos/MediaBazaar/MediaBazaarWeb/Pages/Shared/View.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXFZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/samuilkozarov/Source/Repos/MeBa/MediaBazaarWeb/Pages/Shared/_LayoutPassword.cshtml]
+[C:/Users/samuilkozarov/Source/Repos/MediaBazaar/MediaBazaarWeb/Pages/Shared/_LayoutPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXRQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/samuilkozarov/Source/Repos/MeBa/MediaBazaarWeb/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/samuilkozarov/Source/Repos/MediaBazaar/MediaBazaarWeb/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/samuilkozarov/Source/Repos/MeBa/MediaBazaarWeb/Pages/ShiftRequests.cshtml]
+[C:/Users/samuilkozarov/Source/Repos/MediaBazaar/MediaBazaarWeb/Pages/ShiftRequests.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hpZnRSZXF1ZXN0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/samuilkozarov/Source/Repos/MeBa/MediaBazaarWeb/Pages/_ViewImports.cshtml]
+[C:/Users/samuilkozarov/Source/Repos/MediaBazaar/MediaBazaarWeb/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/samuilkozarov/Source/Repos/MeBa/MediaBazaarWeb/Pages/_ViewStart.cshtml]
+[C:/Users/samuilkozarov/Source/Repos/MediaBazaar/MediaBazaarWeb/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/samuilkozarov/Source/Repos/MeBa/MediaBazaarWeb/Pages/Availability.cshtml]
+[C:/Users/samuilkozarov/Source/Repos/MediaBazaar/MediaBazaarWeb/Pages/Availability.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXZhaWxhYmlsaXR5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = b-y17bysidmz
 
-[C:/Users/samuilkozarov/Source/Repos/MeBa/MediaBazaarWeb/Pages/Schedule.cshtml]
+[C:/Users/samuilkozarov/Source/Repos/MediaBazaar/MediaBazaarWeb/Pages/Schedule.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2NoZWR1bGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-l7spt6tsh6
 
-[C:/Users/samuilkozarov/Source/Repos/MeBa/MediaBazaarWeb/Pages/Shared/_Layout.cshtml]
+[C:/Users/samuilkozarov/Source/Repos/MediaBazaar/MediaBazaarWeb/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-2tox2n5bbn
 
-[C:/Users/samuilkozarov/Source/Repos/MeBa/MediaBazaarWeb/Pages/Shared/_LayoutSchedule.cshtml]
+[C:/Users/samuilkozarov/Source/Repos/MediaBazaar/MediaBazaarWeb/Pages/Shared/_LayoutSchedule.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXRTY2hlZHVsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = b-37f8wq93u8

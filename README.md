@@ -3,6 +3,10 @@
 DineMaster Pro is the backend system powering Canim's online ordering and delivery platform. Designed to support role-based access, real-time order updates, and seamless integration with external services, it enhances the restaurant's operational efficiency and customer satisfaction.
 
 ---
+##Link to application
+https://dinemasterpro.netlify.app/
+
+---
 
 ## Purpose
 
